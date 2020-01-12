@@ -46,14 +46,13 @@ const Tabs = class extends HTMLElement {
 		super();
 		this._shadow = this.attachShadow({ mode: "open" });
 		this._shadow.appendChild(template.content.cloneNode(true));
-		this.state = { 
-			activeTab: null   
-		}; 
+		this.state = {
+			activeTab: null
+		};
 		this.tabs = this._shadow.querySelectorAll(".tab");
 	}
 
-	connectedCallback() { 
-        console.log('yay');
+	connectedCallback() {
 		this.tabs.forEach(tab => {
 			tab.onclick = () => {
 				this.tabs.forEach(x => x.removeAttribute("active"));
@@ -63,4 +62,4 @@ const Tabs = class extends HTMLElement {
 		});
 	}
 };
-customElements.define("app-widget", Tabs);
+customElements.define("x-tabs", Tabs);
