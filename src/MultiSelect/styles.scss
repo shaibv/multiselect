@@ -11,9 +11,14 @@ html {
 	border-radius: 6px;
 	box-shadow: rgba(0, 0, 0, 0.0470588) 0px 0px 0px 1px,
 		rgba(0, 0, 0, 0.0784314) 0px 4px 8px, rgba(0, 0, 0, 0.0784314) 0px 2px 4px;
-	list-style: none;
+    list-style: none;
+    background: $D80;
 	padding: 6px 0;
-	margin: 0;
+    margin: 6px 0 0 0;
+    display: none;
+    &.open {
+        display: block;
+    }
 }
 
 .dropwdown li {
@@ -50,7 +55,8 @@ html {
 .fakeInput {
     display: flex;
     height: 30px;
-	width: 100%;
+    width: 100%;
+    background: $D80;
 	border-radius: 4px;
 	border: 1px solid $B30;
 	padding: 6px 12px;

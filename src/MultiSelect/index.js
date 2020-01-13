@@ -3,11 +3,11 @@ import { useState, useEffect, useRef } from "preact/hooks";
 import { h } from "preact";
 import "./styles.scss";
 
-const Dropdown = ({ items, clickHandler }) => {
+const Dropdown = ({ items, clickHandler, isOpen }) => {
 	useEffect(() => {}, [items]);
 
 	return (
-		<ul class="dropwdown">
+		<ul className={isOpen ? "dropwdown open" : "dropwdown"}>
 			{items.map(x => (
 				<li className={x.checked ? "checked" : undefined} key={x.id}>
 					<label>
@@ -44,8 +44,8 @@ const Multiselect = props => {
 	const [data, setData] = useState(null);
 	const [checked, setChecked] = useState([]);
 	const [unChecked, setUnChecked] = useState([]);
-	const [open, setOpen] = useState(false);
-	const [searchTerm, setSearchTerm] = useState('');
+	const [isOpen, setOpen] = useState(false);
+	const [searchTerm, setSearchTerm] = useState("");
 	const [filteredData, setFilteredData] = useState([]);
 
 	useEffect(() => {
@@ -63,7 +63,6 @@ const Multiselect = props => {
 		}
 	}, [data]);
 
-
 	const clickHandler = e => {
 		data
 			.filter(item => item.id === e.target.id)
@@ -71,32 +70,45 @@ const Multiselect = props => {
 		setData([...data]);
 	};
 
-
 	useEffect(() => {
 		if (searchTerm.length) {
 			let filter = unChecked.filter(
 				item => item.name.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1
 			);
 			setFilteredData(filter);
-		}  else {
+		} else {
 			setFilteredData(unChecked);
 		}
 	}, [searchTerm]);
 
-
 	let timeout;
-	const termSearchHandler = (e) =>{
+	const termSearchHandler = e => {
 		if (timeout) {
 			clearTimeout(timeout);
 		}
 		timeout = setTimeout(() => {
-			setSearchTerm(e.target.value)
-		}, 300)
-	}
+			setSearchTerm(e.target.value);
+		}, 300);
+	};
+
+	const wrappRef = useRef();
+
+	const handleClickOutside = (event) => {
+		 if (wrappRef.current && !wrappRef.current.contains(event.target)) {
+			setOpen(false)
+			}
+	};
+
+	 useEffect(() => {
+			document.addEventListener("mousedown", handleClickOutside);
+			return () => {
+				document.removeEventListener("mousedown", handleClickOutside);
+			};
+		});
 
 	if (!data) return null;
 	return (
-		<div>
+		<div onClick={handleClickOutside} ref={wrappRef}>
 			<div className="fakeInput">
 				<Tags clickHandler={clickHandler} items={checked} />
 				<input
@@ -105,7 +117,11 @@ const Multiselect = props => {
 					type="text"
 				/>
 			</div>
-			<Dropdown clickHandler={clickHandler} items={filteredData} />
+			<Dropdown
+				isOpen={isOpen}
+				clickHandler={clickHandler}
+				items={filteredData}
+			/>
 		</div>
 	);
 };
