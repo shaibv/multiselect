@@ -127,7 +127,7 @@ const Multiselect = props => {
 	});
 
 	if (!data) return null;
-	return (
+	return ( 
 		<div onClick={() => setOpen(true)} ref={wrappRef}>
 			<div className={classes}>
 				<Tags clickHandler={clickHandler} items={checked} />
