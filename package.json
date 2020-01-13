@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "classnames": "^2.2.6",
     "htm": "^2.2.1",
     "micro": "^9.3.4",
     "nodemon": "^2.0.2",

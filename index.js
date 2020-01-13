@@ -11,7 +11,9 @@ const microHttps = fn =>
 	https.createServer(options, (req, res) => run(req, res, fn));
 
 const server = microHttps(async (req, res) => {
-     await handler(req, res);
+     await handler(req, res, {
+				public: "dist"
+			});
 }); 
 
 server.listen(PORT);

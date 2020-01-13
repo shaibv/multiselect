@@ -2,16 +2,37 @@ import register from "preact-custom-element";
 import { useState, useEffect, useRef } from "preact/hooks";
 import { h } from "preact";
 import "./styles.scss";
+import useClickOutside from "../../utils/useClickOutside";
+import { ArrowDown } from "../../utils/Icons";
+import classNames from "classnames";
 
-const Dropdown = ({ items, clickHandler, isOpen }) => {
-	useEffect(() => {}, [items]);
+const Dropdown = ({ items, clickHandler, isOpen, maxHeight }) => {
 
+	console.log(maxHeight);
+	const classes = classNames({
+		dropwdown: true,
+		open: isOpen,
+		maxHeight: maxHeight ? maxHeight : false
+	});
+
+	if (!items.length)
+		return (
+			<ul className={classes}>
+				<li>
+					<label>
+						<pre>No items found...</pre>
+					</label>
+				</li>
+			</ul>
+		);
 	return (
-		<ul className={isOpen ? "dropwdown open" : "dropwdown"}>
-			{items.map(x => (
+		<ul className={classes}>
+			{items.map((x, i) => (
 				<li className={x.checked ? "checked" : undefined} key={x.id}>
 					<label>
 						<input
+							tabIndex={i}
+							aria-checked={x.checked}
 							checked={x.checked}
 							id={x.id}
 							onChange={clickHandler}
@@ -48,9 +69,14 @@ const Multiselect = props => {
 	const [searchTerm, setSearchTerm] = useState("");
 	const [filteredData, setFilteredData] = useState([]);
 
+	const [inputState, setInputState] = useState({ focused: false });
+	const { focused } = inputState;
+
 	useEffect(() => {
 		props && props.data && setData(JSON.parse(props.data));
 	}, [props]);
+
+
 
 	useEffect(() => {
 		setFilteredData(unChecked);
@@ -88,36 +114,34 @@ const Multiselect = props => {
 		}
 		timeout = setTimeout(() => {
 			setSearchTerm(e.target.value);
-		}, 300);
+		}, 25);
 	};
 
-	const wrappRef = useRef();
+	const [wrappRef, isClickOutside] = useClickOutside();
 
-	const handleClickOutside = (event) => {
-		 if (wrappRef.current && !wrappRef.current.contains(event.target)) {
-			setOpen(false)
-			}
-	};
+	isClickOutside && setOpen(false);
 
-	 useEffect(() => {
-			document.addEventListener("mousedown", handleClickOutside);
-			return () => {
-				document.removeEventListener("mousedown", handleClickOutside);
-			};
-		});
+	const classes = classNames({
+		fakeInput: true,
+		focused: focused,
+	});
 
 	if (!data) return null;
 	return (
-		<div onClick={handleClickOutside} ref={wrappRef}>
-			<div className="fakeInput">
+		<div onClick={() => setOpen(true)} ref={wrappRef}>
+			<div className={classes}>
 				<Tags clickHandler={clickHandler} items={checked} />
+				<ArrowDown className="arrow" />
 				<input
 					onInput={termSearchHandler}
-					onClick={() => setOpen(true)}
 					type="text"
+					autoFocus={isOpen}
+					onFocus={e => setInputState({ focused: true })}
+					onBlur={e => setInputState({ focused: false })}
 				/>
 			</div>
 			<Dropdown
+				maxHeight={props.maxHeight}
 				isOpen={isOpen}
 				clickHandler={clickHandler}
 				items={filteredData}
