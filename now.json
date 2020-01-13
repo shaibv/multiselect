@@ -1,4 +1,5 @@
 {
 	"version": 2,
-	"name": "dynamo-components"
+	"name": "dynamo-components",
+    "builds": [{"src": "dist/**","use": "@now/static"}]
 }
