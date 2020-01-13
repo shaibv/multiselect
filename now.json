@@ -1,6 +1,5 @@
 {
 	"version": 2,
 	"name": "dynamo-components",
-	"builds": [{"src": "dist/**","use": "@now/static"},
-	{ "src": "index.js", "use": "@now/node" }]
+	"builds": [{"src": "dist/**","use": "@now/static"}]
 }
