@@ -20,7 +20,8 @@
     "preact": "^10.2.1",
     "preact-compat": "^3.19.0",
     "preact-custom-element": "^3.0.0",
-    "serve": "^11.3.0"
+    "serve": "^11.3.0",
+    "styled-jsx": "^3.2.4"
   },
   "devDependencies": {
     "@babel/core": "^7.8.0",

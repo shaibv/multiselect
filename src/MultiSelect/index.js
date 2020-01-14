@@ -8,7 +8,6 @@ import classNames from "classnames";
 
 const Dropdown = ({ items, clickHandler, isOpen, maxHeight }) => {
 
-	console.log(maxHeight);
 	const classes = classNames({
 		dropwdown: true,
 		open: isOpen,
@@ -69,10 +68,9 @@ const Multiselect = props => {
 	const [searchTerm, setSearchTerm] = useState("");
 	const [filteredData, setFilteredData] = useState([]);
 
-	const [inputState, setInputState] = useState({ focused: false });
-	const { focused } = inputState;
 
 	useEffect(() => {
+
 		props && props.data && setData(JSON.parse(props.data));
 	}, [props]);
 
@@ -89,12 +87,29 @@ const Multiselect = props => {
 		}
 	}, [data]);
 
-	const clickHandler = e => {
+
+
+
+
+		const event = new CustomEvent("stateUpdated", {
+			detail: checked,
+			bubbles: true
+		});
+
+
+
+	 const clickHandler = (e) => {
 		data
 			.filter(item => item.id === e.target.id)
 			.map(x => (x.checked = !x.checked));
 		setData([...data]);
+		e.target.dispatchEvent(event);
+
 	};
+
+
+
+
 
 	useEffect(() => {
 		if (searchTerm.length) {
@@ -121,24 +136,26 @@ const Multiselect = props => {
 
 	isClickOutside && setOpen(false);
 
+
+	const realInputRef = useRef();
+
+	useEffect(() => {
+		isOpen && realInputRef.current.focus();
+	}, [isOpen]);
+
 	const classes = classNames({
 		fakeInput: true,
-		focused: focused,
+		focused: isOpen ? true : false
 	});
 
+
 	if (!data) return null;
-	return ( 
-		<div onClick={() => setOpen(true)} ref={wrappRef}>
-			<div className={classes}>
+	return (
+		<div ref={wrappRef}>
+			<div onClick={() => setOpen(true)} className={classes}>
 				<Tags clickHandler={clickHandler} items={checked} />
-				<ArrowDown className="arrow" />
-				<input
-					onInput={termSearchHandler}
-					type="text"
-					autoFocus={isOpen}
-					onFocus={e => setInputState({ focused: true })}
-					onBlur={e => setInputState({ focused: false })}
-				/>
+				<input onInput={termSearchHandler} type="text" ref={realInputRef} />
+				<ArrowDown onClick={() => setOpen(false)} className="arrow" />
 			</div>
 			<Dropdown
 				maxHeight={props.maxHeight}
@@ -149,4 +166,8 @@ const Multiselect = props => {
 		</div>
 	);
 };
+
+
+
+
 register(Multiselect, "x-multiselect", ["data"]);

@@ -12,7 +12,7 @@ const microHttps = fn =>
 
 const server = microHttps(async (req, res) => {
      await handler(req, res, {
-				public: "dist"
+				// public: "dist"
 			});
 }); 
 
