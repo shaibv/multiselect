@@ -6,8 +6,7 @@ import useClickOutside from "../../utils/useClickOutside";
 import { ArrowDown } from "../../utils/Icons";
 import classNames from "classnames";
 
-const Dropdown = ({ items, clickHandler, isOpen, maxHeight }) => {
-
+const Dropdown = ({ items, addClickHandler, isOpen, maxHeight }) => {
 	const classes = classNames({
 		dropwdown: true,
 		open: isOpen,
@@ -34,7 +33,7 @@ const Dropdown = ({ items, clickHandler, isOpen, maxHeight }) => {
 							aria-checked={x.checked}
 							checked={x.checked}
 							id={x.id}
-							onChange={clickHandler}
+							onChange={addClickHandler}
 							type="checkbox"
 						/>
 						{x.name}
@@ -45,13 +44,13 @@ const Dropdown = ({ items, clickHandler, isOpen, maxHeight }) => {
 	);
 };
 
-const Tags = ({ items, clickHandler }) => {
+const Tags = ({ items, removeClickHandler }) => {
 	return (
 		<div className="tags">
 			{items.map(item => (
 				<span>
 					{item.name}{" "}
-					<i id={item.id} onClick={clickHandler}>
+					<i id={item.id} onClick={removeClickHandler}>
 						⨯
 					</i>
 				</span>
@@ -68,13 +67,9 @@ const Multiselect = props => {
 	const [searchTerm, setSearchTerm] = useState("");
 	const [filteredData, setFilteredData] = useState([]);
 
-
 	useEffect(() => {
-
 		props && props.data && setData(JSON.parse(props.data));
 	}, [props]);
-
-
 
 	useEffect(() => {
 		setFilteredData(unChecked);
@@ -87,29 +82,27 @@ const Multiselect = props => {
 		}
 	}, [data]);
 
+	const event = new CustomEvent("stateUpdated", {
+		detail: checked,
+		bubbles: true
+	});
 
-
-
-
-		const event = new CustomEvent("stateUpdated", {
-			detail: checked,
-			bubbles: true
-		});
-
-
-
-	 const clickHandler = (e) => {
-		data
-			.filter(item => item.id === e.target.id)
-			.map(x => (x.checked = !x.checked));
-		setData([...data]);
+	const addClickHandler = e => {
+		const ctx = unChecked.filter(item => item.id === e.target.id);
+		const ctx2 = unChecked.filter(item => item.id !== e.target.id);
+		setChecked([...checked, ...ctx]);
+		setUnChecked([...ctx2]);
 		e.target.dispatchEvent(event);
-
 	};
 
+	const removeClickHandler = e => {
+		const ctx = checked.filter(item => item.id !== e.target.id);
+		const ctx2 = checked.filter(item => item.id === e.target.id);
+		setChecked([...ctx]);
+		setUnChecked([...ctx2, ...unChecked]);
 
-
-
+		e.target.dispatchEvent(event);
+	};
 
 	useEffect(() => {
 		if (searchTerm.length) {
@@ -119,7 +112,8 @@ const Multiselect = props => {
 			setFilteredData(filter);
 		} else {
 			setFilteredData(unChecked);
-		}
+		} 
+		return () => searchTerm
 	}, [searchTerm]);
 
 	let timeout;
@@ -136,7 +130,6 @@ const Multiselect = props => {
 
 	isClickOutside && setOpen(false);
 
-
 	const realInputRef = useRef();
 
 	useEffect(() => {
@@ -148,26 +141,27 @@ const Multiselect = props => {
 		focused: isOpen ? true : false
 	});
 
+	const placeholder = props.placeholder ? props.placeholder : 'Select Value'
 
 	if (!data) return null;
 	return (
 		<div ref={wrappRef}>
-			<div onClick={() => setOpen(true)} className={classes}>
-				<Tags clickHandler={clickHandler} items={checked} />
-				<input onInput={termSearchHandler} type="text" ref={realInputRef} />
-				<ArrowDown onClick={() => setOpen(false)} className="arrow" />
+			<div className={classes}>
+				<div onClick={() => setOpen(true)} className="content">
+					<Tags removeClickHandler={removeClickHandler} items={checked} />
+					<input placeholder={placeholder} onInput={termSearchHandler} type="text" ref={realInputRef} />
+				</div>
+				<ArrowDown onClick={() => setOpen(!isOpen)} className="arrow" />
 			</div>
 			<Dropdown
 				maxHeight={props.maxHeight}
 				isOpen={isOpen}
-				clickHandler={clickHandler}
+				addClickHandler={addClickHandler}
 				items={filteredData}
+				
 			/>
 		</div>
 	);
 };
-
-
-
 
 register(Multiselect, "x-multiselect", ["data"]);
