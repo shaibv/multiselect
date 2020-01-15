@@ -10,12 +10,13 @@
 </head>
 <body>
     <h1>Hey</h1>
-    <x-tabs/></x-tabs> 
+    <x-tabs id='x-tabs' /></x-tabs> 
         <x-multiselect id='x-multiselect' maxHeight="200" placeholder="Select Value"></x-multiselect>
 
     
 </body> 
 <script>
+    const tabsItems = ['All', 'Active', 'Future', 'Inactive'];
 
     const data = [
         {
@@ -76,7 +77,10 @@
     ];
 
     const multiSelect = document.getElementById('x-multiselect');
+    const tabs = document.getElementById('x-tabs');
     multiSelect.setAttribute('data', JSON.stringify(data))
+    tabs.setAttribute('activetab', 'All') 
+    tabs.setAttribute('data', JSON.stringify(tabsItems))
  
    
 </script>

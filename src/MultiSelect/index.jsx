@@ -5,8 +5,8 @@
 import register from 'preact-custom-element';
 import { useState, useEffect, useRef } from 'preact/hooks';
 import { h } from 'preact';
-import './styles.scss';
 import classNames from 'classnames';
+import './styles.scss';
 import useClickOutside from '../../utils/useClickOutside';
 import { ArrowDown } from '../../utils/Icons';
 import useKeyPress from '../../utils/useKeyPress';
@@ -65,7 +65,7 @@ const Dropdown = ({
 const Tags = ({ items, removeClickHandler }) => (
   <div className="tags">
     {items.map((item) => (
-      <span>
+      <span key={item.id}>
         {item.name}
         {' '}
         <i
@@ -143,8 +143,8 @@ const Multiselect = (props) => {
     if (backSpaceDelete && !searchTerm.length) {
       const e = { target: checked[checked.length - 1] };
       removeClickHandler(e);
-      return () => backSpaceDelete;
     }
+    return () => backSpaceDelete;
   }, [backSpaceDelete]);
 
   useEffect(() => {
@@ -201,6 +201,7 @@ const Multiselect = (props) => {
         <ArrowDown onClick={() => setOpen(!isOpen)} className="arrow" />
       </div>
       <Dropdown
+        maxHeight="300"
         isOpen={isOpen}
         addClickHandler={addClickHandler}
         items={filteredData}
