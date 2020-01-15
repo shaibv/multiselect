@@ -26,9 +26,14 @@ html {
 }
 
 .dropwdown li {
-	&.checked {
-		color: blue;
-	}
+
+
+    &:focus {
+        outline: none;
+		cursor: pointer;
+		background: $B40;
+    }
+    
 
 	&:hover {
 		cursor: pointer;
@@ -44,8 +49,11 @@ html {
 	flex-direction: row;
 	align-items: center;
 	width: 100%;
-
-	cursor: pointer;
+    cursor: pointer;
+    
+    &.noItems {
+        color: $D50;
+    }
 
 	& input[type="checkbox"] {
 		height: 0;

@@ -5,20 +5,28 @@ import "./styles.scss";
 import useClickOutside from "../../utils/useClickOutside";
 import { ArrowDown } from "../../utils/Icons";
 import classNames from "classnames";
+import useKeyPress from "../../utils/useKeyPress";
 
 const Dropdown = ({ items, addClickHandler, isOpen, maxHeight }) => {
+
+	
 	const classes = classNames({
 		dropwdown: true,
 		open: isOpen,
-		maxHeight: maxHeight ? maxHeight : false
+		maxHeight: maxHeight ? maxHeight : false,
 	});
+	
+
+	 const checkboxRef = useRef([]);
+
+
 
 	if (!items.length)
 		return (
 			<ul className={classes}>
 				<li>
-					<label>
-						<pre>No items found...</pre>
+					<label className="noItems">
+						No items found...
 					</label>
 				</li>
 			</ul>
@@ -26,13 +34,24 @@ const Dropdown = ({ items, addClickHandler, isOpen, maxHeight }) => {
 	return (
 		<ul className={classes}>
 			{items.map((x, i) => (
-				<li className={x.checked ? "checked" : undefined} key={x.id}>
+				<li
+					tabIndex={0}
+					key={x.id}
+					id={x.id}
+					checked={x.checked}
+					onKeyPress={e => {
+						if (e.key === "Enter") {
+							checkboxRef.current[i].checked = true;
+							addClickHandler(e);
+						}
+					}}
+				>
 					<label>
 						<input
-							tabIndex={i}
-							aria-checked={x.checked}
-							checked={x.checked}
+							ref={el => (checkboxRef.current[i] = el)}
+							key={x.checked}
 							id={x.id}
+							checked={x.checked}
 							onChange={addClickHandler}
 							type="checkbox"
 						/>
@@ -92,6 +111,7 @@ const Multiselect = props => {
 		const ctx2 = unChecked.filter(item => item.id !== e.target.id);
 		setChecked([...checked, ...ctx]);
 		setUnChecked([...ctx2]);
+		realInputRef.current.focus();
 		e.target.dispatchEvent(event);
 	};
 
@@ -100,7 +120,7 @@ const Multiselect = props => {
 		const ctx2 = checked.filter(item => item.id === e.target.id);
 		setChecked([...ctx]);
 		setUnChecked([...ctx2, ...unChecked]);
-
+		realInputRef.current.focus();
 		e.target.dispatchEvent(event);
 	};
 
@@ -154,6 +174,7 @@ const Multiselect = props => {
 				<ArrowDown onClick={() => setOpen(!isOpen)} className="arrow" />
 			</div>
 			<Dropdown
+				
 				maxHeight={props.maxHeight}
 				isOpen={isOpen}
 				addClickHandler={addClickHandler}
