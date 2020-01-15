@@ -1,5 +1,6 @@
 @import "../../utils/colors.scss";
 @import "../../utils/fonts.scss";
+@import "../../utils/motion.scss";
 
 .tabs {
 		list-style: none;
@@ -27,6 +28,7 @@
 			padding: 0;
 			
 			&:hover {
+				transition: all 230ms $easeOutExpo;
 				color: $B10;
 				cursor: pointer;
 			}
