@@ -1,9 +1,9 @@
-const template = document.createElement("template");
+const template = document.createElement('template');
 
-const css = /*css*/ `
-	.container {
-		display: flex;
-		flex-direction: row;
+const css = /* css */ `
+.container {
+display: flex;
+flex-direction: row;
 		list-style: none;
 		padding: 0;
 		margin: 0;
@@ -29,7 +29,7 @@ const css = /*css*/ `
 		color: #3899ec;
 	}
 `;
-template.innerHTML = /*html*/ `
+template.innerHTML = /* html */ `
 <style>
 ${css}
   </style>
@@ -42,24 +42,24 @@ ${css}
 `;
 
 const Tabs = class extends HTMLElement {
-	constructor() {
-		super();
-		this._shadow = this.attachShadow({ mode: "open" });
-		this._shadow.appendChild(template.content.cloneNode(true));
-		this.state = {
-			activeTab: null
-		};
-		this.tabs = this._shadow.querySelectorAll(".tab");
-	}
+  constructor() {
+    super();
+    this._shadow = this.attachShadow({ mode: 'open' });
+    this._shadow.appendChild(template.content.cloneNode(true));
+    this.state = {
+      activeTab: null,
+    };
+    this.tabs = this._shadow.querySelectorAll('.tab');
+  }
 
-	connectedCallback() {
-		this.tabs.forEach(tab => {
-			tab.onclick = () => {
-				this.tabs.forEach(x => x.removeAttribute("active"));
-				tab.setAttribute("active", true);
-				this.state.activeTab = tab.innerHTML;
-			};
-		});
-	}
+  connectedCallback() {
+    this.tabs.forEach((tab) => {
+      tab.onclick = () => {
+        this.tabs.forEach((x) => x.removeAttribute('active'));
+        tab.setAttribute('active', true);
+        this.state.activeTab = tab.innerHTML;
+      };
+    });
+  }
 };
-customElements.define("x-tabs", Tabs);
+customElements.define('x-tabs', Tabs);
