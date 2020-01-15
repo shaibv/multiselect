@@ -2,9 +2,9 @@
 const glob = require('glob');
 
 module.exports = {
-  entry: glob.sync('./src/**/*.jsx').reduce(
+  entry: glob.sync('./src/**/*.{js,jsx,tsx}').reduce(
     (entries, entry) => Object.assign(entries, {
-      [entry.replace('./src/', '').replace('.jsx', '')]: entry,
+      [entry.replace('./src/', '').replace(/\.(js|jsx|tsx)$/, '')]: entry,
     }),
     {},
   ),
@@ -23,6 +23,11 @@ module.exports = {
 
   module: {
     rules: [
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
@@ -57,8 +62,9 @@ module.exports = {
       },
     ],
   },
+
   resolve: {
-    extensions: ['*', '.js', '.jsx'],
+    extensions: ['*', '.js', '.jsx', '.tsx', '.ts'],
     alias: {
       react: 'preact-compat',
       'react-dom': 'preact-compat',

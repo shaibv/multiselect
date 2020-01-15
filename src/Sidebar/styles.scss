@@ -1,0 +1,12 @@
+@import "../../utils/colors.scss";
+@import "../../utils/fonts.scss";
+@import "../../utils/motion.scss";
+
+
+.sidebar {
+    height: 100vh;
+    background:$D10;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
