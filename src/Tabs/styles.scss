@@ -9,6 +9,9 @@
 		padding: 0;
 		margin: 0;
 		height: 60px;
+		position: relative;
+	font-family: $FontRoman;
+	box-sizing: border-box;
 	
 	& li {
 		height: 100%;

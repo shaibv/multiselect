@@ -2,14 +2,12 @@
 @import "../../utils/fonts.scss";
 @import "../../utils/motion.scss";
 
-*,
-html {
-	font-family: $FontRoman;
-	box-sizing: border-box;
-}
+
 
 .wrapp {
 	position: relative;
+	font-family: $FontRoman;
+	box-sizing: border-box;
 }
 
 .dropwdown {
