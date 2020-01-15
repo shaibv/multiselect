@@ -11,7 +11,7 @@ const Dropdown = ({ items, addClickHandler, isOpen, maxHeight }) => {
 	const classes = classNames({
 		dropwdown: true,
 		open: isOpen,
-		maxHeight: maxHeight ? maxHeight : false
+		maxHeight: maxHeight ? maxHeight : false 
 	});
 
 	const checkboxRef = useRef([]);
