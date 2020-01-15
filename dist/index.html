@@ -88,11 +88,47 @@
     const tabsItems = ['All', 'Active', 'Future', 'Inactive'];
 
 
+    const sidebarItems = [
+        {
+            section: {
+                label: 'Product Catalog',
+                items: [
+                    {label: 'Features'},
+                    {label: 'Products'}
+                ]
+        },
+           section: {
+                label: 'Coupons',
+                items: [
+                    {label: 'Static Coupons'},
+                    {label: 'Dynamic Coupons'}
+                ]
+        },
+          section: {
+                label: 'Offering',
+                items: [
+                    {label: 'Dealer'},
+                ]
+        },
+          section: {
+                label: '',
+                items: [
+                    {label: 'System Settings'},
+                ]
+        }
+    }
+    ]
+
+
     const multiSelect = document.getElementById('x-multiselect');
     const tabs = document.getElementById('x-tabs');
+    const sidebar = document.getElementById('x-sidebar');
+
     multiSelect.setAttribute('data', JSON.stringify(data))
     tabs.setAttribute('activetab', 'All') 
     tabs.setAttribute('data', JSON.stringify(tabsItems))
+
+    sidebar.setAttribute('data', JSON.stringify(sidebarItems))
  
    
 </script>

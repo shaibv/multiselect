@@ -5,6 +5,7 @@ import register from 'preact-custom-element';
 import classNames from 'classnames';
 import "./styles.scss"
 import { FC, ReactChildren } from 'react';
+import LogoIcon from "./LogoIcon";
 
 type MenuItem = {
     id?: string,
@@ -15,9 +16,17 @@ interface Props {
     data: MenuItem[]
     activemenuitem: string,
 }
+
+
+const Logo = () => {
+    return (
+        <div className="logo"><LogoIcon/></div>
+    )
+}
 const Sidebar: FunctionComponent<Props> = ({ data, activemenuitem}) => {
     return (
         <div className='sidebar'>
+            <Logo/>
             <h2>Wow  im sidebar!</h2>
         </div>
     );
