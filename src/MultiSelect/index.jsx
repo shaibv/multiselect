@@ -187,7 +187,7 @@ const Multiselect = (props) => {
 
   if (!data) return null;
   return (
-    <div ref={wrappRef}>
+    <div className="wrapp" ref={wrappRef}>
       <div className={classes}>
         <div tabIndex={-1} onKeyPress={() => setOpen(true)} role="menuitem" onClick={() => setOpen(true)} className="content">
           <Tags removeClickHandler={removeClickHandler} items={checked} />
