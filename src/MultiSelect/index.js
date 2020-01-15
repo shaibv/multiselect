@@ -8,26 +8,19 @@ import classNames from "classnames";
 import useKeyPress from "../../utils/useKeyPress";
 
 const Dropdown = ({ items, addClickHandler, isOpen, maxHeight }) => {
-
-	
 	const classes = classNames({
 		dropwdown: true,
 		open: isOpen,
-		maxHeight: maxHeight ? maxHeight : false,
+		maxHeight: maxHeight ? maxHeight : false
 	});
-	
 
-	 const checkboxRef = useRef([]);
-
-
+	const checkboxRef = useRef([]);
 
 	if (!items.length)
 		return (
 			<ul className={classes}>
 				<li>
-					<label className="noItems">
-						No items found...
-					</label>
+					<label className="noItems">No items found...</label>
 				</li>
 			</ul>
 		);
@@ -86,6 +79,9 @@ const Multiselect = props => {
 	const [searchTerm, setSearchTerm] = useState("");
 	const [filteredData, setFilteredData] = useState([]);
 
+	const backSpaceDelete = useKeyPress("backspace");
+	console.log(backSpaceDelete);
+
 	useEffect(() => {
 		props && props.data && setData(JSON.parse(props.data));
 	}, [props]);
@@ -106,13 +102,16 @@ const Multiselect = props => {
 		bubbles: true
 	});
 
+	useEffect(() => {
+		if (realInputRef.current) realInputRef.current.dispatchEvent(event);
+	}, [checked]);
+
 	const addClickHandler = e => {
 		const ctx = unChecked.filter(item => item.id === e.target.id);
 		const ctx2 = unChecked.filter(item => item.id !== e.target.id);
 		setChecked([...checked, ...ctx]);
 		setUnChecked([...ctx2]);
 		realInputRef.current.focus();
-		e.target.dispatchEvent(event);
 	};
 
 	const removeClickHandler = e => {
@@ -121,8 +120,15 @@ const Multiselect = props => {
 		setChecked([...ctx]);
 		setUnChecked([...ctx2, ...unChecked]);
 		realInputRef.current.focus();
-		e.target.dispatchEvent(event);
 	};
+
+	useEffect(() => {
+		if (backSpaceDelete && !searchTerm.length) {
+			const e = { target: checked[checked.length - 1] };
+			removeClickHandler(e);
+			return () => backSpaceDelete;
+		}
+	}, [backSpaceDelete]);
 
 	useEffect(() => {
 		if (searchTerm.length) {
@@ -132,8 +138,8 @@ const Multiselect = props => {
 			setFilteredData(filter);
 		} else {
 			setFilteredData(unChecked);
-		} 
-		return () => searchTerm
+		}
+		return () => searchTerm;
 	}, [searchTerm]);
 
 	let timeout;
@@ -161,7 +167,7 @@ const Multiselect = props => {
 		focused: isOpen ? true : false
 	});
 
-	const placeholder = props.placeholder ? props.placeholder : 'Select Value'
+	const placeholder = props.placeholder ? props.placeholder : "Select Value";
 
 	if (!data) return null;
 	return (
@@ -169,17 +175,20 @@ const Multiselect = props => {
 			<div className={classes}>
 				<div onClick={() => setOpen(true)} className="content">
 					<Tags removeClickHandler={removeClickHandler} items={checked} />
-					<input placeholder={placeholder} onInput={termSearchHandler} type="text" ref={realInputRef} />
+					<input
+						placeholder={placeholder}
+						onInput={termSearchHandler}
+						type="text"
+						ref={realInputRef}
+					/>
 				</div>
 				<ArrowDown onClick={() => setOpen(!isOpen)} className="arrow" />
 			</div>
 			<Dropdown
-				
 				maxHeight={props.maxHeight}
 				isOpen={isOpen}
 				addClickHandler={addClickHandler}
 				items={filteredData}
-				
 			/>
 		</div>
 	);
