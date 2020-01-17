@@ -1,28 +1,36 @@
 /* eslint-disable no-console */
-import { h } from 'preact';
+import { h, FunctionComponent } from 'preact';
 import { useEffect, useState, useRef } from 'preact/hooks';
 import register from 'preact-custom-element';
-import classNames from 'classnames';
-import './styles.scss';
+import classNames from 'classnames/bind';
+import s from './styles.scss';
+
+
+let cx = classNames.bind(s as any);
 
 
 const Tab = ({ item, isActive, clickHandler }) => {
-  const classes = classNames({
+  const classes = cx({
     active: isActive,
   });
 
   return <li className={classes}><button onClick={() => clickHandler(item)} type="button">{item.label}</button></li>;
 };
 
+type Tab = {
+  label: string,
+  id?: string
+}
+interface Props  {
+  data: string,
+  activetab: String
+};
 
-const Skeleton = () => new Array(3).fill().map((s, index) => ({ id: index, label: 'wow' }));
+const Tabs: FunctionComponent<Props> = ({ data, activetab }) => {
+  const [dataState, setData] = useState<Tab[]>(null);
+  const [active, setActive] = useState<any>({});
 
-
-const Tabs = ({ data, activetab }) => {
-  const [dataState, setData] = useState(null);
-  const [active, setActive] = useState('');
-
-  const componentRef = useRef();
+  const componentRef = useRef<HTMLUListElement>();
 
   useEffect(() => {
     if (data) {
@@ -34,8 +42,9 @@ const Tabs = ({ data, activetab }) => {
   useEffect(() => {
     if (activetab && dataState) {
       console.log(dataState, activetab);
-      setActive(dataState.filter((tab) => tab.id === activetab.toLowerCase())
+      setActive(dataState.filter((Tab) => Tab.id === activetab.toLowerCase())
         .reduce((acc, item) => {
+          //@ts-ignore
           const flatten = acc.concat(item);
           return flatten;
         }));
@@ -58,7 +67,7 @@ const Tabs = ({ data, activetab }) => {
 
   if (!data) return null;
   return (
-    <ul className="tabs" ref={componentRef}>
+    <ul className={s.tabs} ref={componentRef}>
       {dataState.map((tab) => (
         <Tab
           item={tab}

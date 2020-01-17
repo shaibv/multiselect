@@ -38,6 +38,7 @@
 		}
 		
 		&.active button {
+			color: $B10;
 			box-shadow: inset 0 -2px 0 0 $B10;
 		}
 	}

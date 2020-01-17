@@ -65,7 +65,7 @@ const Dropdown = ({
 };
 
 const Tags = ({ items, removeClickHandler }) => (
-  <div className="tags">
+  <div className={s.tags}>
     {items.map((item) => (
       <span key={item.id}>
         {item.name}
