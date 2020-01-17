@@ -14,8 +14,7 @@ $bg-active: #393f59;
 	// position: fixed;
 	// left: 0;
 	// top: 0;
-    color: $D80;
-    
+	color: $D80;
 
 	.logo {
 		padding: 0 24px;
@@ -56,25 +55,32 @@ $bg-active: #393f59;
 		margin: 0;
 
 		& li {
-			padding: 0 24px;
-			height: 36px;
 			display: flex;
-			align-items: center;
-			font-size: 14px;
+			// align-items: center;
 
-			&:hover {
-				background: $bg-hover;
-                outline: none;
-                cursor: pointer;
-			}
-			&:focus {
-				background: $bg-hover;
-				outline: none;
-			}
-			&.active {
-                outline: none;
-                color: $B10;
-				background: $bg-active;
+			& button {
+			height: 36px;
+				padding: 0 24px;
+				width: 100%;
+				font-size: 14px;
+				background: none;
+				text-align: left;
+				color: $D80;
+				border: none;
+				&:hover {
+					background: $bg-hover;
+					outline: none;
+					cursor: pointer;
+				}
+				&:focus {
+					background: $bg-hover;
+					outline: none;
+				}
+				&.active {
+					outline: none;
+					color: $B10;
+					background: $bg-active;
+				}
 			}
 		}
 	}

@@ -2,6 +2,7 @@
 import { h, FunctionComponent } from 'preact';
 import { useEffect, useState, useRef } from 'preact/hooks';
 import register from 'preact-custom-element';
+import { MouseEventHandler, MouseEvent } from 'react';
 import s from './styles.scss';
 import LogoIcon from './LogoIcon';
 
@@ -24,19 +25,25 @@ const Logo = () => (
   <div className={s.logo}><LogoIcon /></div>
 );
 
-const Section: FunctionComponent<{ section: Section, isActive: MenuItem}> = (
-  { section, isActive },
+const Section: FunctionComponent<{ section: Section, isActive: MenuItem, clickHandler: any}> = (
+  { section, isActive, clickHandler },
 ) => (
   <div className={s.section}>
     {section.label && <h5>{section.label}</h5>}
     <ul>
       {section.items.map((item, index) => (
         <li
-          className={isActive && isActive.label === item.label ? s.active : undefined}
-          tabIndex={-index}
           key={item.label}
         >
-          {item.label}
+          <button
+            tabIndex={-index}
+            className={isActive && isActive.label === item.label ? s.active : undefined}
+            type="button"
+            onClick={() => clickHandler(item)}
+            onKeyPress={() => clickHandler(item)}
+          >
+            {item.label}
+          </button>
         </li>
       ))}
     </ul>
@@ -54,6 +61,7 @@ const Sidebar: FunctionComponent<Props> = ({ data, activemenuitem }) => {
     bubbles: true,
   });
 
+  const clickHandler = (item) => setActive(item);
 
   useEffect(() => {
     if (data) {
@@ -75,6 +83,7 @@ const Sidebar: FunctionComponent<Props> = ({ data, activemenuitem }) => {
     if (componentRef.current) componentRef.current.dispatchEvent(clickEvent);
   }, [active]);
 
+
   if (!dataState) return null;
   return (
     <div ref={componentRef} className={s.sidebar}>
@@ -84,6 +93,7 @@ const Sidebar: FunctionComponent<Props> = ({ data, activemenuitem }) => {
           key={section.label}
           section={section}
           isActive={active}
+          clickHandler={clickHandler}
         />
       ))}
     </div>
