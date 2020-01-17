@@ -6,7 +6,7 @@ import classNames from 'classnames/bind';
 import s from './styles.scss';
 
 
-let cx = classNames.bind(s as any);
+const cx = classNames.bind(s as any);
 
 
 const Tab = ({ item, isActive, clickHandler }) => {
@@ -20,11 +20,11 @@ const Tab = ({ item, isActive, clickHandler }) => {
 type Tab = {
   label: string,
   id?: string
-}
-interface Props  {
+};
+interface Props {
   data: string,
   activetab: String
-};
+}
 
 const Tabs: FunctionComponent<Props> = ({ data, activetab }) => {
   const [dataState, setData] = useState<Tab[]>(null);
@@ -41,10 +41,9 @@ const Tabs: FunctionComponent<Props> = ({ data, activetab }) => {
 
   useEffect(() => {
     if (activetab && dataState) {
-      console.log(dataState, activetab);
-      setActive(dataState.filter((Tab) => Tab.id === activetab.toLowerCase())
+      setActive(dataState.filter((tab) => tab.id === activetab.toLowerCase())
         .reduce((acc, item) => {
-          //@ts-ignore
+          // @ts-ignore
           const flatten = acc.concat(item);
           return flatten;
         }));
@@ -65,7 +64,7 @@ const Tabs: FunctionComponent<Props> = ({ data, activetab }) => {
     if (componentRef.current) componentRef.current.dispatchEvent(clickEvent);
   }, [active]);
 
-  if (!data) return null;
+  if (!dataState) return null;
   return (
     <ul className={s.tabs} ref={componentRef}>
       {dataState.map((tab) => (

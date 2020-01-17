@@ -21,7 +21,7 @@
     <h1>Componenets Playground</h1>
     <x-tabs id='x-tabs' /></x-tabs> 
         <x-multiselect id='x-multiselect' maxHeight="200" placeholder="Select Value"></x-multiselect>
-        <!-- <x-sidebar id='x-multiselect' maxHeight="200" placeholder="Select Value"></x-sidebar> -->
+        <x-sidebar id='x-sidebar'></x-sidebar>
 
     
 </body> 
@@ -90,33 +90,32 @@
 
     const sidebarItems = [
         {
-            section: {
                 label: 'Product Catalog',
                 items: [
                     {label: 'Features'},
                     {label: 'Products'}
                 ]
-        },
-           section: {
+    },
+    {
                 label: 'Coupons',
                 items: [
                     {label: 'Static Coupons'},
                     {label: 'Dynamic Coupons'}
                 ]
-        },
-          section: {
+    },
+    {
                 label: 'Offering',
                 items: [
                     {label: 'Dealer'},
                 ]
-        },
-          section: {
+    },
+    {
                 label: '',
                 items: [
                     {label: 'System Settings'},
                 ]
-        }
     }
+
     ]
 
 
@@ -124,11 +123,14 @@
     const tabs = document.getElementById('x-tabs');
     const sidebar = document.getElementById('x-sidebar');
 
-    multiSelect.setAttribute('data', JSON.stringify(data))
-    tabs.setAttribute('activetab', 'All')  
-    tabs.setAttribute('data', JSON.stringify(tabsItems))
+    multiSelect.setAttribute('data', JSON.stringify(data));
 
-    // sidebar.setAttribute('data', JSON.stringify(sidebarItems))
+    tabs.setAttribute('activetab', 'All');
+    tabs.setAttribute('data', JSON.stringify(tabsItems));
+
+
+    sidebar.setAttribute('data', JSON.stringify(sidebarItems))
+    sidebar.setAttribute('activemenuitem', 'Static Coupons')
  
    
 </script>

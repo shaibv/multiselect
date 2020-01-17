@@ -69,8 +69,10 @@ interface CssExports {
   'Y40': string;
   'Y50': string;
   'Y60': string;
+  'active': string;
   'fadeInAndScale': string;
   'logo': string;
+  'section': string;
   'sidebar': string;
 }
 export const cssExports: CssExports;
