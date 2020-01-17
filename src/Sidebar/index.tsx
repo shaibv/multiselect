@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { h, FunctionComponent } from 'preact';
-import { useEffect, useState } from 'preact/hooks';
+import { useEffect, useState, useRef } from 'preact/hooks';
 import register from 'preact-custom-element';
 import s from './styles.scss';
 import LogoIcon from './LogoIcon';
@@ -47,6 +47,13 @@ const Sidebar: FunctionComponent<Props> = ({ data, activemenuitem }) => {
   const [dataState, setData] = useState<Section[]>([]);
   const [active, setActive] = useState<MenuItem | null>(null);
 
+  const componentRef = useRef<HTMLDivElement>();
+
+  const clickEvent = new CustomEvent('menuItemClicked', {
+    detail: active,
+    bubbles: true,
+  });
+
 
   useEffect(() => {
     if (data) {
@@ -65,12 +72,12 @@ const Sidebar: FunctionComponent<Props> = ({ data, activemenuitem }) => {
   }, [data, activemenuitem]);
 
   useEffect(() => {
-    console.log(active);
+    if (componentRef.current) componentRef.current.dispatchEvent(clickEvent);
   }, [active]);
 
   if (!dataState) return null;
   return (
-    <div className={s.sidebar}>
+    <div ref={componentRef} className={s.sidebar}>
       <Logo />
       {dataState.map((section) => (
         <Section
