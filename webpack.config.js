@@ -48,18 +48,29 @@ module.exports = {
         },
       },
       {
-        test: /\.s[ac]ss$/i,
+        test: /\.(css|scss)$/,
         use: [
-          'style-loader',
-          {
-            loader: 'css-loader',
-            options: {
-              modules: false,
-            },
-          },
-          'sass-loader',
+          { loader: 'style-loader' },
+          { loader: 'css-modules-typescript-loader' },
+          { loader: 'css-loader', options: { modules: true } },
+          { loader: 'sass-loader' },
         ],
       },
+      // {
+      //   test: /\.s?css$/,
+      //   use: [
+      //     'typings-for-css-modules-loader?modules&sass',
+      //     // 'style-loader',
+      //     // {
+      //     //   loader: 'css-loader',
+      //     //   options: {
+      //     //     modules: true,
+      //     //     sourceMap: true,
+      //     //   },
+      //     // },
+      //     // 'sass-loader',
+      //   ],
+      // },
     ],
   },
 

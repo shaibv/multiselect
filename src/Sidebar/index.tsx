@@ -3,7 +3,7 @@ import { h, FunctionComponent } from 'preact';
 import { useEffect, useState, useRef } from 'preact/hooks';
 import register from 'preact-custom-element';
 import classNames from 'classnames';
-import "./styles.scss"
+import s from "./styles.scss"
 import { FC, ReactChildren } from 'react';
 import LogoIcon from "./LogoIcon";
 
@@ -20,12 +20,12 @@ interface Props {
 
 const Logo = () => {
     return (
-        <div className="logo"><LogoIcon/></div>
+        <div className={s.logo}><LogoIcon/></div>
     )
 }
 const Sidebar: FunctionComponent<Props> = ({ data, activemenuitem}) => {
     return (
-        <div className='sidebar'>
+        <div className={s.sidebar}>
             <Logo/>
             <h2>Wow  im sidebar!</h2>
         </div>

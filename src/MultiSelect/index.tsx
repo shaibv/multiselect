@@ -5,16 +5,18 @@
 import register from 'preact-custom-element';
 import { useState, useEffect, useRef } from 'preact/hooks';
 import { h } from 'preact';
-import classNames from 'classnames';
-import './styles.scss';
+import classNames from 'classnames/bind';
+import s from './styles.scss';
 import useClickOutside from '../../utils/useClickOutside';
 import { ArrowDown } from '../../utils/Icons';
 import useKeyPress from '../../utils/useKeyPress';
 
+const cx = classNames.bind(s as any);
+
 const Dropdown = ({
   items, addClickHandler, isOpen, maxHeight,
 }) => {
-  const classes = classNames({
+  const classes = cx({
     dropwdown: true,
     open: isOpen,
     maxHeight: maxHeight || false,
@@ -92,7 +94,7 @@ const Multiselect = (props) => {
 
   const backSpaceDelete = useKeyPress('backspace');
 
-  const realInputRef = useRef();
+  const realInputRef = useRef<HTMLInputElement>();
 
   const { placeholder } = props;
 
@@ -178,7 +180,7 @@ const Multiselect = (props) => {
     if (isOpen) realInputRef.current.focus();
   }, [isOpen]);
 
-  const classes = classNames({
+  const classes = cx({
     fakeInput: true,
     focused: !!isOpen,
   });
@@ -187,9 +189,10 @@ const Multiselect = (props) => {
 
   if (!data) return null;
   return (
-    <div className="wrapp" ref={wrappRef}>
+    //@ts-ignore 
+    <div className={s.wrapp} ref={wrappRef}>
       <div className={classes}>
-        <div tabIndex={-1} onKeyPress={() => setOpen(true)} role="menuitem" onClick={() => setOpen(true)} className="content">
+        <div tabIndex={-1} onKeyPress={() => setOpen(true)} role="menuitem" onClick={() => setOpen(true)} className={s.content}>
           <Tags removeClickHandler={removeClickHandler} items={checked} />
           <input
             placeholder={inputPlaceHolder}
@@ -198,7 +201,7 @@ const Multiselect = (props) => {
             ref={realInputRef}
           />
         </div>
-        <ArrowDown onClick={() => setOpen(!isOpen)} className="arrow" />
+        <ArrowDown onClick={() => setOpen(!isOpen)} className={s.arrow} />
       </div>
       <Dropdown
         maxHeight="300"
