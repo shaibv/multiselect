@@ -14,7 +14,8 @@ $bg-active: #393f59;
 	// position: fixed;
 	// left: 0;
 	// top: 0;
-	color: $D80;
+    color: $D80;
+    @include FontRoman;
 
 	.logo {
 		padding: 0 24px;
@@ -40,7 +41,7 @@ $bg-active: #393f59;
 	& h5 {
 		font-size: 12px;
 		font-weight: 500;
-
+        
 		color: $D40;
 		height: 36px;
 		display: flex;
@@ -59,6 +60,8 @@ $bg-active: #393f59;
 			// align-items: center;
 
 			& button {
+    @include FontRoman;
+
 			height: 36px;
 				padding: 0 24px;
 				width: 100%;

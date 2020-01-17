@@ -7,6 +7,8 @@ $FontRoman: "HelveticaNeueW01-55Roma", "HelveticaNeueW02-55Roma", "HelveticaNeue
 $FontMedium: "HelveticaNeueW01-65Medi", "HelveticaNeueW02-65Medi", "HelveticaNeueW10-65Medi", $fonts-fallback;
 $FontBold: "HelveticaNeueW01-75Bold", "HelveticaNeueW02-75Bold", "HelveticaNeueW10-75Bold", $fonts-fallback;
 
+@import url("https://static.parastorage.com/services/third-party/fonts/Helvetica/fontFace.css");
+
 @mixin FontUltraThin() {
   font-family: $FontUltraThin; /* IE11 */
   font-family: var(--wsr-font-family, $FontUltraThin);
