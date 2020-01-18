@@ -5,7 +5,6 @@
     "target": "es2017",
     "moduleResolution": "node",
     "noImplicitAny": false,
-    // "noEmit": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "strict": false,
@@ -19,7 +18,7 @@
       "esnext"
     ],
     "jsx": "react",
-     "jsxFactory": "h",
+    "jsxFactory": "h",
     "allowJs": true
   },
    "exclude": [
