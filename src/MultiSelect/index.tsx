@@ -189,7 +189,7 @@ const Multiselect = (props) => {
 
   if (!data) return null;
   return (
-    //@ts-ignore 
+    // @ts-ignore
     <div className={s.wrapp} ref={wrappRef}>
       <div className={classes}>
         <div tabIndex={-1} onKeyPress={() => setOpen(true)} role="menuitem" onClick={() => setOpen(true)} className={s.content}>
