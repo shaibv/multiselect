@@ -75,7 +75,6 @@ interface CssExports {
   'fadeInAndScale': string;
   'fakeInput': string;
   'focused': string;
-  'noItems': string;
   'open': string;
   'tags': string;
   'wrapp': string;

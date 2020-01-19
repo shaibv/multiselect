@@ -8,15 +8,12 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "strict": true,
+    "strictNullChecks":false, 
     "esModuleInterop": true,
     "isolatedModules": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
-      "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+  
     "jsx": "react",
     "jsxFactory": "h",
     "allowJs": true
@@ -25,4 +22,5 @@
     "dist",
     "node_modules"
   ],
+
 }

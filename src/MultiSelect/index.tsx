@@ -1,7 +1,5 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-/* eslint-disable react/prop-types */
 import register from 'preact-custom-element';
 import { useState, useEffect, useRef } from 'preact/hooks';
 import { h } from 'preact';
@@ -22,13 +20,13 @@ const Dropdown = ({
     maxHeight: maxHeight || false,
   });
 
-  const checkboxRef = useRef([]);
+  const checkboxRef = useRef<HTMLInputElement[]>([]);
 
   if (!items.length) {
     return (
       <ul className={classes}>
         <li>
-          <label className="noItems">No items found...</label>
+          <pre className="noItems">No items found...</pre>
         </li>
       </ul>
     );
@@ -47,7 +45,7 @@ const Dropdown = ({
             }
           }}
         >
-          <label>
+          <label htmlFor={x.id}>
             <input
               ref={(el) => { checkboxRef.current[i] = el; }}
               key={x.checked}

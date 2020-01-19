@@ -48,6 +48,19 @@
 	}
 }
 
+
+.dropwdown li pre {
+	display: flex;
+	font-size: 12px;
+	padding: 0 18px;
+	height: 36px;
+	margin: 0;
+	flex-direction: row;
+	align-items: center;
+        color: $D40;
+
+}
+
 .dropwdown li label {
 	display: flex;
 	font-size: 14px;
@@ -57,9 +70,7 @@
 	align-items: center;
     cursor: pointer;
     
-    &.noItems {
-        color: $D50;
-    }
+  
 
 	& input[type="checkbox"] {
 		height: 0;
