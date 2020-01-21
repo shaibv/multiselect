@@ -7,14 +7,11 @@ import {
   useState, useEffect, useRef,
 } from 'preact/hooks';
 import { h } from 'preact';
-// import { styled, setPragma } from 'goober';
-import styled from "styled-components"
+import styled, { ThemeProvider } from "styled-components"
 import useClickOutside from '../../utils/useClickOutside';
 import { ArrowDown } from '../../utils/Icons';
 import useKeyPress from '../../utils/useKeyPress';
-import Theme from '../../utils/globalStyles';
-// setPragma(h);
-
+import theme from '../../utils/globalStyles';
 
 const Dropdown = ({
   items, addClickHandler, isOpen, maxHeight,
@@ -31,9 +28,9 @@ const Dropdown = ({
     );
   }
   return (
-    <ul className="dropwdown">
+    <StyledDropdown isOpen={isOpen}>
       {items.map((x, i) => (
-        <li
+        <Item
           tabIndex={0}
           key={x.id}
           id={x.id}
@@ -55,9 +52,9 @@ const Dropdown = ({
             />
             {x.name}
           </label>
-        </li>
+        </Item>
       ))}
-    </ul>
+    </StyledDropdown>
   );
 };
 
@@ -182,8 +179,8 @@ const Multiselect = (props) => {
 
   if (!data) return null;
   return (
-    <div ref={wrappRef}>
-      <Wrapp>
+    <ThemeProvider theme={theme}>
+      <Wrapp ref={wrappRef}>
         <FakeInput>
           <Content onKeyPress={() => setOpen(true)} role="menuitem" onClick={() => setOpen(true)}>
             <Tags removeClickHandler={removeClickHandler} items={checked} />
@@ -203,13 +200,47 @@ const Multiselect = (props) => {
           items={filteredData}
         />
       </Wrapp>
-    </div>
+    </ThemeProvider>
 
   );
 };
 
 
-const RealInput: any = styled('input')`
+const Item = styled.li`
+  &:focus {
+    outline: none;
+      cursor: pointer;
+background: $B40;
+  }
+  &:hover {
+cursor: pointer;
+background: $B40;
+}
+`;
+
+
+const StyledDropdown: any = styled.ul<{ isOpen: Boolean }>`
+${(props) => console.log(props)}
+position: absolute;
+  width: 100%;
+left: 0;
+right: 0;
+border-radius: 6px;
+box-shadow: rgba(0, 0, 0, 0.0470588) 0px 0px 0px 1px,
+rgba(0, 0, 0, 0.0784314) 0px 4px 8px, rgba(0, 0, 0, 0.0784314) 0px 2px 4px;
+list-style: none;
+background:${(props) => props.theme.colors.$D80};
+padding: 6px 0;
+margin: 6px 0 0 0;
+display: none;
+max-height: 192px;
+display: ${(props) => (props.isOpen ? 'block' : 'none')};
+
+
+  
+`;
+
+const RealInput: any = styled.input`
   display: flex;
   flex: 1;
   align-self: center;
@@ -223,32 +254,32 @@ const RealInput: any = styled('input')`
   border: none;
 `;
 
-const Wrapp = styled('div')`
+const Wrapp: any = styled.div`
   position: relative;
   box-sizing: border-box;
 `;
 
-const FakeInput = styled('div')`
+const FakeInput: any = styled.div`
 display: flex;
 min-height: 36px;
 flex-wrap: wrap;
 width: 100%;
-background: ${() => Theme.Colors.$D80};
+background: ${(props) => props.theme.colors.$D80};
 align-items: stretch;
 border-radius: 4px;
 padding: 0 6px;
-border: 1px solid  ${() => Theme.Colors.$B30};
+border: 1px solid  ${(props) => props.theme.colors.$B30};
   position: relative;
   
 &:hover {
-      background:  ${() => Theme.Colors.$B40};
+      background:  ${(props) => props.theme.colors.$B40};
       cursor: text;
 }
 .focused {
-  border: 1px solid  ${() => Theme.Colors.$B10};
+  border: 1px solid  ${(props) => props.theme.colors.$B10};
 }
 .arrow {
-  fill:${() => Theme.Colors.$B10};
+  fill: ${(props) => props.theme.colors.$B10};
   top: 0;
   bottom: 0;
   margin: auto;
@@ -257,8 +288,8 @@ border: 1px solid  ${() => Theme.Colors.$B30};
 }
 `;
 
-const Content: any = styled<{ onKeyPress: Function }>('div')`
- display: flex;
+const Content: any = styled('div')`
+display: flex;
 flex: 1;
 justify-content: stretch;
 flex-wrap: wrap;

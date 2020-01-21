@@ -5,10 +5,9 @@ module.exports = {
 	extends: [
 		"airbnb-typescript",
 		"prettier/@typescript-eslint",
-		"plugin:react/recommended"
+		"plugin:react/recommended",
 	],
 	settings: {
-
 		react: {
 			createClass: "createReactClass",
 			pragma: "h",

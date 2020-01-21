@@ -1,5 +1,5 @@
 
-const Colors = {
+const colors = {
 
   $D10: '#162D3D', // Main input text, titles
   $D20: '#32536A', // Titles, texts
@@ -25,9 +25,9 @@ const Colors = {
 
 };
 
-const Theme = {
-  Colors,
+const theme = {
+  colors,
 
 };
 
-export default Theme;
+export default theme;

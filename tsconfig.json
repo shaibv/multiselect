@@ -13,7 +13,6 @@
     "isolatedModules": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
-  
     "jsx": "react",
     "jsxFactory": "h",
     "allowJs": true
