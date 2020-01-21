@@ -1,6 +1,6 @@
 import { h, FunctionComponent } from 'preact';
 import { useEffect, useState, useRef } from 'preact/hooks';
-import styled, { ThemeProvider } from "styled-components"
+import styled from "styled-components"
 import register from 'preact-custom-element';
 import Base from '../../utils/globalStyles';
 

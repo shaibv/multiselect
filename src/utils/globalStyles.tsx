@@ -6,7 +6,6 @@ const GlobalStyles = createGlobalStyle`
   *, html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    
     box-sizing: border-box;
 }
 `;
@@ -33,6 +32,7 @@ const colors = {
   $B50: "#EAF7FF", // Dividers
   $B60: "#F4FAFE", // Table hover
 };
+
 
 const sidebar = {
   colors: {
