@@ -1,8 +1,8 @@
 import { h, FunctionComponent } from 'preact';
 import { useEffect, useState, useRef } from 'preact/hooks';
+import { styled, setPragma } from 'goober';
 import register from 'preact-custom-element';
 // import classNames from 'classnames/bind';
-import { styled, setPragma } from 'goober';
 import Theme from '../../utils/globalStyles';
 // import styled from 'styled-components';
 // import s from './styles.scss';

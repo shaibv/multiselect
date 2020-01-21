@@ -1,30 +1,29 @@
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable react/prop-types */
 import register from 'preact-custom-element';
-import { useState, useEffect, useRef } from 'preact/hooks';
+import {
+  useState, useEffect, useRef,
+} from 'preact/hooks';
 import { h } from 'preact';
-import classNames from 'classnames/bind';
-import s from './styles.scss';
+// import { styled, setPragma } from 'goober';
+import styled from "styled-components"
 import useClickOutside from '../../utils/useClickOutside';
 import { ArrowDown } from '../../utils/Icons';
 import useKeyPress from '../../utils/useKeyPress';
+import Theme from '../../utils/globalStyles';
+// setPragma(h);
 
-const cx = classNames.bind(s as any);
 
 const Dropdown = ({
   items, addClickHandler, isOpen, maxHeight,
 }) => {
-  const classes = cx({
-    dropwdown: true,
-    open: isOpen,
-    maxHeight: maxHeight || false,
-  });
-
   const checkboxRef = useRef<HTMLInputElement[]>([]);
 
   if (!items.length) {
     return (
-      <ul className={classes}>
+      <ul className="dropwdown">
         <li>
           <pre className="noItems">No items found...</pre>
         </li>
@@ -32,7 +31,7 @@ const Dropdown = ({
     );
   }
   return (
-    <ul className={classes}>
+    <ul className="dropwdown">
       {items.map((x, i) => (
         <li
           tabIndex={0}
@@ -63,7 +62,7 @@ const Dropdown = ({
 };
 
 const Tags = ({ items, removeClickHandler }) => (
-  <div className={s.tags}>
+  <div className="tags">
     {items.map((item) => (
       <span key={item.id}>
         {item.name}
@@ -75,7 +74,7 @@ const Tags = ({ items, removeClickHandler }) => (
           onKeyPress={removeClickHandler}
           onClick={removeClickHandler}
         >
-⨯
+          ⨯
         </i>
       </span>
     ))}
@@ -169,7 +168,7 @@ const Multiselect = (props) => {
     }, 25);
   };
 
-  const [wrappRef, isClickOutside] = useClickOutside();
+  const [wrappRef, isClickOutside]: (any | boolean)[] = useClickOutside();
 
   if (isClickOutside) setOpen(false);
 
@@ -178,37 +177,92 @@ const Multiselect = (props) => {
     if (isOpen) realInputRef.current.focus();
   }, [isOpen]);
 
-  const classes = cx({
-    fakeInput: true,
-    focused: !!isOpen,
-  });
 
   const inputPlaceHolder = placeholder || 'Select Value';
 
   if (!data) return null;
   return (
-    // @ts-ignore
-    <div className={s.wrapp} ref={wrappRef}>
-      <div className={classes}>
-        <div tabIndex={-1} onKeyPress={() => setOpen(true)} role="menuitem" onClick={() => setOpen(true)} className={s.content}>
-          <Tags removeClickHandler={removeClickHandler} items={checked} />
-          <input
-            placeholder={inputPlaceHolder}
-            onInput={termSearchHandler}
-            type="text"
-            ref={realInputRef}
-          />
-        </div>
-        <ArrowDown onClick={() => setOpen(!isOpen)} className={s.arrow} />
-      </div>
-      <Dropdown
-        maxHeight="300"
-        isOpen={isOpen}
-        addClickHandler={addClickHandler}
-        items={filteredData}
-      />
+    <div ref={wrappRef}>
+      <Wrapp>
+        <FakeInput>
+          <Content onKeyPress={() => setOpen(true)} role="menuitem" onClick={() => setOpen(true)}>
+            <Tags removeClickHandler={removeClickHandler} items={checked} />
+            <RealInput
+              placeholder={inputPlaceHolder}
+              onInput={termSearchHandler}
+              type="text"
+              ref={realInputRef}
+            />
+          </Content>
+          <ArrowDown onClick={() => setOpen(!isOpen)} className="arrow" />
+        </FakeInput>
+        <Dropdown
+          maxHeight="300"
+          isOpen={isOpen}
+          addClickHandler={addClickHandler}
+          items={filteredData}
+        />
+      </Wrapp>
     </div>
+
   );
 };
+
+
+const RealInput: any = styled('input')`
+  display: flex;
+  flex: 1;
+  align-self: center;
+  border-radius: 4px;
+  width: calc(100% - 24px);
+  background: transparent;
+  outline: none;
+  font-size: 14px;
+  padding: 0 6px;
+  margin: 6px 0;
+  border: none;
+`;
+
+const Wrapp = styled('div')`
+  position: relative;
+  box-sizing: border-box;
+`;
+
+const FakeInput = styled('div')`
+display: flex;
+min-height: 36px;
+flex-wrap: wrap;
+width: 100%;
+background: ${() => Theme.Colors.$D80};
+align-items: stretch;
+border-radius: 4px;
+padding: 0 6px;
+border: 1px solid  ${() => Theme.Colors.$B30};
+  position: relative;
+  
+&:hover {
+      background:  ${() => Theme.Colors.$B40};
+      cursor: text;
+}
+.focused {
+  border: 1px solid  ${() => Theme.Colors.$B10};
+}
+.arrow {
+  fill:${() => Theme.Colors.$B10};
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  cursor: pointer;
+  z-index: 991;
+}
+`;
+
+const Content: any = styled<{ onKeyPress: Function }>('div')`
+ display: flex;
+flex: 1;
+justify-content: stretch;
+flex-wrap: wrap;
+`;
+
 
 register(Multiselect, 'x-multiselect', ['data']);

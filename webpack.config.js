@@ -6,7 +6,9 @@ module.exports = {
 	entry: glob.sync("./src/**/*.{js,jsx,tsx}").reduce(
 		(entries, entry) =>
 			Object.assign(entries, {
-				[entry.replace("./src/", "").replace(/\.(js|jsx|tsx)$/, "")]: entry
+				[entry
+					.replace("./src/components/", "")
+					.replace(/\.(js|jsx|tsx)$/, "")]: entry
 			}),
 		{}
 	),
@@ -91,7 +93,8 @@ module.exports = {
 			{
 				test: /\.s?css$/,
 				use: ["style-loader", "css-loader", "sass-loader"]
-			}
+			},
+		
 		]
 	},
 	devtool: "inline-source-map",

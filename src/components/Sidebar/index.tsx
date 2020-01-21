@@ -2,7 +2,6 @@
 import { h, FunctionComponent } from 'preact';
 import { useEffect, useState, useRef } from 'preact/hooks';
 import register from 'preact-custom-element';
-import { MouseEventHandler, MouseEvent } from 'react';
 import s from './styles.scss';
 import LogoIcon from './LogoIcon';
 

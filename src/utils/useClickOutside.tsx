@@ -1,8 +1,8 @@
 import { useEffect, useState, useRef } from 'preact/hooks';
 
 const useClickOutside = () => {
-  const [state, setState] = useState(false);
-  const ref = useRef();
+  const [state, setState] = useState<boolean>(false);
+  const ref = useRef<HTMLDivElement>();
 
   const clickHandler = (ev) => {
     if (ref.current && !ref.current.contains(ev.target)) {
