@@ -1,42 +1,33 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/prop-types */
 import register from 'preact-custom-element';
-import { useState, useEffect, useRef } from 'preact/hooks';
+import {
+  useState, useEffect, useRef,
+} from 'preact/hooks';
 import { h } from 'preact';
-import classNames from 'classnames/bind';
-import s from './styles.scss';
+import styled, { ThemeProvider } from "styled-components"
 import useClickOutside from '../../utils/useClickOutside';
 import { ArrowDown } from '../../utils/Icons';
 import useKeyPress from '../../utils/useKeyPress';
-
-const cx = classNames.bind(s as any);
+import Base from '../../utils/globalStyles';
+import {
+  StyledDropdown, StyledTags, FakeInput, RealInput, Item, Wrapp, Content,
+} from "./styles"
 
 const Dropdown = ({
-  items, addClickHandler, isOpen, maxHeight,
+  items, addClickHandler, isOpen,
 }) => {
-  const classes = cx({
-    dropwdown: true,
-    open: isOpen,
-    maxHeight: maxHeight || false,
-  });
+  const checkboxRef = useRef<HTMLInputElement[]>([]);
 
-  const checkboxRef = useRef([]);
 
-  if (!items.length) {
-    return (
-      <ul className={classes}>
-        <li>
-          <label className="noItems">No items found...</label>
-        </li>
-      </ul>
-    );
-  }
   return (
-    <ul className={classes}>
+    <StyledDropdown isOpen={isOpen}>
       {items.map((x, i) => (
-        <li
+
+        <Item
           tabIndex={0}
           key={x.id}
           id={x.id}
@@ -58,14 +49,14 @@ const Dropdown = ({
             />
             {x.name}
           </label>
-        </li>
+        </Item>
       ))}
-    </ul>
+    </StyledDropdown>
   );
 };
 
 const Tags = ({ items, removeClickHandler }) => (
-  <div className={s.tags}>
+  <StyledTags>
     {items.map((item) => (
       <span key={item.id}>
         {item.name}
@@ -77,11 +68,11 @@ const Tags = ({ items, removeClickHandler }) => (
           onKeyPress={removeClickHandler}
           onClick={removeClickHandler}
         >
-⨯
+          ⨯
         </i>
       </span>
     ))}
-  </div>
+  </StyledTags>
 );
 
 const Multiselect = (props) => {
@@ -171,7 +162,7 @@ const Multiselect = (props) => {
     }, 25);
   };
 
-  const [wrappRef, isClickOutside] = useClickOutside();
+  const [wrappRef, isClickOutside]: (any | boolean)[] = useClickOutside();
 
   if (isClickOutside) setOpen(false);
 
@@ -180,37 +171,35 @@ const Multiselect = (props) => {
     if (isOpen) realInputRef.current.focus();
   }, [isOpen]);
 
-  const classes = cx({
-    fakeInput: true,
-    focused: !!isOpen,
-  });
 
   const inputPlaceHolder = placeholder || 'Select Value';
 
   if (!data) return null;
   return (
-    // @ts-ignore
-    <div className={s.wrapp} ref={wrappRef}>
-      <div className={classes}>
-        <div tabIndex={-1} onKeyPress={() => setOpen(true)} role="menuitem" onClick={() => setOpen(true)} className={s.content}>
-          <Tags removeClickHandler={removeClickHandler} items={checked} />
-          <input
-            placeholder={inputPlaceHolder}
-            onInput={termSearchHandler}
-            type="text"
-            ref={realInputRef}
-          />
-        </div>
-        <ArrowDown onClick={() => setOpen(!isOpen)} className={s.arrow} />
-      </div>
-      <Dropdown
-        maxHeight="300"
-        isOpen={isOpen}
-        addClickHandler={addClickHandler}
-        items={filteredData}
-      />
-    </div>
+    <Base>
+      <Wrapp ref={wrappRef}>
+        <FakeInput focused={isOpen}>
+          <Content onKeyPress={() => setOpen(true)} role="menuitem" onClick={() => setOpen(true)}>
+            <Tags removeClickHandler={removeClickHandler} items={checked} />
+            <RealInput
+              placeholder={inputPlaceHolder}
+              onInput={termSearchHandler}
+              type="text"
+              ref={realInputRef}
+            />
+          </Content>
+          <ArrowDown onClick={() => setOpen(!isOpen)} className="arrow" />
+        </FakeInput>
+        <Dropdown
+          isOpen={isOpen}
+          addClickHandler={addClickHandler}
+          items={filteredData}
+        />
+      </Wrapp>
+    </Base>
+
   );
 };
+
 
 register(Multiselect, 'x-multiselect', ['data']);
