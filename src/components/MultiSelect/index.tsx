@@ -16,6 +16,7 @@ import Base from '../../utils/globalStyles';
 import {
   StyledDropdown, StyledTags, FakeInput, RealInput, Item, Wrapp, Content,
 } from "./styles"
+import useCustomEvent from '../../utils/useCustomEvent';
 
 const Dropdown = ({
   items, addClickHandler, isOpen,
@@ -107,13 +108,15 @@ const Multiselect = (props) => {
     }
   }, [data]);
 
-  const event = new CustomEvent('stateUpdated', {
-    detail: checked,
-    bubbles: true,
+
+  const dispatchEvent = useCustomEvent({
+    ref: realInputRef,
+    data: checked,
+    eventName: 'menuItemClicked',
   });
 
   useEffect(() => {
-    if (realInputRef.current) realInputRef.current.dispatchEvent(event);
+    dispatchEvent()
   }, [checked]);
 
   const addClickHandler = (e) => {

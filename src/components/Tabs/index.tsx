@@ -3,6 +3,7 @@ import { useEffect, useState, useRef } from 'preact/hooks';
 import styled from "styled-components"
 import register from 'preact-custom-element';
 import Base from '../../utils/globalStyles';
+import useCustomEvent from '../../utils/useCustomEvent';
 
 const Tab = ({ item, isActive, clickHandler }) => (
   <StyledLi isActive={isActive}>
@@ -50,9 +51,15 @@ const Tabs: FunctionComponent<Props> = ({ data, activetab }) => {
   }, [dataState]);
 
 
-  const clickEvent = new CustomEvent('tabItemClicked', {
-    detail: active,
-    bubbles: true,
+  // const clickEvent = new CustomEvent('tabItemClicked', {
+  //   detail: active,
+  //   bubbles: true,
+  // });
+
+  const dispatchEvent = useCustomEvent({
+    ref: componentRef,
+    data: active,
+    eventName: 'menuItemClicked',
   });
 
   const clickHandler = (item) => {
@@ -60,7 +67,8 @@ const Tabs: FunctionComponent<Props> = ({ data, activetab }) => {
   };
 
   useEffect(() => {
-    if (componentRef.current) componentRef.current.dispatchEvent(clickEvent);
+    dispatchEvent()
+    // if (componentRef.current) componentRef.current.dispatchEvent(clickEvent);
   }, [active]);
 
   if (!dataState) return null;

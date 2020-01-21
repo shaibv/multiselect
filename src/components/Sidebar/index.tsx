@@ -5,6 +5,7 @@ import register from 'preact-custom-element';
 import styled from "styled-components"
 import LogoIcon from './LogoIcon';
 import Base from '../../utils/globalStyles';
+import useCustomEvent from '../../utils/useCustomEvent';
 
 type MenuItem = {
   id?: string,
@@ -37,7 +38,6 @@ const Section: FunctionComponent<{ section: Section, isActive: MenuItem, clickHa
           <MenuItem
             tabIndex={-index}
             isActive={isActive && isActive.label === item.label}
-            // className={isActive && isActive.label === item.label ? s.active : undefined}
             type="button"
             onClick={() => clickHandler(item)}
             onKeyPress={() => clickHandler(item)}
@@ -56,10 +56,11 @@ const Sidebar: FunctionComponent<Props> = ({ data, activemenuitem }) => {
 
   const componentRef = useRef<HTMLDivElement>();
 
-  const clickEvent = new CustomEvent('menuItemClicked', {
-    detail: active,
-    bubbles: true,
-  });
+  const dispatchEvent = useCustomEvent({
+    ref: componentRef,
+    data: active,
+    eventName: 'menuItemClicked',
+});
 
   const clickHandler = (item) => setActive(item);
 
@@ -80,7 +81,7 @@ const Sidebar: FunctionComponent<Props> = ({ data, activemenuitem }) => {
   }, [data, activemenuitem]);
 
   useEffect(() => {
-    if (componentRef.current) componentRef.current.dispatchEvent(clickEvent);
+    dispatchEvent()
   }, [active]);
 
 
