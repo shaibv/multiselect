@@ -13,5 +13,9 @@ module.exports = {
 			pragma: "h",
 			version: "detect"
 		}
+	},
+	rules: {
+		"react/prop-types": 0,
+		"array-callback-return": 0 
 	}
 };

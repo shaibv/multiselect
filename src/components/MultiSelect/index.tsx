@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -11,25 +12,21 @@ import styled, { ThemeProvider } from "styled-components"
 import useClickOutside from '../../utils/useClickOutside';
 import { ArrowDown } from '../../utils/Icons';
 import useKeyPress from '../../utils/useKeyPress';
-import theme from '../../utils/globalStyles';
+import Base from '../../utils/globalStyles';
+import {
+  StyledDropdown, StyledTags, FakeInput, RealInput, Item, Wrapp, Content,
+} from "./styles"
 
 const Dropdown = ({
-  items, addClickHandler, isOpen, maxHeight,
+  items, addClickHandler, isOpen,
 }) => {
   const checkboxRef = useRef<HTMLInputElement[]>([]);
 
-  if (!items.length) {
-    return (
-      <ul className="dropwdown">
-        <li>
-          <pre className="noItems">No items found...</pre>
-        </li>
-      </ul>
-    );
-  }
+
   return (
     <StyledDropdown isOpen={isOpen}>
       {items.map((x, i) => (
+
         <Item
           tabIndex={0}
           key={x.id}
@@ -41,7 +38,7 @@ const Dropdown = ({
             }
           }}
         >
-          <label htmlFor={x.id}>
+          <label>
             <input
               ref={(el) => { checkboxRef.current[i] = el; }}
               key={x.checked}
@@ -59,7 +56,7 @@ const Dropdown = ({
 };
 
 const Tags = ({ items, removeClickHandler }) => (
-  <div className="tags">
+  <StyledTags>
     {items.map((item) => (
       <span key={item.id}>
         {item.name}
@@ -75,7 +72,7 @@ const Tags = ({ items, removeClickHandler }) => (
         </i>
       </span>
     ))}
-  </div>
+  </StyledTags>
 );
 
 const Multiselect = (props) => {
@@ -179,9 +176,9 @@ const Multiselect = (props) => {
 
   if (!data) return null;
   return (
-    <ThemeProvider theme={theme}>
+    <Base>
       <Wrapp ref={wrappRef}>
-        <FakeInput>
+        <FakeInput focused={isOpen}>
           <Content onKeyPress={() => setOpen(true)} role="menuitem" onClick={() => setOpen(true)}>
             <Tags removeClickHandler={removeClickHandler} items={checked} />
             <RealInput
@@ -194,106 +191,15 @@ const Multiselect = (props) => {
           <ArrowDown onClick={() => setOpen(!isOpen)} className="arrow" />
         </FakeInput>
         <Dropdown
-          maxHeight="300"
           isOpen={isOpen}
           addClickHandler={addClickHandler}
           items={filteredData}
         />
       </Wrapp>
-    </ThemeProvider>
+    </Base>
 
   );
 };
-
-
-const Item = styled.li`
-  &:focus {
-    outline: none;
-      cursor: pointer;
-background: $B40;
-  }
-  &:hover {
-cursor: pointer;
-background: $B40;
-}
-`;
-
-
-const StyledDropdown: any = styled.ul<{ isOpen: Boolean }>`
-${(props) => console.log(props)}
-position: absolute;
-  width: 100%;
-left: 0;
-right: 0;
-border-radius: 6px;
-box-shadow: rgba(0, 0, 0, 0.0470588) 0px 0px 0px 1px,
-rgba(0, 0, 0, 0.0784314) 0px 4px 8px, rgba(0, 0, 0, 0.0784314) 0px 2px 4px;
-list-style: none;
-background:${(props) => props.theme.colors.$D80};
-padding: 6px 0;
-margin: 6px 0 0 0;
-display: none;
-max-height: 192px;
-display: ${(props) => (props.isOpen ? 'block' : 'none')};
-
-
-  
-`;
-
-const RealInput: any = styled.input`
-  display: flex;
-  flex: 1;
-  align-self: center;
-  border-radius: 4px;
-  width: calc(100% - 24px);
-  background: transparent;
-  outline: none;
-  font-size: 14px;
-  padding: 0 6px;
-  margin: 6px 0;
-  border: none;
-`;
-
-const Wrapp: any = styled.div`
-  position: relative;
-  box-sizing: border-box;
-`;
-
-const FakeInput: any = styled.div`
-display: flex;
-min-height: 36px;
-flex-wrap: wrap;
-width: 100%;
-background: ${(props) => props.theme.colors.$D80};
-align-items: stretch;
-border-radius: 4px;
-padding: 0 6px;
-border: 1px solid  ${(props) => props.theme.colors.$B30};
-  position: relative;
-  
-&:hover {
-      background:  ${(props) => props.theme.colors.$B40};
-      cursor: text;
-}
-.focused {
-  border: 1px solid  ${(props) => props.theme.colors.$B10};
-}
-.arrow {
-  fill: ${(props) => props.theme.colors.$B10};
-  top: 0;
-  bottom: 0;
-  margin: auto;
-  cursor: pointer;
-  z-index: 991;
-}
-`;
-
-const Content: any = styled('div')`
-display: flex;
-flex: 1;
-justify-content: stretch;
-flex-wrap: wrap;
-`;
 
 
 register(Multiselect, 'x-multiselect', ['data']);
