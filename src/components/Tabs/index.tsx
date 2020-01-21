@@ -59,7 +59,7 @@ const Tabs: FunctionComponent<Props> = ({ data, activetab }) => {
   const dispatchEvent = useCustomEvent({
     ref: componentRef,
     data: active,
-    eventName: 'menuItemClicked',
+    eventName: 'tabItemClicked',
   });
 
   const clickHandler = (item) => {

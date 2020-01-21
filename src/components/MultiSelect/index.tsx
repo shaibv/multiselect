@@ -112,7 +112,7 @@ const Multiselect = (props) => {
   const dispatchEvent = useCustomEvent({
     ref: realInputRef,
     data: checked,
-    eventName: 'menuItemClicked',
+    eventName: 'stateUpdated',
   });
 
   useEffect(() => {
