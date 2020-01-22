@@ -11,13 +11,15 @@ const Tooltip = ({ position }) => {
   const [y, setY] = useState(0);
 
   useEffect(() => {
-    const parsedPosstion = JSON.parse(position);
-    setX(parsedPosstion.clientX)
-    setY(parsedPosstion.clientY)
+    if (position) {
+      const parsedPosstion = JSON.parse(position);
+      setX(parsedPosstion.clientX)
+      setY(parsedPosstion.clientY)
+    }
   }, [position])
 
   useEffect(() => {
-
+    console.log(x, y);
   }, [x, y])
 
   return (
