@@ -9,6 +9,7 @@
       <script src="/dist/MultiSelect/index.js"></script>
       <script src="/dist/Sidebar/index.js"></script>
       <script src="/dist/ProgressBar/index.js"></script>
+      <script src="/dist/BreadCrumbs/index.js"></script>
       <style>
         html {
             position: relative;
@@ -20,6 +21,7 @@
 </head>
 <body>
     <h1>Componenets Playground</h1>
+    <x-breadcrumbs id='x-breadcrumbs'></x-breadcrumbs> 
     <x-tabs id='x-tabs' /></x-tabs> 
         <x-multiselect id='x-multiselect' maxHeight="200" placeholder="Select Value"></x-multiselect>
      <x-sidebar id='x-sidebar'></x-sidebar> 
@@ -125,6 +127,7 @@
     const tabs = document.getElementById('x-tabs');
     const sidebar = document.getElementById('x-sidebar');
     const progressbar = document.getElementById('x-progressbar');
+    const breacCrumbs = document.getElementById('x-breadcrumbs');
 
     multiSelect.setAttribute('data', JSON.stringify(data));
 
@@ -140,6 +143,17 @@
     setTimeout(() => {
     progressbar.setAttribute('state', 'finish')
     }, 1000);
+
+
+    /// Beradcrumbs
+
+    const breadCrumbsItems = [
+        {label: 'Coupouns', url: "entities/static"},
+        {label: 'Test Coupons', url: ""},
+    ];
+
+    breacCrumbs.setAttribute('data', JSON.stringify(breadCrumbsItems))
+
    
 </script>
 </html>
