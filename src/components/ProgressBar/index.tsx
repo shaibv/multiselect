@@ -5,8 +5,14 @@ import register from 'preact-custom-element';
 import { useEffect, useRef, useState } from "preact/compat";
 import App from "../../App"
 
+type Props = {
+    size?: Number,
+    color?: String,
+    className?: String,
+    delay?: Number
+}
 
-const Bar = function (config) {
+const Bar = (config: Props) => {
     const assign = (to, from) => {
         Object.keys(from || {}).forEach((key) => {
             to[key] = from[key];
@@ -61,7 +67,7 @@ const Bar = function (config) {
     let current;
     let timeout;
 
-    this.start = () => {
+    const start = () => {
         if (current && current.parentNode) {
             current.parentNode.removeChild(current);
         }
@@ -86,7 +92,7 @@ const Bar = function (config) {
         current.scrollTop = 0;
     };
 
-    this.finish = () => {
+    const finish = () => {
         if (timeout != null) {
             clearTimeout(timeout);
             timeout = null;
@@ -96,12 +102,14 @@ const Bar = function (config) {
             assign(current.style, finishedStyle);
         }
     };
+
+    return { finish, start }
 }
 
 
 const ProgressBar = ({ state }) => {
     const [progressState, setState] = useState(state);
-    const progress = new Bar({ size: 2, color: "#3899EC", delay: 100 });
+    const progress = Bar({ size: 2, color: "#3899EC", delay: 100 });
     const compponentRef = useRef();
 
 
