@@ -109,7 +109,7 @@ const Bar = (config: Props) => {
 
 const ProgressBar = ({ state }) => {
     const [progressState, setState] = useState(state);
-    const progress = Bar({ size: 2, color: "#3899EC", delay: 100 });
+    const progress = Bar({ size: 2, color: "#3899EC", delay: 0 });
     const compponentRef = useRef();
 
 
