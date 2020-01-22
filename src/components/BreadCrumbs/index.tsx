@@ -80,6 +80,7 @@ const StyledCrumb = styled("li")`
     color: ${(props) => props.theme.colors.$D10};
     padding: 0;
     display: flex;
+    font-weight: 300;
     border-radius: 30em;
     padding: 6px 0;
     &:hover {
@@ -89,6 +90,9 @@ const StyledCrumb = styled("li")`
       -10px 0 0 0 ${(props) => props.theme.colors.$B40}, 
       10px 0 0 0 ${(props) => props.theme.colors.$B40};
     }
+  }
+  &:last-child button {
+    font-weight: 400;
   }
 
   &:not(:last-child):after {
