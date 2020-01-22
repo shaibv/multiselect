@@ -19,9 +19,9 @@
 </head>
 <body>
     <h1>Componenets Playground</h1>
-    <x-tabs id='x-tabs' /></x-tabs> 
+    <!-- <x-tabs id='x-tabs' /></x-tabs>  -->
         <x-multiselect id='x-multiselect' maxHeight="200" placeholder="Select Value"></x-multiselect>
-        <x-sidebar id='x-sidebar'></x-sidebar>
+        <!-- <!-- <x-sidebar id='x-sidebar'></x-sidebar> --> 
 
     
 </body> 
@@ -120,17 +120,17 @@
 
 
     const multiSelect = document.getElementById('x-multiselect');
-    const tabs = document.getElementById('x-tabs');
-    const sidebar = document.getElementById('x-sidebar');
+    // const tabs = document.getElementById('x-tabs');
+    // const sidebar = document.getElementById('x-sidebar');
 
     multiSelect.setAttribute('data', JSON.stringify(data));
 
-    tabs.setAttribute('activetab', 'All');
-    tabs.setAttribute('data', JSON.stringify(tabsItems));
+    // tabs.setAttribute('activetab', 'All');
+    // tabs.setAttribute('data', JSON.stringify(tabsItems));
 
 
-    sidebar.setAttribute('data', JSON.stringify(sidebarItems))
-    sidebar.setAttribute('activemenuitem', 'Static Coupons')
+    // sidebar.setAttribute('data', JSON.stringify(sidebarItems))
+    // sidebar.setAttribute('activemenuitem', 'Static Coupons')
  
    
 </script>
