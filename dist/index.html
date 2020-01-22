@@ -8,6 +8,7 @@
       <script src="/dist/Tabs/index.js"></script>
       <script src="/dist/MultiSelect/index.js"></script>
       <script src="/dist/Sidebar/index.js"></script>
+      <script src="/dist/ProgressBar/index.js"></script>
       <style>
         html {
             position: relative;
@@ -22,6 +23,7 @@
     <x-tabs id='x-tabs' /></x-tabs> 
         <x-multiselect id='x-multiselect' maxHeight="200" placeholder="Select Value"></x-multiselect>
      <x-sidebar id='x-sidebar'></x-sidebar> 
+     <x-progressbar id='x-progressbar'></x-progressbar> 
 
     
 </body> 
@@ -122,6 +124,7 @@
     const multiSelect = document.getElementById('x-multiselect');
     const tabs = document.getElementById('x-tabs');
     const sidebar = document.getElementById('x-sidebar');
+    const progressbar = document.getElementById('x-progressbar');
 
     multiSelect.setAttribute('data', JSON.stringify(data));
 
@@ -131,7 +134,12 @@
 
     sidebar.setAttribute('data', JSON.stringify(sidebarItems))
     sidebar.setAttribute('activemenuitem', 'Static Coupons')
- 
+    
+    progressbar.setAttribute('state', 'run')
+
+    setTimeout(() => {
+    progressbar.setAttribute('state', 'finish')
+    }, 1000);
    
 </script>
 </html>
