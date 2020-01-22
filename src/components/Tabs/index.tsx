@@ -1,9 +1,19 @@
 import { h, FunctionComponent } from 'preact';
 import { useEffect, useState, useRef } from 'preact/hooks';
-import styled from "styled-components"
+import { styled } from "@nksaraf/goober"
 import register from 'preact-custom-element';
-import Base from '../../utils/globalStyles';
+import App from '../../App';
 import useCustomEvent from '../../utils/useCustomEvent';
+
+
+type Tab = {
+  label: string,
+  id?: string
+};
+interface Props {
+  data: string,
+  activetab: String
+}
 
 const Tab = ({ item, isActive, clickHandler }) => (
   <StyledLi isActive={isActive}>
@@ -16,15 +26,6 @@ const Tab = ({ item, isActive, clickHandler }) => (
   </StyledLi>
 );
 
-
-type Tab = {
-  label: string,
-  id?: string
-};
-interface Props {
-  data: string,
-  activetab: String
-}
 
 const Tabs: FunctionComponent<Props> = ({ data, activetab }) => {
   const [dataState, setData] = useState<Tab[] | null>(null);
@@ -50,12 +51,6 @@ const Tabs: FunctionComponent<Props> = ({ data, activetab }) => {
     }
   }, [dataState]);
 
-
-  // const clickEvent = new CustomEvent('tabItemClicked', {
-  //   detail: active,
-  //   bubbles: true,
-  // });
-
   const dispatchEvent = useCustomEvent({
     ref: componentRef,
     data: active,
@@ -68,12 +63,11 @@ const Tabs: FunctionComponent<Props> = ({ data, activetab }) => {
 
   useEffect(() => {
     dispatchEvent()
-    // if (componentRef.current) componentRef.current.dispatchEvent(clickEvent);
   }, [active]);
 
   if (!dataState) return null;
   return (
-    <Base>
+    <App>
       <div ref={componentRef}>
         <StyledUl>
           {dataState.map((tab) => (
@@ -86,11 +80,11 @@ const Tabs: FunctionComponent<Props> = ({ data, activetab }) => {
         ))}
         </StyledUl>
       </div>
-    </Base>
+    </App>
   );
 };
 
-const StyledUl: any = styled.ul`
+const StyledUl: any = styled('ul')`
   list-style: none;
   display: flex;
   flex-direction: row;
@@ -102,7 +96,7 @@ const StyledUl: any = styled.ul`
   box-sizing: border-box;
 `;
 
-const StyledLi: any = styled.li<{ isActive: boolean }>`
+const StyledLi: any = styled<{ isActive: boolean }>('li')`
   height: 100%;
   display: flex;
   justify-content: center;

@@ -10,7 +10,6 @@ import { styled } from "@nksaraf/goober"
 import useClickOutside from '../../utils/useClickOutside';
 import { ArrowDown } from '../../utils/Icons';
 import useKeyPress from '../../utils/useKeyPress';
-import Base from '../../utils/globalStyles';
 import useCustomEvent from '../../utils/useCustomEvent';
 import App from "../../App"
 

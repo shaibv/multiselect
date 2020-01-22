@@ -22,7 +22,6 @@ const colors = {
   $B60: "#F4FAFE", // Table hover
 };
 
-
 const sidebar = {
   colors: {
     $bg: "#23263e",
