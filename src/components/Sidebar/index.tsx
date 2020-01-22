@@ -2,10 +2,10 @@
 import { h, FunctionComponent } from 'preact';
 import { useEffect, useState, useRef } from 'preact/hooks';
 import register from 'preact-custom-element';
-import styled from "styled-components"
+import { styled } from "@nksaraf/goober"
 import LogoIcon from './LogoIcon';
-import Base from '../../utils/globalStyles';
 import useCustomEvent from '../../utils/useCustomEvent';
+import App from "../../App";
 
 type MenuItem = {
   id?: string,
@@ -87,7 +87,7 @@ const Sidebar: FunctionComponent<Props> = ({ data, activemenuitem }) => {
 
   if (!dataState) return null;
   return (
-    <Base>
+    <App>
       <StyledBar ref={componentRef}>
         <Logo />
         {dataState.map((section) => (
@@ -99,12 +99,12 @@ const Sidebar: FunctionComponent<Props> = ({ data, activemenuitem }) => {
           />
         ))}
       </StyledBar>
-    </Base>
+    </App>
   );
 };
 
 
-const StyledBar: any = styled.div`
+const StyledBar: any = styled('div')`
   height: 100vh;
   width: 220px;
   background: ${(props) => props.theme.sidebar.colors.$bg};
@@ -118,7 +118,7 @@ const StyledBar: any = styled.div`
   }
 `;
 
-const StyledSection: any = styled.div<{isActive: Boolean}>`
+const StyledSection: any = styled<{ isActive: Boolean }>('div')`
   &:last-child:after {
     display: none;
   }
@@ -153,7 +153,7 @@ const StyledSection: any = styled.div<{isActive: Boolean}>`
   }
 `;
 
-const MenuItem: any = styled.button<{isActive: Boolean}>`
+const MenuItem: any = styled<{ isActive: Boolean }>('button')`
     height: 36px;
         padding: 0 24px;
         width: 100%;

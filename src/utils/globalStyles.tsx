@@ -1,15 +1,4 @@
 
-import { h } from "preact";
-import { createGlobalStyle, ThemeProvider } from "styled-components"
-
-const GlobalStyles = createGlobalStyle`
-  *, html {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    box-sizing: border-box;
-}
-`;
-
 const colors = {
   $D10: "#162D3D", // Main input text, titles
   $D20: "#32536A", // Titles, texts
@@ -33,7 +22,6 @@ const colors = {
   $B60: "#F4FAFE", // Table hover
 };
 
-
 const sidebar = {
   colors: {
     $bg: "#23263e",
@@ -48,12 +36,4 @@ const theme = {
 };
 
 
-const Base = ({ children }) => (
-  <ThemeProvider theme={theme}>
-    <GlobalStyles />
-    {children}
-  </ThemeProvider>
-  )
-
-
-export default Base;
+export default theme;
