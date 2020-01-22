@@ -128,9 +128,7 @@ const ProgressBar = ({ state }) => {
     }, [progressState]);
 
     return (
-      <App ref={compponentRef}>
-        <button type="button" onClick={() => setState('run')}>Show Loading Progress Bar</button>
-      </App>
+      <App ref={compponentRef} />
     )
 }
 
