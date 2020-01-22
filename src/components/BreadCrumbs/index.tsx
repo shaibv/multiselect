@@ -26,10 +26,10 @@ const BreadCrumbs: FunctionComponent<Props> = ({ data }) => {
     const componentRef = useRef<HTMLUListElement>();
 
     useEffect(() => {
-    if (data) {
-        const parsedData = JSON.parse(data);
-        setData(parsedData);
-    }
+        if (data) {
+            const parsedData = JSON.parse(data);
+            setData(parsedData);
+        }
     }, [data]);
 
 
@@ -39,7 +39,7 @@ const BreadCrumbs: FunctionComponent<Props> = ({ data }) => {
             eventName: 'crumbClicked',
             data: item,
         })
-
+        if (dataState[dataState.length - 1].label.indexOf(item.label) === 0) return
         dispatchEvent();
     }
 
@@ -54,7 +54,7 @@ const BreadCrumbs: FunctionComponent<Props> = ({ data }) => {
               key={crumb.label}
               item={crumb}
             />
-        ))}
+                ))}
         </StyledCrumbs>
       </App>
     );
@@ -83,16 +83,18 @@ const StyledCrumb = styled("li")`
     font-weight: 300;
     border-radius: 30em;
     padding: 6px 0;
-    &:hover {
-        cursor: pointer;
+    
+  }
+  &:last-child button {
+    font-weight: 400;
+  }
+
+  &:not(:last-child) button:hover {
+   cursor: pointer;
       background: ${(props) => props.theme.colors.$B40};
       box-shadow: 
       -10px 0 0 0 ${(props) => props.theme.colors.$B40}, 
       10px 0 0 0 ${(props) => props.theme.colors.$B40};
-    }
-  }
-  &:last-child button {
-    font-weight: 400;
   }
 
   &:not(:last-child):after {
