@@ -1,6 +1,6 @@
 /* eslint-disable */
 const glob = require("glob");
-
+const CleanTerminalPlugin = require("clean-terminal-webpack-plugin");
 module.exports = {
   context: __dirname,
   entry: glob.sync("./src/components/**/*.{js,jsx,tsx}").reduce(

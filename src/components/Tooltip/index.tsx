@@ -3,40 +3,60 @@ import { useEffect, useState, useRef } from 'preact/hooks';
 import { styled } from "@nksaraf/goober"
 import register from 'preact-custom-element';
 import App from '../../App';
-import useCustomEvent from '../../utils/useCustomEvent';
 
 
-const Tooltip = ({ position }) => {
-  const [x, setX] = useState(0);
-  const [y, setY] = useState(0);
+const Tooltip: FunctionComponent<{target: string}> = ({ target }) => {
+  const [coords, setCoords] = useState<{x: number, y: number}>({ x: 0, y: 0 });
 
+  const compRef = useRef<HTMLDivElement>();
+
+  const showTooltip = (ev) => {
+    const targetCoords = ev.target.getBoundingClientRect();
+    const compCoords = compRef.current.getBoundingClientRect();
+
+    const deltaCenter = (targetCoords.width - compCoords.width) / 2;
+    const deltaX = targetCoords.left - compCoords.left + deltaCenter;
+    const deltaY = targetCoords.top - compCoords.top - compCoords.height - 6;
+
+    setCoords({ x: deltaX, y: deltaY });
+  }
+
+  const hideTooltip = () => {
+    setCoords({ x: 0, y: 0 });
+  }
 
   useEffect(() => {
-    if (position) {
-      const parsedPosstion = JSON.parse(position);
-      setX(parsedPosstion.clientX)
-      setY(parsedPosstion.clientY)
-      console.log(document.getElementById(parsedPosstion.syntheticEvent.id));
+    if (target && compRef && compRef.current) {
+      const ParsedEvent = JSON.parse(target);
+      const targetEl = document.getElementById(ParsedEvent.syntheticEvent.id);
+
+      targetEl.addEventListener('mouseenter', showTooltip);
+      targetEl.addEventListener('mouseleave', hideTooltip);
     }
-  }, [position])
+    return () => {
+      document.removeEventListener('mouseenter', showTooltip);
+      document.removeEventListener('mouseleave', hideTooltip);
+    }
+  }, [target]);
 
-
-  useEffect(() => {
-    console.log(x, y);
-  }, [x, y])
 
   return (
     <App>
-      <Tip x={x} y={y}>Im tooltip!</Tip>
+      <Tip ref={compRef} x={coords.x} y={coords.y}>Im a tooltip!</Tip>
     </App>
-    )
+  )
 };
 
-const Tip = styled<{x: any, y: any}>('div')`
+const Tip: any = styled<{ x: number, y: number }>('div')`
 position: absolute;
+background: ${(props) => props.theme.colors.$D10};
+color: ${(props) => props.theme.colors.$D80};
+padding: 18px;
+font-size: 14px;
+border-radius: 6px;
 left: ${(props) => props.x}px;
 top: ${(props) => props.y}px;
 `;
 
 
-register(Tooltip, 'x-tooltip', ['position']);
+register(Tooltip, 'x-tooltip', ['target']);

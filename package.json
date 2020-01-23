@@ -6,14 +6,14 @@
   "scripts": {
     "start": "npm-run-all --parallel dev:server watch:build",
     "dev:server": "nodemon  --ignore dist index.js ",
-    "watch:build": "webpack --watch  --config webpack.config.js"
+    "watch:build": "webpack --watch --progress   --config webpack.config.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@babel/runtime": "^7.8.3",
     "@nksaraf/goober": "^1.6.3",
-    "@types/react": "^16.9.17",
+    "@types/react": "^16.9.19",
     "@types/styled-components": "^4.4.2",
     "chalk": "^3.0.0",
     "classnames": "^2.2.6",
@@ -44,9 +44,12 @@
     "@types/classnames": "^2.2.9",
     "@typescript-eslint/eslint-plugin": "^2.16.0",
     "@typescript-eslint/parser": "^2.16.0",
+    "@webpack-cli/info": "^0.2.0",
     "babel-loader": "^8.0.6",
     "babel-plugin-module-resolver": "^4.0.0",
     "babel-plugin-styled-components": "^1.10.6",
+    "clean-terminal-webpack-plugin": "^2.0.5",
+    "corvid-types": "^0.1.90",
     "css-loader": "^3.4.2",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.0.1",
