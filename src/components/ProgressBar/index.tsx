@@ -2,7 +2,7 @@
 
 import { h } from "preact";
 import register from 'preact-custom-element';
-import { useEffect, useRef, useState } from "preact/compat";
+import { useEffect, useRef } from "preact/compat";
 import App from "../../App"
 
 type Props = {
@@ -108,24 +108,18 @@ const Bar = (config: Props) => {
 
 
 const ProgressBar = ({ state }) => {
-    const [progressState, setState] = useState(state);
     const progress = Bar({ size: 2, color: "#3899EC", delay: 0 });
     const compponentRef = useRef();
 
 
     useEffect(() => {
-        setState(state)
-    }, [state]);
-
-    useEffect(() => {
-        if (progressState === 'run') {
+        if (state === 'run') {
             progress.start()
             setTimeout(() => {
                 progress.finish();
-                setState('finish')
             }, 2000);
         }
-    }, [progressState]);
+    }, [state]);
 
     return (
       <App ref={compponentRef} />

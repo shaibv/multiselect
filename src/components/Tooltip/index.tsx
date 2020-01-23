@@ -32,6 +32,7 @@ const Tooltip: FunctionComponent<{ showtooltip: string }> = ({ showtooltip }) =>
   const hideTooltip = () => {
     setIsVisible(false);
       setCoords({ x: 0, y: 0 });
+      setTargetState(null)
   }
 
 
@@ -56,7 +57,7 @@ const Tooltip: FunctionComponent<{ showtooltip: string }> = ({ showtooltip }) =>
 
   return (
     <App>
-      {!targetState && !coords ? null
+      {!targetState || !coords ? null
         : (
           <Tip
             isVisible={isVisible}
