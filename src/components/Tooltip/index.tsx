@@ -5,58 +5,100 @@ import register from 'preact-custom-element';
 import App from '../../App';
 
 
-const Tooltip: FunctionComponent<{target: string}> = ({ target }) => {
-  const [coords, setCoords] = useState<{x: number, y: number}>({ x: 0, y: 0 });
+const DURATION = 120;
+
+const Tooltip: FunctionComponent<{ target: string }> = ({ showtooltip }) => {
+  const [coords, setCoords] = useState<{ x: number, y: number }>({ x: 0, y: 0 });
+  const [isVisible, setIsVisible] = useState(false);
+  const [messageState, setMessage] = useState<string | null>(null)
 
   const compRef = useRef<HTMLDivElement>();
 
   const showTooltip = (ev) => {
-    const targetCoords = ev.target.getBoundingClientRect();
-    const compCoords = compRef.current.getBoundingClientRect();
+    if (compRef && compRef.current) {
+      const targetCoords = ev.getBoundingClientRect();
+      const compCoords = compRef.current.getBoundingClientRect();
 
-    const deltaCenter = (targetCoords.width - compCoords.width) / 2;
-    const deltaX = targetCoords.left - compCoords.left + deltaCenter;
-    const deltaY = targetCoords.top - compCoords.top - compCoords.height - 6;
+      const deltaCenter = (targetCoords.width - compCoords.width) / 2;
+      const deltaX = targetCoords.left - compCoords.left + deltaCenter;
+      const deltaY = targetCoords.top - compCoords.top - compCoords.height - 9;
 
-    setCoords({ x: deltaX, y: deltaY });
+      setCoords({ x: deltaX, y: deltaY });
+      setIsVisible(true);
+    }
   }
 
   const hideTooltip = () => {
-    setCoords({ x: 0, y: 0 });
+    setIsVisible(false);
+    setTimeout(() => {
+      setCoords({ x: 0, y: 0 });
+    }, DURATION);
   }
 
+
   useEffect(() => {
-    if (target && compRef && compRef.current) {
-      const ParsedEvent = JSON.parse(target);
-      const targetEl = document.getElementById(ParsedEvent.syntheticEvent.id);
+    if (showtooltip) {
+      const parsedData = JSON.parse(showtooltip);
+      const { message, target } = parsedData;
 
-      targetEl.addEventListener('mouseenter', showTooltip);
+      const targetEl = document.getElementById(target.syntheticEvent.id);
       targetEl.addEventListener('mouseleave', hideTooltip);
-    }
-    return () => {
-      document.removeEventListener('mouseenter', showTooltip);
-      document.removeEventListener('mouseleave', hideTooltip);
-    }
-  }, [target]);
 
+      showTooltip(targetEl)
+      setMessage(message)
+    }
+  }, [showtooltip]);
 
+  if (!messageState) return null
   return (
     <App>
-      <Tip ref={compRef} x={coords.x} y={coords.y}>Im a tooltip!</Tip>
+      <Tip
+        isVisible={isVisible}
+        duration={DURATION}
+        ref={compRef}
+        x={coords.x}
+        y={coords.y}
+      >
+        <span>{messageState}</span>
+      </Tip>
     </App>
   )
 };
 
-const Tip: any = styled<{ x: number, y: number }>('div')`
-position: absolute;
-background: ${(props) => props.theme.colors.$D10};
-color: ${(props) => props.theme.colors.$D80};
-padding: 18px;
-font-size: 14px;
-border-radius: 6px;
-left: ${(props) => props.x}px;
-top: ${(props) => props.y}px;
+const Tip: any = styled<{ x: number; y: number, isVisible: boolean, duration: number }>("div")`
+  position: absolute;
+  background: ${(props) => props.theme.colors.$D10};
+  color: ${(props) => props.theme.colors.$D80};
+  padding: 12px;
+  font-size: 14px;
+  z-index: 0;
+  border-radius: 6px;
+  left: ${(props) => props.x}px;
+  top: ${(props) => props.y}px;
+  display: block;
+  text-align: center;
+  max-width: 144px;
+  opacity: ${(props) => (props.isVisible ? '1' : '0')};
+  transform: ${(props) => (props.isVisible ? 'translateY(0px)' : 'translateY(10px)')};
+  transition: all ${(props) => props.duration}ms cubic-bezier(0.23, 1, 0.32, 1);
+
+  &:before {
+    top: 100%;
+    left: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-color: rgba(194, 225, 245, 0);
+    border-top-color: ${(props) => props.theme.colors.$D10};
+    border-width: 6px;
+    margin-left: -6px;
+  }
+
+
 `;
 
 
-register(Tooltip, 'x-tooltip', ['target']);
+register(Tooltip, 'x-tooltip', ['showtooltip']);
