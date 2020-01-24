@@ -53,7 +53,6 @@ const Tabs: FunctionComponent<Props> = ({ data, activetab }) => {
 
   const dispatchEvent = useCustomEvent({
     ref: componentRef,
-    data: active,
     eventName: 'tabItemClicked',
   });
 
@@ -62,7 +61,7 @@ const Tabs: FunctionComponent<Props> = ({ data, activetab }) => {
   };
 
   useEffect(() => {
-    dispatchEvent()
+    dispatchEvent(active)
   }, [active]);
 
   if (!dataState) return null;

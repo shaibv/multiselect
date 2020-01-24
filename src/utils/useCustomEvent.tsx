@@ -1,12 +1,18 @@
+import { PropRef } from "preact/hooks/src";
 
-const useCustomEvent = ({ ref, eventName, data }) => {
-    const customEvent = new CustomEvent(eventName, {
-        detail: data,
+interface CustomEvent {
+    ref: PropRef<any>,
+    eventName: string,
+}
+
+const useCustomEvent = ({ ref, eventName }: CustomEvent) => {
+    const customEvent = (detail) => new CustomEvent(eventName, {
+        detail,
         bubbles: true,
     });
 
-    const dispatchEvent = () => {
-        if (ref.current) ref.current.dispatchEvent(customEvent);
+    const dispatchEvent = (evData) => {
+        if (ref.current) ref.current.dispatchEvent(customEvent(evData));
     }
     return dispatchEvent
 }

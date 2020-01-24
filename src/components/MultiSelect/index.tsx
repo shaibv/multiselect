@@ -105,12 +105,11 @@ const Multiselect = (props) => {
 
   const dispatchEvent = useCustomEvent({
     ref: realInputRef,
-    data: checked,
     eventName: 'stateUpdated',
   });
 
   useEffect(() => {
-    dispatchEvent()
+    dispatchEvent(checked)
   }, [checked]);
 
   const addClickHandler = (e) => {

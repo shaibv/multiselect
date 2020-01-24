@@ -13,8 +13,9 @@ const microHttps = (fn) => https.createServer(options, (req, res) => run(req, re
 const server = microHttps(async (req, res) => {
   await handler(req, res, {
     // public: "dist"
-    redirects: [
-      { source: "/", destination: "/dist" },
+    rewrites: [
+      { source: "/", destination: "/dist/index.html" },
+      { source: "/:id", destination: "/dist/:id/index.js" },
     ],
   });
 });

@@ -58,7 +58,6 @@ const Sidebar: FunctionComponent<Props> = ({ data, activemenuitem }) => {
 
   const dispatchEvent = useCustomEvent({
     ref: componentRef,
-    data: active,
     eventName: 'menuItemClicked',
 });
 
@@ -81,7 +80,7 @@ const Sidebar: FunctionComponent<Props> = ({ data, activemenuitem }) => {
   }, [data, activemenuitem]);
 
   useEffect(() => {
-    dispatchEvent()
+    dispatchEvent(active)
   }, [active]);
 
 

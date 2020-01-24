@@ -37,10 +37,9 @@ const BreadCrumbs: FunctionComponent<Props> = ({ data }) => {
         const dispatchEvent = useCustomEvent({
             ref: componentRef,
             eventName: 'crumbClicked',
-            data: item,
         })
         if (dataState[dataState.length - 1].label.indexOf(item.label) === 0) return
-        dispatchEvent();
+      dispatchEvent(item);
     }
 
     if (!dataState) return null;
