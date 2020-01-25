@@ -7,15 +7,51 @@ import {
 } from 'preact/hooks';
 import { styled } from "@nksaraf/goober"
 import register from 'preact-custom-element';
-import { useTable, Column } from 'react-table'
+import { useTable, usePagination } from 'react-table'
 import App from '../../App';
 import useCustomEvent from '../../utils/useCustomEvent';
 import Skeleton from "../Skeleton";
 
 
-const LoadingTable = () => {
-    const columns = new Array(4).fill({}).map((item, i) => ({ accessor: `${i}` }));
-    const data = new Array(4).fill({});
+const TableComp: FunctionComponent<{ data: string, columns: string}> = ({ data, columns }) => {
+    const dummyColumns = new Array(4).fill({}).map((item, i) => ({ accessor: `${i}` }));
+    const dummyData = new Array(4).fill({});
+
+    const [dataState, setData] = useState(dummyData);
+    const [columnsState, setColumns] = useState(dummyColumns);
+    const [loading, setLoading] = useState(true);
+    const [pageCount, setPageCount] = useState(0)
+
+
+    useEffect(() => {
+        if (data && columns) {
+            const parsedData: Array<any> = JSON.parse(data);
+            const parsedColumns: Array<any> = JSON.parse(columns);
+
+            setData(parsedData);
+            setColumns(parsedColumns);
+            setLoading(false)
+       }
+    }, [data, columns]);
+
+
+    return (
+      <App>
+        <Table
+          columns={columnsState}
+          data={dataState}
+          loading={loading}
+          pageCount={pageCount}
+        />
+      </App>
+    )
+    }
+
+
+const Table = (props) => {
+    const {
+        columns, data, loading, pageCount, pageCount: controlledPageCount,
+} = props;
 
     const {
         getTableProps,
@@ -23,37 +59,48 @@ const LoadingTable = () => {
         headerGroups,
         rows,
         prepareRow,
+        state: { pageIndex, pageSize },
     } = useTable({
         columns,
         data,
+        initialState: { pageIndex: 0 },
+        manualPagination: true,
+        pageCount: controlledPageCount,
+    }, usePagination);
+
+    const componentRef = useRef<HTMLTableElement>();
+    const dispatchEvent = useCustomEvent({
+        ref: componentRef,
+        eventName: 'tableRowClicked',
     });
 
+
     return (
-      <App>
-        <Styles>
-          <div {...getTableProps()} className="table">
-            <div>
-              {headerGroups.map((headerGroup) => (
-                <div key={headerGroup.id} {...headerGroup.getHeaderGroupProps()} className="tr header">
-                  {headerGroup.headers.map((column) => (
-                    <div key={column.id} {...column.getHeaderProps()} className="th">
-                      {/* <Skeleton height={16} /> */}
 
-                    </div>
+      <Styles>
+        <div ref={componentRef} {...getTableProps()} className="table">
+          <div>
+            {headerGroups.map((headerGroup) => (
+              <div key={headerGroup.id} {...headerGroup.getHeaderGroupProps()} className="tr header">
+                {headerGroup.headers.map((column) => (
+                  <div key={column.id} {...column.getHeaderProps()} className="th">
+                    {!loading && column.render('Header')}
+
+                  </div>
                                 ))}
-                </div>
+              </div>
                         ))}
-            </div>
+          </div>
 
-            <div {...getTableBodyProps()}>
-              {rows.map(
-                            (row) => {
+          <div {...getTableBodyProps()}>
+            {rows.map(
+                            (row, i) => {
                                 prepareRow(row);
                                 return (
-                                  <div key={row.id} {...row.getRowProps()} className="tr">
+                                  <div onClick={() => dispatchEvent(row.values)} key={row.id} {...row.getRowProps()} className="tr">
                                     {row.cells.map((cell) => (
                                       <div key={cell.value} {...cell.getCellProps()} className="td">
-                                        <Skeleton height={16} />
+                                        {loading ? <Skeleton height={16} /> : cell.render('Cell')}
 
                                       </div>
                                         ))}
@@ -61,93 +108,11 @@ const LoadingTable = () => {
                                 )
                             },
                         )}
-            </div>
           </div>
-        </Styles>
-      </App>
+        </div>
+      </Styles>
     )
 }
-
-const Table: FunctionComponent<{ data: string, columns: string}> = ({ data, columns }) => {
-    const [dataState, setData] = useState(null);
-    const [columnsState, setColumns] = useState(null);
-
-    const componentRef = useRef<HTMLTableElement>();
-
-    useEffect(() => {
-        if (data && columns) {
-            const parsedData: Array<any> = JSON.parse(data);
-            const parsedColumns: Array<Column> = JSON.parse(columns);
-
-            setData(parsedData);
-            setColumns(parsedColumns);
-       }
-    }, [data, columns]);
-
-
-    useEffect(() => {
-        console.log(dataState, columnsState);
-    }, [dataState, columnsState]);
-
-
-    const dispatchEvent = useCustomEvent({
-        ref: componentRef,
-        eventName: 'tableRowClicked',
-    });
-
-
-    if (!dataState || !columnsState) return <LoadingTable />
-
-    const {
-        getTableProps,
-        getTableBodyProps,
-        headerGroups,
-        rows,
-        prepareRow,
-    } = useTable({
-        columns: columnsState,
-        data: dataState,
-    });
-
-    return (
-      <App>
-        <Styles>
-          <div ref={componentRef} {...getTableProps()} className="table">
-            <div>
-              {headerGroups.map((headerGroup) => (
-                <div key={headerGroup.id} {...headerGroup.getHeaderGroupProps()} className="tr header">
-                  {headerGroup.headers.map((column) => (
-                    <div key={column.id} {...column.getHeaderProps()} className="th">
-                      {column.render('Header')}
-
-                    </div>
-                                ))}
-                </div>
-                        ))}
-            </div>
-
-            <div {...getTableBodyProps()}>
-              {rows.map(
-                            (row, i) => {
-                                prepareRow(row);
-                                return (
-                                  <div onClick={() => dispatchEvent(row.values)} key={row.id} {...row.getRowProps()} className="tr">
-                                    {row.cells.map((cell) => (
-                                      <div key={cell.value} {...cell.getCellProps()} className="td">
-                                        {cell.render('Cell')}
-
-                                      </div>
-                                            ))}
-                                  </div>
-                                )
-                            },
-                        )}
-            </div>
-          </div>
-        </Styles>
-      </App>
-    )
-    }
 
 
 const Styles = styled("div")`
@@ -202,6 +167,4 @@ const Styles = styled("div")`
   }
 `;
 
-register(Table, 'x-table', ['columns', 'data']);
-
-export default Table;
+register(TableComp, 'x-table', ['columns', 'data']);
