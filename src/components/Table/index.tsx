@@ -3,14 +3,70 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { h, FunctionComponent } from 'preact';
 import {
- useEffect, useState, useRef, useMemo,
+ useEffect, useState, useRef,
 } from 'preact/hooks';
 import { styled } from "@nksaraf/goober"
 import register from 'preact-custom-element';
-import { useTable, Column, useBlockLayout } from 'react-table'
+import { useTable, Column } from 'react-table'
 import App from '../../App';
 import useCustomEvent from '../../utils/useCustomEvent';
+import Skeleton from "../Skeleton";
 
+
+const LoadingTable = () => {
+    const columns = new Array(4).fill({}).map((item, i) => ({ accessor: `${i}` }));
+    const data = new Array(4).fill({});
+
+    const {
+        getTableProps,
+        getTableBodyProps,
+        headerGroups,
+        rows,
+        prepareRow,
+    } = useTable({
+        columns,
+        data,
+    });
+
+    return (
+      <App>
+        <Styles>
+          <div {...getTableProps()} className="table">
+            <div>
+              {headerGroups.map((headerGroup) => (
+                <div key={headerGroup.id} {...headerGroup.getHeaderGroupProps()} className="tr header">
+                  {headerGroup.headers.map((column) => (
+                    <div key={column.id} {...column.getHeaderProps()} className="th">
+                      <Skeleton height={16} />
+
+                    </div>
+                                ))}
+                </div>
+                        ))}
+            </div>
+
+            <div {...getTableBodyProps()}>
+              {rows.map(
+                            (row) => {
+                                prepareRow(row);
+                                return (
+                                  <div key={row.id} {...row.getRowProps()} className="tr">
+                                    {row.cells.map((cell) => (
+                                      <div key={cell.value} {...cell.getCellProps()} className="td">
+                                        <Skeleton height={16} />
+
+                                      </div>
+                                        ))}
+                                  </div>
+                                )
+                            },
+                        )}
+            </div>
+          </div>
+        </Styles>
+      </App>
+    )
+}
 
 const Table: FunctionComponent<{ data: string, columns: string}> = ({ data, columns }) => {
     const [dataState, setData] = useState(null);
@@ -40,7 +96,7 @@ const Table: FunctionComponent<{ data: string, columns: string}> = ({ data, colu
     });
 
 
-    if (!dataState || !columnsState) return <div>Loading....</div>
+    if (!dataState || !columnsState) return <LoadingTable />
 
     const {
         getTableProps,
@@ -63,6 +119,7 @@ const Table: FunctionComponent<{ data: string, columns: string}> = ({ data, colu
                   {headerGroup.headers.map((column) => (
                     <div key={column.id} {...column.getHeaderProps()} className="th">
                       {column.render('Header')}
+
                     </div>
                                 ))}
                 </div>
@@ -78,6 +135,7 @@ const Table: FunctionComponent<{ data: string, columns: string}> = ({ data, colu
                                     {row.cells.map((cell) => (
                                       <div key={cell.value} {...cell.getCellProps()} className="td">
                                         {cell.render('Cell')}
+
                                       </div>
                                             ))}
                                   </div>
