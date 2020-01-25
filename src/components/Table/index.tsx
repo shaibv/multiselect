@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/jsx-props-no-spreading */
 import { h, FunctionComponent } from 'preact';
 import {
@@ -5,7 +7,7 @@ import {
 } from 'preact/hooks';
 import { styled } from "@nksaraf/goober"
 import register from 'preact-custom-element';
-import { useTable, Column } from 'react-table'
+import { useTable, Column, useBlockLayout } from 'react-table'
 import App from '../../App';
 import useCustomEvent from '../../utils/useCustomEvent';
 
@@ -54,28 +56,36 @@ const Table: FunctionComponent<{ data: string, columns: string}> = ({ data, colu
     return (
       <App>
         <Styles>
-          <table ref={componentRef} {...getTableProps()}>
-            <thead>
+          <div ref={componentRef} {...getTableProps()} className="table">
+            <div>
               {headerGroups.map((headerGroup) => (
-
-                <tr key={headerGroup.id} {...headerGroup.getHeaderGroupProps()}>
+                <div key={headerGroup.id} {...headerGroup.getHeaderGroupProps()} className="tr header">
                   {headerGroup.headers.map((column) => (
-                    <th key={column.id} {...column.getHeaderProps()}>{column.render("Header")}</th>
-                            ))}
-                </tr>
-                    ))}
-            </thead>
-            <tbody {...getTableBodyProps()}>
-              {rows.map((row) => {
-                        prepareRow(row);
-                        return (
-                          <tr onClick={() => dispatchEvent(row.values)} key={row.id} {...row.getRowProps()}>
-                            {row.cells.map((cell) => <td key={cell.value} {...cell.getCellProps()}>{cell.render("Cell")}</td>)}
-                          </tr>
-                        );
-                    })}
-            </tbody>
-          </table>
+                    <div key={column.id} {...column.getHeaderProps()} className="th">
+                      {column.render('Header')}
+                    </div>
+                                ))}
+                </div>
+                        ))}
+            </div>
+
+            <div {...getTableBodyProps()}>
+              {rows.map(
+                            (row, i) => {
+                                prepareRow(row);
+                                return (
+                                  <div onClick={() => dispatchEvent(row.values)} key={row.id} {...row.getRowProps()} className="tr">
+                                    {row.cells.map((cell) => (
+                                      <div key={cell.value} {...cell.getCellProps()} className="td">
+                                        {cell.render('Cell')}
+                                      </div>
+                                            ))}
+                                  </div>
+                                )
+                            },
+                        )}
+            </div>
+          </div>
         </Styles>
       </App>
     )
@@ -83,42 +93,52 @@ const Table: FunctionComponent<{ data: string, columns: string}> = ({ data, colu
 
 
 const Styles = styled("div")`
-  table {
+  .table {
     font-size: 14px;
     background: ${(props) => props.theme.colors.$D80};
     border-radius: 8px;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
     width: 100%;
-    tr {
+    overflow: hidden;
+
+    .tr.header {
+      background: ${(props) => props.theme.colors.$B40};
+      height: 42px;
+      &:hover {
+        background: ${(props) => props.theme.colors.$B40};
+        cursor: default;
+      }
+    }
+
+    .tr {
       height: 54px;
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      border-bottom: 1px solid ${(props) => props.theme.colors.$D60};
 
       &:hover {
-          background: ${(props) => props.theme.colors.$B50};
-          cursor: pointer;
-          transition: all 120ms ease;
+        background: ${(props) => props.theme.colors.$B50};
+        cursor: pointer;
+        transition: all 120ms ease;
       }
-    }
-    thead {
-      background: ${(props) => props.theme.colors.$B40};
-      
-      th {
-        font-weight: 400;
+
+      .th,
+      .td {
+        display: block;
+        flex: 1;
+        text-align: left;
+        overflow-x: hidden;
+        text-overflow: ellipsis;
+        padding: 0 30px 0 0;
+        align-items: center;
       }
-      tr {
-        height: 42px;
-        &:hover {
-             background: ${(props) => props.theme.colors.$B40};
-             cursor: default;
-        }
+
+      .th:first-child,
+      .td:first-child {
+        padding: 0 0 0 30px;
       }
-    }
-    th,
-    td {
-      margin: 0;
-      border-bottom: 1px solid ${(props) => props.theme.colors.$D60};
-      vertical-align: middle;
-      text-align: left;
-      padding: 0 30px;
     }
   }
 `;
