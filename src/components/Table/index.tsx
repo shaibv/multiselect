@@ -37,7 +37,7 @@ const LoadingTable = () => {
                 <div key={headerGroup.id} {...headerGroup.getHeaderGroupProps()} className="tr header">
                   {headerGroup.headers.map((column) => (
                     <div key={column.id} {...column.getHeaderProps()} className="th">
-                      <Skeleton height={16} />
+                      {/* <Skeleton height={16} /> */}
 
                     </div>
                                 ))}
