@@ -4,8 +4,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/prop-types */
 import register from 'preact-custom-element';
-import { h } from 'preact';
-import { useState, useEffect, useRef } from 'preact/hooks';
+import { h, FunctionComponent } from 'preact';
+import {
+ useState, useEffect, useRef, PropRef,
+} from 'preact/hooks';
 import { styled } from "@nksaraf/goober"
 import useClickOutside from '../../utils/useClickOutside';
 import { ArrowDown } from '../../utils/Icons';
@@ -23,26 +25,22 @@ const Dropdown = ({
     <StyledDropdown isOpen={isOpen}>
       {items.map((x, i) => (
         <Item
-          tabIndex={0}
           key={x.id}
           id={x.id}
+          ref={(el) => { checkboxRef.current[x.id] = el; }}
           checked={x.checked}
-          onKeyPress={(e) => {
-            if (e.key === 'Enter') {
-              checkboxRef.current[i].checked = true; addClickHandler(e);
-            }
-          }}
         >
           <label>
             <input
-              ref={(el) => { checkboxRef.current[i] = el; }}
-              key={x.checked}
+              tabIndex={0}
               id={x.id}
               checked={x.checked}
               onChange={addClickHandler}
+              onFocus={() => { checkboxRef.current[x.id].classList.add('focused') }}
+              onBlur={() => { checkboxRef.current[x.id].classList.remove('focused') }}
               type="checkbox"
             />
-            {x.name}
+            {x.label}
           </label>
         </Item>
       ))}
@@ -54,10 +52,10 @@ const Tags = ({ items, removeClickHandler }) => (
   <StyledTags>
     {items.map((item) => (
       <span key={item.id}>
-        {item.name}
+        {item.label}
         {' '}
         <i
-          tabIndex={-1}
+          tabIndex={0}
           role="button"
           id={item.id}
           onKeyPress={removeClickHandler}
@@ -70,37 +68,50 @@ const Tags = ({ items, removeClickHandler }) => (
   </StyledTags>
 );
 
-const Multiselect = (props) => {
-  const [data, setData] = useState(null);
-  const [checked, setChecked] = useState([]);
-  const [unChecked, setUnChecked] = useState([]);
+
+type DropdownItem = {
+  id: string,
+  label: string,
+  checked?: boolean
+}
+interface Attr {
+data: string,
+placeholder?:string
+}
+
+
+const Multiselect: FunctionComponent<Attr> = ({ data, placeholder }) => {
+  const [parsedData, setData] = useState<DropdownItem[] | null>(null);
+  const [checked, setChecked] = useState<DropdownItem[] | []>([]);
+  const [unChecked, setUnChecked] = useState<DropdownItem[] | []>([]);
   const [isOpen, setOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-  const [filteredData, setFilteredData] = useState([]);
+  const [filteredData, setFilteredData] = useState<DropdownItem[] | []>([]);
+
 
   const backSpaceDelete = useKeyPress('backspace');
+  const inputPlaceHolder = placeholder || 'Select Value';
+
 
   const realInputRef = useRef<HTMLInputElement>();
 
-  const { placeholder } = props;
+
+  useEffect(() => {
+    if (data) setData(JSON.parse(data));
+  }, [data]);
 
 
   useEffect(() => {
-    if (props && props.data) {
-      setData(JSON.parse(props.data));
+    if (parsedData) {
+      setChecked(parsedData.filter((item) => item.checked));
+      setUnChecked(parsedData.filter((item) => !item.checked));
     }
-  }, [props]);
+  }, [parsedData]);
+
 
   useEffect(() => {
     setFilteredData(unChecked);
   }, [unChecked]);
-
-  useEffect(() => {
-    if (data) {
-      setChecked(data.filter((item) => item.checked));
-      setUnChecked(data.filter((item) => !item.checked));
-    }
-  }, [data]);
 
 
   const dispatchEvent = useCustomEvent({
@@ -114,17 +125,15 @@ const Multiselect = (props) => {
 
   const addClickHandler = (e) => {
     const ctx = unChecked.filter((item) => item.id === e.target.id);
-    const ctx2 = unChecked.filter((item) => item.id !== e.target.id);
-    setChecked([...checked, ...ctx]);
-    setUnChecked([...ctx2]);
+    setChecked((x) => [...x, ...ctx]);
+    setUnChecked((x) => x.filter((item) => item.id !== e.target.id));
     realInputRef.current.focus();
   };
 
   const removeClickHandler = (e) => {
-    const ctx = checked.filter((item) => item.id !== e.target.id);
     const ctx2 = checked.filter((item) => item.id === e.target.id);
-    setChecked([...ctx]);
-    setUnChecked([...ctx2, ...unChecked]);
+    setChecked((x) => x.filter((item) => item.id !== e.target.id));
+    setUnChecked((x) => [...ctx2, ...x]);
     realInputRef.current.focus();
   };
 
@@ -133,20 +142,19 @@ const Multiselect = (props) => {
       const e = { target: checked[checked.length - 1] };
       removeClickHandler(e);
     }
-    return () => backSpaceDelete;
   }, [backSpaceDelete]);
 
   useEffect(() => {
     if (searchTerm.length) {
       const filter = unChecked.filter(
-        (item) => item.name.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1,
+        (item) => item.label.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1,
       );
       setFilteredData(filter);
     } else {
       setFilteredData(unChecked);
     }
     return () => searchTerm;
-  }, [searchTerm]);
+  }, [searchTerm, checked]);
 
   let timeout;
   const termSearchHandler = (e) => {
@@ -159,7 +167,7 @@ const Multiselect = (props) => {
   };
 
 
-  const [wrappRef, isClickOutside]: (any | boolean)[] = useClickOutside();
+  const [wrappRef, isClickOutside]: (PropRef<HTMLElement> | boolean)[] = useClickOutside();
 
   if (isClickOutside) setOpen(false);
 
@@ -169,19 +177,21 @@ const Multiselect = (props) => {
   }, [isOpen]);
 
 
-  const inputPlaceHolder = placeholder || 'Select Value';
-
   if (!data) return null;
   return (
     <App>
-      <Wrapp ref={wrappRef}>
+      <Wrap ref={wrappRef}>
         <FakeInput focused={isOpen}>
-          <Content onKeyPress={() => setOpen(true)} role="menuitem" onClick={() => setOpen(true)}>
+          <Content
+            role="menuitem"
+            onClick={() => setOpen(true)}
+          >
             <Tags removeClickHandler={removeClickHandler} items={checked} />
             <RealInput
               placeholder={inputPlaceHolder}
               onInput={termSearchHandler}
               type="text"
+              onFocus={() => setOpen(true)}
               ref={realInputRef}
             />
           </Content>
@@ -192,11 +202,16 @@ const Multiselect = (props) => {
           addClickHandler={addClickHandler}
           items={filteredData}
         />
-      </Wrapp>
+      </Wrap>
     </App>
 
   );
 };
+
+const Wrap: any = styled('div')`
+  position: relative;
+  box-sizing: border-box;
+`;
 
 
 const StyledTags: any = styled('div')`
@@ -230,16 +245,20 @@ const StyledTags: any = styled('div')`
   }
 `;
 
-const Item: any = styled<{ checked: any }>('li')`
-  &:focus {
-    outline: none;
-    background:  ${(props) => props.theme.colors.$B40};
-    cursor: pointer;
-  }
+const Item: any = styled<{ checked: any, focused: boolean }>('li')`
   &:hover {
     cursor: pointer;
     background:  ${(props) => props.theme.colors.$B40};
   }
+  &:active {
+    cursor: pointer;
+    background:  ${(props) => props.theme.colors.$B50};
+  }
+
+  &.focused {
+     background:  ${(props) => props.theme.colors.$B40};
+  }
+
 
   label {
     display: flex;
@@ -251,11 +270,9 @@ const Item: any = styled<{ checked: any }>('li')`
     cursor: pointer;
 
     & input[type="checkbox"] {
-      height: 0;
       position: absolute;
       opacity: 0;
-      width: 0;
-      visibility: hidden; 
+      height: 0; width: 0;
     }
   }
 
@@ -293,16 +310,11 @@ const RealInput: any = styled<{ isOpen: Boolean }>('input')`
   border: none;
 `;
 
-const Wrapp: any = styled('div')`
-  position: relative;
-  box-sizing: border-box;
-`;
 
 const FakeInput: any = styled<{ focused: Boolean }>('div')`
   display: flex;
   min-height: 36px;
   flex-wrap: wrap;
-  width: 100%;
   align-items: stretch;
   border-radius: 4px;
   background: ${(props) => props.theme.colors.$D80};
@@ -319,7 +331,7 @@ const FakeInput: any = styled<{ focused: Boolean }>('div')`
     top: 0;
     bottom: 0;
     margin: auto;
-     fill: ${(props) => props.theme.colors.$B10};
+    fill: ${(props) => props.theme.colors.$B10};
     cursor: pointer;
     z-index: 991;
   }
