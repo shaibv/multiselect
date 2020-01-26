@@ -47,8 +47,7 @@ module.exports = (env = {}, argv) => {
           sourceMap: false,
           cache: true
         })
-      ],
-  
+      ]
     },
     resolve: {
       alias: {
@@ -61,7 +60,7 @@ module.exports = (env = {}, argv) => {
       rules: [
         {
           test: /\.tsx?$/,
-          loader: "babel-loader",
+          loader: "babel-loader?cacheDirectory=true",
           options: {
             sourceMap: true,
             presets: [
