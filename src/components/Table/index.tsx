@@ -2,8 +2,9 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/jsx-props-no-spreading */
 import { h, FunctionComponent } from 'preact';
+import { memo } from "preact/compat"
 import {
- useEffect, useState, useRef,
+    useEffect, useState, useRef, useCallback,
 } from 'preact/hooks';
 import { styled } from "@nksaraf/goober"
 import register from 'preact-custom-element';
@@ -12,24 +13,29 @@ import App from '../../App';
 import useCustomEvent from '../../utils/useCustomEvent';
 import Skeleton from "../Skeleton";
 
-const TableComp: FunctionComponent<{ data: string, columns: string}> = ({ data, columns }) => {
-    const dummyColumns = new Array(4).fill({}).map((item, i) => ({ accessor: `${i}` }));
-    const dummyData = new Array(4).fill({});
+const dummyColumns = new Array(4).fill({}).map((item, i) => ({ accessor: `${i}` }));
+const dummyData = new Array(4).fill({});
 
+
+const TableComp: FunctionComponent<{ data: string, columns: string}> = ({ data, columns }) => {
     const [dataState, setData] = useState(dummyData);
     const [columnsState, setColumns] = useState(dummyColumns);
     const [loading, setLoading] = useState(true);
     const [pageCount, setPageCount] = useState(0);
 
 
+    const run = useCallback(({ parsedData, parsedColumns }) => {
+        setData(parsedData);
+        setColumns(parsedColumns);
+        setLoading(false)
+    }, [dataState, columnsState, loading])
+
+
     useEffect(() => {
         if (data && columns) {
             const parsedData: Array<any> = JSON.parse(data);
             const parsedColumns: Array<any> = JSON.parse(columns);
-
-            setData(parsedData);
-            setColumns(parsedColumns);
-            setLoading(false)
+            run({ parsedData, parsedColumns })
        }
     }, [data, columns]);
 
@@ -47,7 +53,7 @@ const TableComp: FunctionComponent<{ data: string, columns: string}> = ({ data, 
     }
 
 
-const Table = (props) => {
+const Table = memo((props) => {
     const {
         columns, data, loading, pageCount, pageCount: controlledPageCount,
 } = props;
@@ -56,13 +62,14 @@ const Table = (props) => {
         getTableProps,
         getTableBodyProps,
         headerGroups,
-        rows,
+        page,
         prepareRow,
+        setPageSize,
         state: { pageIndex, pageSize },
     } = useTable({
         columns,
         data,
-        initialState: { pageIndex: 0 },
+        initialState: { pageIndex: 0, pageSize: 10 },
         manualPagination: true,
         pageCount: controlledPageCount,
     }, usePagination);
@@ -92,7 +99,7 @@ const Table = (props) => {
           </div>
 
           <div {...getTableBodyProps()}>
-            {rows.map(
+            {page.map(
                             (row) => {
                                 prepareRow(row);
                                 return (
@@ -110,7 +117,7 @@ const Table = (props) => {
         </div>
       </Styles>
     )
-}
+});
 
 
 const Styles = styled("div")`
