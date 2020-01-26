@@ -1,7 +1,9 @@
 /* eslint-disable */
 const glob = require("glob");
-const CleanTerminalPlugin = require("clean-terminal-webpack-plugin");
-module.exports = {
+const WebpackBar = require("webpackbar");
+module.exports = (env = {}, argv) => {
+ const isProduction = argv.mode === "production";
+  let config = {
   context: __dirname,
   entry: glob.sync("./src/components/**/*.{js,jsx,tsx}").reduce(
     (entries, entry) =>
@@ -16,6 +18,7 @@ module.exports = {
     filename: "[name].js"
   },
   mode: "production",
+
   resolve: {
     alias: {
       react: "preact/compat",
@@ -97,6 +100,7 @@ module.exports = {
     ]
   },
   devtool: "inline-source-map",
+   stats: 'errors-only',
   node: {
     process: "mock",
     Buffer: false,
@@ -104,5 +108,8 @@ module.exports = {
   },
   devServer: {
     historyApiFallback: true
-  }
+  },
+  plugins: [new WebpackBar()]
+}
+return config
 };

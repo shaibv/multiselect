@@ -12,7 +12,6 @@ import App from '../../App';
 import useCustomEvent from '../../utils/useCustomEvent';
 import Skeleton from "../Skeleton";
 
-
 const TableComp: FunctionComponent<{ data: string, columns: string}> = ({ data, columns }) => {
     const dummyColumns = new Array(4).fill({}).map((item, i) => ({ accessor: `${i}` }));
     const dummyData = new Array(4).fill({});
@@ -20,7 +19,7 @@ const TableComp: FunctionComponent<{ data: string, columns: string}> = ({ data, 
     const [dataState, setData] = useState(dummyData);
     const [columnsState, setColumns] = useState(dummyColumns);
     const [loading, setLoading] = useState(true);
-    const [pageCount, setPageCount] = useState(0)
+    const [pageCount, setPageCount] = useState(0);
 
 
     useEffect(() => {
@@ -94,14 +93,13 @@ const Table = (props) => {
 
           <div {...getTableBodyProps()}>
             {rows.map(
-                            (row, i) => {
+                            (row) => {
                                 prepareRow(row);
                                 return (
                                   <div onClick={() => dispatchEvent(row.values)} key={row.id} {...row.getRowProps()} className="tr">
                                     {row.cells.map((cell) => (
                                       <div key={cell.value} {...cell.getCellProps()} className="td">
                                         {loading ? <Skeleton height={16} /> : cell.render('Cell')}
-
                                       </div>
                                         ))}
                                   </div>
