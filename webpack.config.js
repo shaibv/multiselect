@@ -1,8 +1,10 @@
 /* eslint-disable */
 const glob = require("glob");
 const TerserPlugin = require("terser-webpack-plugin");
-
+const path = require("path");
 const WebpackBar = require("webpackbar");
+
+
 module.exports = (env = {}, argv) => {
   const isProduction = argv.mode === "production";
   let config = {
@@ -21,7 +23,7 @@ module.exports = (env = {}, argv) => {
     },
     mode: "production",
     optimization: {
-      minimize: true,
+      minimize: isProduction,
       minimizer: [
         new TerserPlugin({
           terserOptions: {
@@ -48,6 +50,11 @@ module.exports = (env = {}, argv) => {
           cache: true
         })
       ]
+    },
+    devServer: {
+      contentBase: path.join(__dirname, "dist"),
+      compress: true,
+      quiet: true
     },
     resolve: {
       alias: {
@@ -138,9 +145,7 @@ module.exports = (env = {}, argv) => {
       Buffer: false,
       setImmediate: false
     },
-    devServer: {
-      historyApiFallback: true
-    },
+
     plugins: [new WebpackBar()]
   };
   return config;

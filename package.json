@@ -5,10 +5,9 @@
   "description": "",
   "main": "src",
   "scripts": {
-    "start": "npm-run-all --parallel dev:server watch:build",
-    "dev:server": "nodemon  --ignore dist index.js ",
-    "watch:build": "webpack --watch  --config webpack.config.js",
-     "now-build": "webpack --mode production"
+    "start": "webpack-dev-server --mode development --open",
+     "build": "webpack --mode production",
+    "now-build": "webpack --mode production"
   },
   "author": "",
   "license": "ISC",
