@@ -61,7 +61,10 @@ const Sidebar: FunctionComponent<Props> = ({ data, activemenuitem }) => {
     eventName: 'menuItemClicked',
 });
 
-  const clickHandler = (item) => setActive(item);
+  const clickHandler = (item) => {
+    setActive(item);
+    dispatchEvent(item);
+  }
 
   useEffect(() => {
     if (data) {
@@ -78,10 +81,6 @@ const Sidebar: FunctionComponent<Props> = ({ data, activemenuitem }) => {
       }
     }
   }, [data, activemenuitem]);
-
-  useEffect(() => {
-    dispatchEvent(active)
-  }, [active]);
 
 
   if (!dataState) return null;
