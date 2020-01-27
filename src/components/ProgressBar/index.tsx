@@ -115,11 +115,10 @@ const ProgressBar = ({ state }) => {
     useEffect(() => {
         if (state === 'run') {
             progress.start()
-            // setTimeout(() => {
-            //     progress.finish();
-            // }, 1000);
+            setTimeout(() => {
+                progress.finish();
+            }, 1500);
         }
-        return () => progress.finish();
     }, [state]);
 
     return (
