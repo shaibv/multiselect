@@ -58,6 +58,7 @@ module.exports = (env = {}, argv) => {
       contentBase: path.join(__dirname, "dist"),
       compress: true,
       quiet: true,
+      hot: true,
       watchContentBase: true,
       https: true
     },

@@ -117,7 +117,7 @@ const ProgressBar = ({ state }) => {
             progress.start()
             setTimeout(() => {
                 progress.finish();
-            }, 2000);
+            }, 1000);
         }
     }, [state]);
 
