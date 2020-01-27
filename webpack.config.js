@@ -3,7 +3,10 @@ const glob = require("glob");
 const TerserPlugin = require("terser-webpack-plugin");
 const path = require("path");
 const WebpackBar = require("webpackbar");
-
+const ExtractCssChunks = require("extract-css-chunks-webpack-plugin");
+const { HashedModuleIdsPlugin } = require("webpack");
+const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
+const ScriptExtHtmlWebpackPlugin = require("script-ext-html-webpack-plugin");
 
 module.exports = (env = {}, argv) => {
   const isProduction = argv.mode === "production";
@@ -54,7 +57,9 @@ module.exports = (env = {}, argv) => {
     devServer: {
       contentBase: path.join(__dirname, "dist"),
       compress: true,
-      quiet: true
+      quiet: true,
+      watchContentBase: true,
+      https: true
     },
     resolve: {
       alias: {
@@ -134,7 +139,7 @@ module.exports = (env = {}, argv) => {
         },
         {
           test: /\.s?css$/,
-          use: ["style-loader", "css-loader", "sass-loader"]
+          use: [ExtractCssChunks.loader, "css-loader", "clean-css-loader"]
         }
       ]
     },
@@ -146,7 +151,20 @@ module.exports = (env = {}, argv) => {
       setImmediate: false
     },
 
-    plugins: [new WebpackBar()]
+    plugins: [
+      new WebpackBar(),
+      new ExtractCssChunks({
+        filename: "[name].css",
+        chunkFilename: "[id].css"
+      }),
+     
+      new HashedModuleIdsPlugin({
+        hashFunction: "sha256",
+        hashDigest: "hex",
+        hashDigestLength: 20
+      }),
+      new FriendlyErrorsWebpackPlugin()
+    ]
   };
   return config;
 };

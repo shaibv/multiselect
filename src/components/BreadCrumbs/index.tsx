@@ -72,16 +72,16 @@ const StyledCrumbs: any = styled("ul")`
   min-height: 30px;
 `;
 
-const StyledCrumb = styled("li")`
+const StyledCrumb = styled("li")` 
   display: flex;
   align-items: center;
+  
  
-
   button {
     border: none;
-    background: transparent;
-    font-size: 14px;
-    color: ${(props) => props.theme.colors.$D10};
+    background: transparent; 
+    font-size: 14px; 
+    color: ${(props) => props.theme.colors.$D10}; 
     padding: 0;
     display: flex;
     font-weight: 300;
