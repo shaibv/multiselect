@@ -48,7 +48,7 @@ const Tabs: FunctionComponent<Props> = ({ data, activetab }) => {
           return flatten;
         }));
     }
-  }, [dataState]);
+  }, [activetab, dataState]);
 
 
   const dispatchEvent = useCustomEvent({
