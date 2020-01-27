@@ -90,7 +90,12 @@
         }
     ];
 
-    const tabsItems = ['All', 'Active', 'Future', 'Inactive'];
+    const tabsItems = [
+    { id: 'PUBLISHED', label: 'Published', active: false },
+	{ id: 'DRAFT', label: 'Draft', active: true },
+	{ id: 'ARCHIVED', label: 'Archived', active: false },
+	{ id: 'ALL', label: 'All', active: false },
+    ];
 
 
     const sidebarItems = [

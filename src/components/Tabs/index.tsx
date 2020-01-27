@@ -35,14 +35,13 @@ const Tabs: FunctionComponent<Props> = ({ data, activetab }) => {
 
   useEffect(() => {
     if (data) {
-      const parsedData = JSON.parse(data);
-      setData(parsedData.map((tab) => ({ label: tab, id: tab.toLowerCase() })));
+      setData(JSON.parse(data));
     }
   }, [data]);
 
   useEffect(() => {
     if (activetab && dataState) {
-      setActive(dataState.filter((tab) => tab.id === activetab.toLowerCase())
+      setActive(dataState.filter((tab) => tab.id.toLowerCase() === activetab.toLowerCase())
         .reduce((acc, item) => {
           // @ts-ignore
           const flatten = acc.concat(item);
@@ -51,18 +50,17 @@ const Tabs: FunctionComponent<Props> = ({ data, activetab }) => {
     }
   }, [dataState]);
 
+
   const dispatchEvent = useCustomEvent({
     ref: componentRef,
     eventName: 'tabItemClicked',
   });
 
   const clickHandler = (item) => {
+    dispatchEvent(item)
     setActive(item);
   };
 
-  useEffect(() => {
-    dispatchEvent(active)
-  }, [active]);
 
   if (!dataState) return null;
   return (
