@@ -325,7 +325,7 @@ const FakeInput: any = styled<{ focused: Boolean }>('div')`
 
   &:hover {
     cursor: text;
-     background: ${(props) => props.theme.colors.$B40};
+     background: ${(props) => props.theme.colors.$B50};
   }
  
   .arrow {
