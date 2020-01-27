@@ -73,7 +73,7 @@ const Sidebar: FunctionComponent<Props> = ({ data, activemenuitem }) => {
 
       if (activemenuitem) {
         parsedData.map((section) => {
-          const filter = section.items.filter((item) => item.label === activemenuitem);
+          const filter = section.items.filter((item) => item.label.toLowerCase() === activemenuitem.toLowerCase());
           if (!filter.length) return;
           // @ts-ignore
           setActive(...filter);
