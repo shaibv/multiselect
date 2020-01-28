@@ -42,8 +42,9 @@ const ListedData = ({ data }) => (
     <Values>
       {data.map((item) => (
         // @ts-ignore
-        isHtmlElement(item.value) ? <li innerHTML={item.value} key={item.value} />
-        : <li key={item.value}>{item.value}</li>
+        // isHtmlElement(item.value) ? <li innerHTML={item.value} key={item.value} />
+        // : <li key={item.value}>{item.value}</li>
+        <li innerHTML={item.value} key={item.value} />
 
     ))}
     </Values>
