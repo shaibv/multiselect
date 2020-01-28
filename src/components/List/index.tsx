@@ -84,7 +84,7 @@ const StyledList = styled('div')`
   font-size: 14px;
 
   div li {
-  height: 30px;
+  height: 36px;
   }
 
 `;
