@@ -85,6 +85,8 @@ const StyledList = styled('div')`
 
   div li {
   height: 36px;
+  display: flex;
+  align-items: center;
   }
 
 `;
