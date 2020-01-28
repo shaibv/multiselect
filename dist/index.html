@@ -1,166 +1,234 @@
-
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Document</title>
-      <script src="/Tabs/index.js"></script>
-      <script src="/MultiSelect/index.js"></script>
-      <script src="/Sidebar/index.js"></script> 
-      <script src="/ProgressBar/index.js"></script>
-      <script src="/BreadCrumbs/index.js"></script>
-      <style>
-        html {
-            position: relative;
-	       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-	box-sizing: border-box;
-            padding: 84px;
-        }
-      </style>
-</head>
-<body>
+    <script src="/Tabs/index.js"></script>
+    <script src="/MultiSelect/index.js"></script>
+    <script src="/Sidebar/index.js"></script>
+    <script src="/ProgressBar/index.js"></script>
+    <script src="/BreadCrumbs/index.js"></script>
+    <script src="/List/index.js"></script>
+    <style>
+      html {
+        position: relative;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+          "Segoe UI Symbol";
+        box-sizing: border-box;
+        padding: 84px;
+      }
+    </style>
+  </head>
+  <body>
     <h1>Componenets Playground</h1>
-    <x-breadcrumbs id='x-breadcrumbs'></x-breadcrumbs> 
-    <x-tabs id='x-tabs'></x-tabs> 
-        <x-multiselect id='x-multiselect' maxHeight="200" placeholder="Select Value"></x-multiselect>
-     <x-sidebar id='x-sidebar'></x-sidebar> 
-     <x-progressbar id='x-progressbar'></x-progressbar> 
-
-    
-</body> 
-<script>
-
+    <x-breadcrumbs id="x-breadcrumbs"></x-breadcrumbs>
+    <x-tabs id="x-tabs"></x-tabs>
+    <x-list id="x-list"></x-list>
+    <x-multiselect
+      id="x-multiselect"
+      maxHeight="200"
+      placeholder="Select Value"
+    ></x-multiselect>
+    <x-sidebar id="x-sidebar"></x-sidebar>
+    <x-progressbar id="x-progressbar"></x-progressbar>
+  </body>
+  <script>
     const data = [
-        {
-            "id": "ef4c058e-bab1-481b-9131-b56a92fc0401",
-            "label": "Answers",
-            "productSettingsId": "20a780b4-04d8-42ff-bfbc-e9541863afea"
-        },
-        {
-            "id": "381596df-8376-4e3e-8bef-0fbc2e91aa46",
-            "label": "Office365",
-            "productSettingsId": "20a780b4-04d8-42ff-bfbc-e9541863afea"
-        },
-        {
-            "id": "72af0602-1321-4897-8299-f507480b2bb8",
-            "label": "Domain",
-            "productSettingsId": "20a780b4-04d8-42ff-bfbc-e9541863afea"
-        },
-        {
-            "id": "8b1b47e6-9f58-4e59-b147-cac894bec8da",
-            "label": "Premium",
-            "productSettingsId": "20a780b4-04d8-42ff-bfbc-e9541863afea"
-        },
-        {
-            "id": "c8a5ca23-5a0f-46dd-ae57-69643fa08743",
-            "label": "G-Suite",
-            "productSettingsId": "20a780b4-04d8-42ff-bfbc-e9541863afea"
-        },
-        {
-            "id": "73988963-5f5f-4f61-b6a1-fd004df31b00",
-            "label": "Ascend",
-            "productSettingsId": "20a780b4-04d8-42ff-bfbc-e9541863afea"
-        },
-        {
-            "id": "cc05402e-8593-4284-86f2-8314b7651991",
-            "label": "DeviantArt",
-            "productSettingsId": "20a780b4-04d8-42ff-bfbc-e9541863afea"
-        },
-        {
-            "id": "4ea2fc67-6495-4001-bcbe-438d67f7efa4",
-            "label": "Logo",
-            "productSettingsId": "20a780b4-04d8-42ff-bfbc-e9541863afea"
-        },
-        {
-            "id": "fbc52050-2ca2-4737-9af9-79dfca465f7d",
-            "label": "Test",
-            "productSettingsId": "20a780b4-04d8-42ff-bfbc-e9541863afea"
-        },
-        {
-            "id": "71a2c5fa-96a0-461e-9ff7-8cd043d393f9",
-            "label": "Shutterstock",
-            "productSettingsId": "20a780b4-04d8-42ff-bfbc-e9541863afea"
-        },
-        {
-            "id": "e24de30e-d484-426b-b9b2-eda6c8b42d70",
-            "label": "External Apps",
-            "productSettingsId": "20a780b4-04d8-42ff-bfbc-e9541863afea"
-        }
+      {
+        id: "ef4c058e-bab1-481b-9131-b56a92fc0401",
+        label: "Answers",
+        productSettingsId: "20a780b4-04d8-42ff-bfbc-e9541863afea"
+      },
+      {
+        id: "381596df-8376-4e3e-8bef-0fbc2e91aa46",
+        label: "Office365",
+        productSettingsId: "20a780b4-04d8-42ff-bfbc-e9541863afea"
+      },
+      {
+        id: "72af0602-1321-4897-8299-f507480b2bb8",
+        label: "Domain",
+        productSettingsId: "20a780b4-04d8-42ff-bfbc-e9541863afea"
+      },
+      {
+        id: "8b1b47e6-9f58-4e59-b147-cac894bec8da",
+        label: "Premium",
+        productSettingsId: "20a780b4-04d8-42ff-bfbc-e9541863afea"
+      },
+      {
+        id: "c8a5ca23-5a0f-46dd-ae57-69643fa08743",
+        label: "G-Suite",
+        productSettingsId: "20a780b4-04d8-42ff-bfbc-e9541863afea"
+      },
+      {
+        id: "73988963-5f5f-4f61-b6a1-fd004df31b00",
+        label: "Ascend",
+        productSettingsId: "20a780b4-04d8-42ff-bfbc-e9541863afea"
+      },
+      {
+        id: "cc05402e-8593-4284-86f2-8314b7651991",
+        label: "DeviantArt",
+        productSettingsId: "20a780b4-04d8-42ff-bfbc-e9541863afea"
+      },
+      {
+        id: "4ea2fc67-6495-4001-bcbe-438d67f7efa4",
+        label: "Logo",
+        productSettingsId: "20a780b4-04d8-42ff-bfbc-e9541863afea"
+      },
+      {
+        id: "fbc52050-2ca2-4737-9af9-79dfca465f7d",
+        label: "Test",
+        productSettingsId: "20a780b4-04d8-42ff-bfbc-e9541863afea"
+      },
+      {
+        id: "71a2c5fa-96a0-461e-9ff7-8cd043d393f9",
+        label: "Shutterstock",
+        productSettingsId: "20a780b4-04d8-42ff-bfbc-e9541863afea"
+      },
+      {
+        id: "e24de30e-d484-426b-b9b2-eda6c8b42d70",
+        label: "External Apps",
+        productSettingsId: "20a780b4-04d8-42ff-bfbc-e9541863afea"
+      }
     ];
 
     const tabsItems = [
-    { id: 'PUBLISHED', label: 'Published', active: false },
-	{ id: 'DRAFT', label: 'Draft', active: true },
-	{ id: 'ARCHIVED', label: 'Archived', active: false },
-	{ id: 'ALL', label: 'All', active: false },
+      { id: "PUBLISHED", label: "Published", active: false },
+      { id: "DRAFT", label: "Draft", active: true },
+      { id: "ARCHIVED", label: "Archived", active: false },
+      { id: "ALL", label: "All", active: false }
     ];
 
-
     const sidebarItems = [
-        {
-                label: 'Product Catalog',
-                items: [
-                    {label: 'Features'},
-                    {label: 'Products'}
-                ]
-    },
-    {
-                label: 'Coupons',
-                items: [
-                    {label: 'Static Coupons'},
-                    {label: 'Dynamic Coupons'}
-                ]
-    },
-    {
-                label: 'Offering',
-                items: [
-                    {label: 'Dealer'},
-                ]
-    },
-    {
-                label: '',
-                items: [
-                    {label: 'System Settings'},
-                ]
-    }
+      {
+        label: "Product Catalog",
+        items: [{ label: "Features" }, { label: "Products" }]
+      },
+      {
+        label: "Coupons",
+        items: [{ label: "Static Coupons" }, { label: "Dynamic Coupons" }]
+      },
+      {
+        label: "Offering",
+        items: [{ label: "Dealer" }]
+      },
+      {
+        label: "",
+        items: [{ label: "System Settings" }]
+      }
+    ];
 
-    ]
+    const multiSelect = document.getElementById("x-multiselect");
+    const tabs = document.getElementById("x-tabs");
+    const sidebar = document.getElementById("x-sidebar");
+    const progressbar = document.getElementById("x-progressbar");
+    const breacCrumbs = document.getElementById("x-breadcrumbs");
+    const list = document.getElementById("x-list");
 
+    multiSelect.setAttribute("data", JSON.stringify(data));
 
-    const multiSelect = document.getElementById('x-multiselect');
-    const tabs = document.getElementById('x-tabs');
-    const sidebar = document.getElementById('x-sidebar');
-    const progressbar = document.getElementById('x-progressbar');
-    const breacCrumbs = document.getElementById('x-breadcrumbs');
+    tabs.setAttribute("activetab", "All");
+    tabs.setAttribute("data", JSON.stringify(tabsItems));
 
-    multiSelect.setAttribute('data', JSON.stringify(data));
+    sidebar.setAttribute("data", JSON.stringify(sidebarItems));
+    sidebar.setAttribute("activemenuitem", "Static Coupons");
 
-    tabs.setAttribute('activetab', 'All');
-    tabs.setAttribute('data', JSON.stringify(tabsItems));
-
-
-    sidebar.setAttribute('data', JSON.stringify(sidebarItems))
-    sidebar.setAttribute('activemenuitem', 'Static Coupons')
-    
-    progressbar.setAttribute('state', 'run')
+    progressbar.setAttribute("state", "run");
 
     setTimeout(() => {
-    progressbar.setAttribute('state', 'finish')
+      progressbar.setAttribute("state", "finish");
     }, 1000);
-
 
     /// Beradcrumbs
 
     const breadCrumbsItems = [
-        {label: 'Static Coupouns', url: "entities/static"},
-        {label: 'Details', url: ""},
-        {label: 'Test Coupons', url: ""},
+      { label: "Static Coupouns", url: "entities/static" },
+      { label: "Details", url: "" },
+      { label: "Test Coupons", url: "" }
     ];
 
-    breacCrumbs.setAttribute('data', JSON.stringify(breadCrumbsItems))
+    breacCrumbs.setAttribute("data", JSON.stringify(breadCrumbsItems));
 
-   
-</script>
+    /// List
+
+    const itemObject = {
+      id: "9190f9e1-2049-425c-a362-4b3f4f88b73c",
+      name: "Freelancer",
+      description: "Wix Studio Freelancer package",
+      features: [
+        {
+          featureSpecId: "6818bb83-e015-49e8-aec7-fe64c5643849",
+          limit: "1",
+          properties: {},
+          excludedCycles: []
+        },
+        {
+          featureSpecId: "94084311-8dd9-4ab9-85d7-f6296c5e7d63",
+          properties: {},
+          excludedCycles: []
+        },
+        {
+          featureSpecId: "03130347-89da-4013-ba23-f9d11789f4c3",
+          properties: {},
+          excludedCycles: []
+        },
+        {
+          featureSpecId: "487a6a3c-54f3-4afa-9b9b-730d0292da9f",
+          properties: {},
+          excludedCycles: []
+        },
+        {
+          featureSpecId: "6447c83d-bef0-485c-b5a8-808e7e2cce30",
+          properties: {},
+          excludedCycles: []
+        },
+        {
+          featureSpecId: "4228ad66-e30d-4b52-a42a-53d581307e54",
+          properties: {},
+          excludedCycles: []
+        },
+        {
+          featureSpecId: "1810046f-a122-43f1-ace2-45cff7a950d6",
+          properties: {},
+          excludedCycles: []
+        }
+      ],
+      productTypeId: "507b0a14-ebb5-48c8-a9c4-542cbf997732",
+      productFamilyId: "3f3e2d43-ddc1-4d8b-8c68-64618439c671",
+      productStatus: "PUBLISHED",
+      billingProductId: "12d44304-85a5-4a29-ad8d-68fa1955ca1b",
+      additionalProperties: {},
+      couponTemplates: [],
+      createdAt: "2020-01-15T12:18:28.238Z",
+      updatedAt: "2020-01-15T12:23:54.575Z",
+      productType: "Wix Studio",
+      labels: ["Wix Studio"]
+    };
+
+
+
+    const styledData = {
+		'name':  "<strong style='color: red;'>item.name</strong>",
+		'id':  "item.id"
+		
+    };
+    
+    fetch("https://www.mocky.io/v2/5e30af2c3200008000858c10").then(x =>
+      x.json().then(data => {
+
+        const objectToKeyValuePair = Object.entries(
+          data
+        ).map(([key, value]) => ({ key, value: styledData[key] }));
+
+
+        setTimeout(() => {
+            
+            list.setAttribute("data", JSON.stringify(objectToKeyValuePair));
+        }, 2000);
+      })
+    );
+
+  </script>
 </html>
