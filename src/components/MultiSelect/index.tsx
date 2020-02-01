@@ -98,7 +98,7 @@ const Multiselect: FunctionComponent<Attr> = ({ data, placeholder }) => {
 
   useEffect(() => {
     if (data) setData(JSON.parse(data));
-  }, [data]);
+  }, [data, placeholder]);
 
 
   useEffect(() => {
