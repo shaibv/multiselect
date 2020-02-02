@@ -9,10 +9,11 @@ const data = [
     { id: "ALL", label: "All", active: false },
 ];
 
- export const Default = () => <Tabs activetab={data[0].label} data={JSON.stringify(data)} />
+  const Default = () => <Tabs activetab={data[0].label} data={JSON.stringify(data)} />
 
 export default {
     title: 'Tabs',
+    component: Default,
     parameters: {
         info: { inline: true },
     },
