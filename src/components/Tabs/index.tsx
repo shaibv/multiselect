@@ -14,7 +14,7 @@ type Tab = {
 };
 interface Props {
   data: string,
-  activetab: String
+  activetab?: String
 }
 
 const Tab = ({ item, isActive, clickHandler }) => (
@@ -29,7 +29,7 @@ const Tab = ({ item, isActive, clickHandler }) => (
 );
 
 
-export const Tabs: FunctionComponent<Props> = ({ data, activetab }) => {
+const Tabs: FunctionComponent<Props> = ({ data, activetab }) => {
   const [dataState, setData] = useState<Tab[] | null>(null);
   const [active, setActive] = useState<any>({});
 
@@ -124,4 +124,4 @@ const StyledLi: any = styled<{ isActive: boolean }>('li')`
 `;
 
 register(Tabs, 'x-tabs', ['data', 'activetab']);
-export default { title: 'Tabs' }
+export default Tabs;

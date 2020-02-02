@@ -173,6 +173,6 @@ const Styles = styled("div")`
     }
   }
 `;
-export default { title: 'TableComp' }
+export default TableComp
 
 register(TableComp, 'x-table', ['columns', 'data']);

@@ -346,6 +346,5 @@ const Content: any = styled("div")`
   justify-content: stretch;
   flex-wrap: wrap;
 `;
-export default { title: 'Multiselect' }
-
+export default Multiselect;
 register(Multiselect, 'x-multiselect', ['data']);
