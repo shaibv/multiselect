@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { h } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
 import { styled } from "@nksaraf/goober"
@@ -95,5 +97,6 @@ const Values = styled('div')`
 
 `;
 
+export default { title: 'List' }
 
 register(List, 'x-list', ['data']);

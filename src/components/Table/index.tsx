@@ -1,6 +1,8 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/jsx-props-no-spreading */
+// @ts-nocheck
+
 import { h, FunctionComponent } from 'preact';
 import { memo } from "preact/compat"
 import {
@@ -171,5 +173,6 @@ const Styles = styled("div")`
     }
   }
 `;
+export default { title: 'TableComp' }
 
 register(TableComp, 'x-table', ['columns', 'data']);

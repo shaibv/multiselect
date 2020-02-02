@@ -2,7 +2,7 @@ import { h } from "preact"
 import { styled } from "@nksaraf/goober";
 import { useEffect, useState } from "preact/hooks";
 
-const Skeleton = ({ width, height }: {width?: number, height: number}) => {
+ const Skeleton = ({ width, height }: {width?: number, height: number}) => {
   const randomInteger = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
   const maxWidth = width || 150;
   const [currentWidth, setWidth] = useState(0);
@@ -60,5 +60,4 @@ const Rectangle: any = styled<{ width: number, height: number}>('span')`
     margin-bottom: 0;
   }
 `;
-
 export default Skeleton;

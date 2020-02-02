@@ -3,6 +3,8 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/prop-types */
+// @ts-nocheck
+
 import register from 'preact-custom-element';
 import { h, FunctionComponent } from 'preact';
 import {
@@ -344,5 +346,6 @@ const Content: any = styled("div")`
   justify-content: stretch;
   flex-wrap: wrap;
 `;
+export default { title: 'Multiselect' }
 
 register(Multiselect, 'x-multiselect', ['data']);

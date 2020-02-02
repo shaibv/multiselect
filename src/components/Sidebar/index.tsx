@@ -1,8 +1,11 @@
 /* eslint-disable no-console */
+// @ts-nocheck
+
 import { h, FunctionComponent } from 'preact';
 import { useEffect, useState, useRef } from 'preact/hooks';
 import register from 'preact-custom-element';
 import { styled } from "@nksaraf/goober"
+import { FC } from 'preact/compat/src';
 import LogoIcon from './LogoIcon';
 import useCustomEvent from '../../utils/useCustomEvent';
 import App from "../../App";
@@ -17,7 +20,7 @@ type Section = {
 };
 interface Props {
   data: string
-  activemenuitem: string,
+  activemenuitem?: string,
 }
 
 
@@ -25,7 +28,7 @@ const Logo = () => (
   <div className="logo"><LogoIcon /></div>
 );
 
-const Section: FunctionComponent<{ section: Section, isActive: MenuItem, clickHandler: any}> = (
+const Section: FC<{ section: Section, isActive: MenuItem, clickHandler: any}> = (
   { section, isActive, clickHandler },
 ) => (
   <StyledSection>
@@ -174,6 +177,5 @@ const MenuItem: any = styled<{ isActive: Boolean }>('button')`
 `;
 
 register(Sidebar, 'x-sidebar', ['data', 'activemenuitem']);
-
 
 export default Sidebar;
