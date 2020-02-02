@@ -1,8 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { h } from "preact";
-import { storiesOf } from "@storybook/preact";
 import Tabs from "./index";
-
 
 const data = [
     { id: "PUBLISHED", label: "Published", active: false },
@@ -11,4 +9,11 @@ const data = [
     { id: "ALL", label: "All", active: false },
 ];
 
-storiesOf("Tabs", module).add("Default", () => (<Tabs activetab={data[0].label} data={JSON.stringify(data)} />));
+ export const Default = () => <Tabs activetab={data[0].label} data={JSON.stringify(data)} />
+
+export default {
+    title: 'Tabs',
+    parameters: {
+        info: { inline: true },
+    },
+};

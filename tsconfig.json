@@ -12,19 +12,20 @@
     "esModuleInterop": true,
     "isolatedModules": true,
     "allowSyntheticDefaultImports": true,
+     "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "react",
     "jsxFactory": "h",
     "allowJs": true
   },
+  "include": ["src/**/*"],
    "exclude": [
     "dist",
     "node_modules"
   ],
    "plugins": [
-      {
-        "name": "typescript-styled-plugin"
-      }
+     
     ]
 
 }

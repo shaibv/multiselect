@@ -31,7 +31,7 @@ const Rectangle: any = styled<{ width: number, height: number}>('span')`
   }
 }
 
-  width: ${(props) => props.width}px;
+  width: 100px;
   background: linear-gradient(
     270deg,
     rgb(250, 250, 250),

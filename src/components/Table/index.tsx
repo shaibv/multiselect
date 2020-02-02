@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/jsx-props-no-spreading */
-// @ts-nocheck
 
 import { h, FunctionComponent } from 'preact';
 import { memo } from "preact/compat"
@@ -122,7 +121,7 @@ const Table = memo((props) => {
 });
 
 
-const Styles = styled("div")`
+const Styles = styled<{theme: any}>("div")`
   .table {
     font-size: 14px;
     background: ${(props) => props.theme.colors.$D80};

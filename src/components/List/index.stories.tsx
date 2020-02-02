@@ -16,7 +16,6 @@ const MockList = () => {
         setData(objectToKeyValuePair);
     }, []);
 
-    if (!data) return null;
     return (
       <List data={JSON.stringify(data)} />
     )

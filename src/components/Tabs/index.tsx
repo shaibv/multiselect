@@ -1,4 +1,3 @@
-// @ts-nocheck
 
 import { h, FunctionComponent } from 'preact';
 import { useEffect, useState, useRef } from 'preact/hooks';
@@ -95,7 +94,7 @@ const StyledUl: any = styled('ul')`
   box-sizing: border-box;
 `;
 
-const StyledLi: any = styled<{ isActive: boolean }>('li')`
+const StyledLi: any = styled<{ theme: any, isActive: boolean }>('li')`
 
   height: 100%;
   display: flex;
