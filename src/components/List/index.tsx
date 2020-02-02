@@ -97,6 +97,5 @@ const Values = styled('div')`
 
 `;
 
-export default { title: 'List' }
-
+export default List;
 register(List, 'x-list', ['data']);

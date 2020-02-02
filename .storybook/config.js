@@ -1,2 +1,2 @@
 import { configure } from "@storybook/preact";
-configure(require.context("../src/components/Sidebar", true, /\.stories\.tsx?$/), module);
+configure(require.context("../src/components", true, /\.stories\.tsx?$/), module);

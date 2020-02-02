@@ -1,5 +1,6 @@
 // @ts-nocheck
-import { h, FunctionComponent } from 'preact';
+import { h } from 'preact';
+import { FC } from 'preact/compat'
 import { useEffect, useState, useRef } from 'preact/hooks';
 import { styled } from "@nksaraf/goober"
 import register from 'preact-custom-element';
@@ -24,7 +25,7 @@ const Crumb = ({ item, clickHandler }) => (
 );
 
 
-const BreadCrumbs: FunctionComponent<Props> = ({ data }) => {
+const BreadCrumbs:FC<Props> = ({ data }) => {
     const [dataState, setData] = useState<Crumb[] | null>(null);
     const componentRef = useRef<HTMLUListElement>();
 
@@ -111,6 +112,5 @@ const StyledCrumb = styled("li")`
   }
 `;
 
-
+export default BreadCrumbs;
 register(BreadCrumbs, 'x-breadcrumbs', ['data']);
-export default { title: 'BreadCrumbs' }

@@ -1,12 +1,10 @@
-// @ts-nocheck
-import { h, FunctionComponent } from 'preact';
-import { useState } from "preact/hooks";
-import { styled } from "@nksaraf/goober";
+/* eslint-disable import/no-extraneous-dependencies */
+import { h } from 'preact';
 import { storiesOf } from "@storybook/preact"
 import Sidebar from "./index";
 
 
-const sidebarItems = [
+const data = [
     {
         label: "Product Catalog",
         items: [{ label: "Features" }, { label: "Products" }],
@@ -25,7 +23,5 @@ const sidebarItems = [
     },
 ];
 
-// const SidebarStory = () => <Sidebar data={JSON.stringify(sidebarItems)} />;
-// export default { title: 'Sidebar' }
 storiesOf('Sidebar', module)
-    .add('Default', () => <Sidebar data={JSON.stringify(sidebarItems)} />);
+    .add('Default', () => <Sidebar activemenuitem="Features" data={JSON.stringify(data)} />);
