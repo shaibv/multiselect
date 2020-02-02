@@ -1,13 +1,18 @@
 {
   "version": 2,
   "name": "dynamo-components",
-  "builds": [ {
-                "src": "package.json",
-                "use": "@now/static-build",
-                "config": { "distDir": "dist" }
-              }],
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@now/static-build",
+      "config": { "distDir": "dist" }
+    }
+  ],
   "rewrites": [
     { "source": "/", "destination": "/dist" },
     { "source": "/:id", "destination": "/dist/:id/index.js" }
+  ],
+  "redirects": [
+    {"source": "/storybook","destination": "/storybook/index.html"}
   ]
 }

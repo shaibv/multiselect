@@ -158,7 +158,7 @@ module.exports = (env = {}, argv) => {
         filename: "[name].css",
         chunkFilename: "[id].css"
       }),
-     
+
       new HashedModuleIdsPlugin({
         hashFunction: "sha256",
         hashDigest: "hex",

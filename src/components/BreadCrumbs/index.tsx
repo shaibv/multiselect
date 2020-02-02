@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { h, FunctionComponent } from 'preact';
 import { useEffect, useState, useRef } from 'preact/hooks';
 import { styled } from "@nksaraf/goober"
@@ -112,5 +113,4 @@ const StyledCrumb = styled("li")`
 
 
 register(BreadCrumbs, 'x-breadcrumbs', ['data']);
-
-export default BreadCrumbs;
+export default { title: 'BreadCrumbs' }

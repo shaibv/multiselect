@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { h, FunctionComponent } from 'preact';
 import { useEffect, useState, useRef } from 'preact/hooks';
 import { styled } from "@nksaraf/goober"
@@ -27,7 +29,7 @@ const Tab = ({ item, isActive, clickHandler }) => (
 );
 
 
-const Tabs: FunctionComponent<Props> = ({ data, activetab }) => {
+export const Tabs: FunctionComponent<Props> = ({ data, activetab }) => {
   const [dataState, setData] = useState<Tab[] | null>(null);
   const [active, setActive] = useState<any>({});
 
@@ -94,6 +96,7 @@ const StyledUl: any = styled('ul')`
 `;
 
 const StyledLi: any = styled<{ isActive: boolean }>('li')`
+
   height: 100%;
   display: flex;
   justify-content: center;
@@ -121,5 +124,4 @@ const StyledLi: any = styled<{ isActive: boolean }>('li')`
 `;
 
 register(Tabs, 'x-tabs', ['data', 'activetab']);
-
-export default Tabs;
+export default { title: 'Tabs' }

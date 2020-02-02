@@ -126,5 +126,6 @@ const ProgressBar = ({ state }) => {
     )
 }
 
+export default { title: 'ProgressBar' }
 
 register(ProgressBar, 'x-progressbar', ['state']);

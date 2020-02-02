@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { h, FunctionComponent } from 'preact';
 import { useEffect, useState, useRef } from 'preact/hooks';
 import { styled } from "@nksaraf/goober"
@@ -72,7 +74,6 @@ const Tooltip: FunctionComponent<{ showtooltip: string }> = ({ showtooltip }) =>
     </App>
   )
 };
-
 const Tip: any = styled<{ x: number, y: number, isVisible: boolean, duration: number }>("div")`
   position: absolute;
   background: ${(props) => props.theme.colors.$D10};
@@ -105,6 +106,8 @@ const Tip: any = styled<{ x: number, y: number, isVisible: boolean, duration: nu
     margin-left: -6px;
   }
 `;
+
+export default { title: 'Tooltip' }
 
 
 register(Tooltip, 'x-tooltip', ['showtooltip']);
