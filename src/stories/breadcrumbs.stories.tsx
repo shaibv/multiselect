@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { h } from "preact";
 import { storiesOf } from "@storybook/preact";
-import BreadCrumbs from "./index";
+import BreadCrumbs from "../components/BreadCrumbs";
 
 const data = [
   { label: "Static Coupouns", url: "entities/static" },

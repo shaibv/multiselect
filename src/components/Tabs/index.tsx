@@ -1,8 +1,9 @@
 
-import { h, FunctionComponent } from 'preact';
+import { h } from 'preact';
 import { useEffect, useState, useRef } from 'preact/hooks';
 import { styled } from "@nksaraf/goober"
 import register from 'preact-custom-element';
+import { FC } from 'preact/compat';
 import App from '../../App';
 import useCustomEvent from '../../utils/useCustomEvent';
 
@@ -28,7 +29,7 @@ const Tab = ({ item, isActive, clickHandler }) => (
 );
 
 
-const Tabs: FunctionComponent<Props> = ({ data, activetab }) => {
+const Tabs: FC<Props> = ({ data, activetab }) => {
   const [dataState, setData] = useState<Tab[] | null>(null);
   const [active, setActive] = useState<any>({});
 

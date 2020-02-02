@@ -1,6 +1,6 @@
-/* eslint-disable import/no-extraneous-dependencies */
+/** @jsx h */
 import { h } from "preact";
-import Tabs from "./index";
+import Tabs from "../components/Tabs";
 
 const data = [
     { id: "PUBLISHED", label: "Published", active: false },
@@ -11,9 +11,8 @@ const data = [
 
   export const Default = () => <Tabs activetab={data[0].label} data={JSON.stringify(data)} />
 
+
 export default {
     title: 'Tabs',
-    parameters: {
-        info: { inline: true },
-    },
+    component: Default,
 };

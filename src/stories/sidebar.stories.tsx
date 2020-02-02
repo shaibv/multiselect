@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { h } from 'preact';
 import { storiesOf } from "@storybook/preact"
-import Sidebar from "./index";
+import Sidebar from "../components/Sidebar";
 
 
 const data = [

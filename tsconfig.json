@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "./dist/",
+     "rootDir": "./src",
      "module": "esnext",
     "target": "es2017",
     "moduleResolution": "node",
@@ -8,6 +9,7 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "strict": true,
+      "declaration": true,
     "strictNullChecks":false, 
     "esModuleInterop": true,
     "isolatedModules": true,
@@ -15,7 +17,7 @@
      "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "forceConsistentCasingInFileNames": true,
-    "jsx": "react",
+    "jsx": "preserve",
     "jsxFactory": "h",
     "allowJs": true
   },

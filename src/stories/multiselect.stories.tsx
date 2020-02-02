@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { h } from "preact";
 import { storiesOf } from "@storybook/preact";
-import MultiSelect from "./index";
+import MultiSelect from "../components/MultiSelect";
 
 
 const data = [

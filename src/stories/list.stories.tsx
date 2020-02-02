@@ -2,7 +2,7 @@
 import { h } from "preact";
 import { storiesOf } from "@storybook/preact";
 import { useEffect, useState } from "preact/compat";
-import List from "./index";
+import List from "../components/List";
 
 
 const MockList = () => {
