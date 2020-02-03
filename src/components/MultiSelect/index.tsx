@@ -3,7 +3,6 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/prop-types */
-// @ts-nocheck
 
 import register from 'preact-custom-element';
 import { h, FunctionComponent } from 'preact';
@@ -11,6 +10,7 @@ import {
  useState, useEffect, useRef, PropRef,
 } from 'preact/hooks';
 import styled from "styled-components"
+import { FC } from 'preact/compat';
 import useClickOutside from '../../utils/useClickOutside';
 import { ArrowDown } from '../../utils/Icons';
 import useKeyPress from '../../utils/useKeyPress';
@@ -76,13 +76,13 @@ type DropdownItem = {
   label: string,
   checked?: boolean
 }
-interface Attr {
+interface Props {
 data: string,
 placeholder?:string
 }
 
 
-const Multiselect: FunctionComponent<Attr> = ({ data, placeholder }) => {
+const Multiselect: FC<Props> = ({ data, placeholder }) => {
   const [parsedData, setData] = useState<DropdownItem[] | null>(null);
   const [checked, setChecked] = useState<DropdownItem[] | []>([]);
   const [unChecked, setUnChecked] = useState<DropdownItem[] | []>([]);
@@ -280,7 +280,7 @@ const Item: any = styled.li<{ checked: any, focused: boolean }>`
 
 `;
 
-const StyledDropdown: any = styled.ul<{ isOpen: Boolean }>`
+const StyledDropdown: any = styled.ul<{ isOpen: boolean }>`
   position: absolute;
   width: 100%;
   left: 0;
@@ -299,7 +299,7 @@ const StyledDropdown: any = styled.ul<{ isOpen: Boolean }>`
   display: ${(props) => (props.isOpen ? "block" : "none")};
 `;
 
-const RealInput: any = styled<{ isOpen: Boolean }>('input')`
+const RealInput: any = styled.input<{ isOpen: boolean }>`
   display: flex;
   flex: 1;
   align-self: center;
@@ -314,7 +314,7 @@ const RealInput: any = styled<{ isOpen: Boolean }>('input')`
 `;
 
 
-const FakeInput: any = styled.div<{ focused: Boolean }>`
+const FakeInput: any = styled.div<{ focused: boolean }>`
   display: flex;
   min-height: 36px;
   flex-wrap: wrap;

@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "./dist/",
-     "rootDir": "./src",
+    "rootDirs": ["src", "stories"],
      "module": "esnext",
     "target": "es2017",
     "moduleResolution": "node",

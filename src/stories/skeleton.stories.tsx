@@ -6,6 +6,9 @@ export const SkeletonList = () => (
   <Skeleton height={16} />
 );
 
+
 export default {
     title: 'Skeleton',
+    component: Skeleton,
+
 };

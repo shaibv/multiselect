@@ -1,11 +1,10 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { h } from "preact";
-import { storiesOf } from "@storybook/preact";
 import { useEffect, useState } from "preact/compat";
 import List from "../components/List";
 
 
-const MockList = () => {
+export const MockList = () => {
     const [data, setData] = useState(null);
     // @ts-ignore
     useEffect(async () => {
@@ -21,4 +20,7 @@ const MockList = () => {
     )
 }
 
-storiesOf("List", module).add("Key:Value Table", () => (<MockList />));
+export default {
+  title: 'List',
+  component: List,
+};

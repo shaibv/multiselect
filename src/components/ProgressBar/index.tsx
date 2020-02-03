@@ -1,5 +1,4 @@
 /* eslint-disable no-param-reassign */
-
 import { h } from "preact";
 import register from 'preact-custom-element';
 import { useEffect, useRef } from "preact/compat";

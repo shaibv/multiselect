@@ -72,36 +72,7 @@ module.exports = (env = {}, argv) => {
       rules: [
         {
           test: /\.tsx?$/,
-          loader: "babel-loader?cacheDirectory=true",
-          options: {
-            sourceMap: true,
-            presets: [
-              [require.resolve("@babel/preset-typescript"), { jsxPragma: "h" }],
-              [
-                require.resolve("@babel/preset-env"),
-                {
-                  targets: {
-                    browsers: ["last 2 versions", "IE >= 9"]
-                  },
-                  modules: false,
-                  loose: true
-                }
-              ],
-              [require.resolve("@babel/preset-react")]
-            ],
-            plugins: [
-              [require.resolve("@babel/plugin-transform-runtime")],
-              [require.resolve("@babel/plugin-transform-react-jsx-source")],
-              [
-                require.resolve("@babel/plugin-transform-react-jsx"),
-                { pragma: "h", pragmaFrag: "Fragment" }
-              ],
-              [
-                require.resolve("@babel/plugin-proposal-class-properties"),
-                { loose: true }
-              ]
-            ]
-          }
+          loader: "ts-loader",
         },
         {
           test: /\.js$/,

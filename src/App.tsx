@@ -1,9 +1,10 @@
 import { h } from "preact";
 import styled, { ThemeProvider } from 'styled-components';
+import { FC } from "preact/compat";
 import theme from "./utils/globalStyles";
 
 
-const App = ({ children }) => (
+const App:FC = ({ children }) => (
 
   <StyledBase>
     <ThemeProvider theme={theme}>{children}</ThemeProvider>

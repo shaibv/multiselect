@@ -62,4 +62,9 @@ const data = [
   },
 ];
 
-storiesOf("Dropdown", module).add("MultiSelect", () => (<MultiSelect data={JSON.stringify(data)} />));
+export const MultiSelectTags = () => (<MultiSelect data={JSON.stringify(data)} />)
+
+export default {
+  title: 'DropDown',
+  component: MultiSelect,
+};

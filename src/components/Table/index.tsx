@@ -1,13 +1,13 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/jsx-props-no-spreading */
-
-import { h, FunctionComponent } from 'preact';
-import { memo } from "preact/compat"
+// @ts-nocheck
+import { h } from 'preact';
+import { FC } from "preact/compat"
 import {
     useEffect, useState, useRef, useCallback,
 } from 'preact/hooks';
-import { styled } from "@nksaraf/goober"
+import styled from "styled-components"
 import register from 'preact-custom-element';
 import { useTable, usePagination } from 'react-table'
 import App from '../../App';
@@ -18,7 +18,7 @@ const dummyColumns = new Array(4).fill({}).map((item, i) => ({ accessor: `${i}` 
 const dummyData = new Array(4).fill({});
 
 
-const TableComp: FunctionComponent<{ data: string, columns: string}> = ({ data, columns }) => {
+const TableComp:FC<{ data: string, columns: string}> = ({ data, columns }) => {
     const [dataState, setData] = useState(dummyData);
     const [columnsState, setColumns] = useState(dummyColumns);
     const [loading, setLoading] = useState(true);
@@ -54,7 +54,7 @@ const TableComp: FunctionComponent<{ data: string, columns: string}> = ({ data, 
     }
 
 
-const Table = memo((props) => {
+const Table:FC = (props) => {
     const {
         columns, data, loading, pageCount, pageCount: controlledPageCount,
 } = props;
@@ -118,10 +118,10 @@ const Table = memo((props) => {
         </div>
       </Styles>
     )
-});
+};
 
 
-const Styles = styled<{theme: any}>("div")`
+const Styles = styled.div`
   .table {
     font-size: 14px;
     background: ${(props) => props.theme.colors.$D80};
