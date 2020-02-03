@@ -17,7 +17,7 @@
      "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "forceConsistentCasingInFileNames": true,
-    "jsx": "preserve",
+    "jsx": "react",
     "jsxFactory": "h",
     "allowJs": true
   },
@@ -27,7 +27,9 @@
     "node_modules"
   ],
    "plugins": [
-     
+      {
+        "name": "typescript-styled-plugin"
+      }
     ]
 
 }

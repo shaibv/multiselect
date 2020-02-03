@@ -1,5 +1,5 @@
 import { h } from "preact"
-import { styled } from "@nksaraf/goober";
+import styled from "styled-components";
 import { useEffect, useState } from "preact/hooks";
 
  const Skeleton = ({ width, height }: {width?: number, height: number}) => {
@@ -19,7 +19,7 @@ import { useEffect, useState } from "preact/hooks";
 };
 
 
-const Rectangle: any = styled<{ width: number, height: number}>('span')`
+const Rectangle: any = styled.span<{ width: number, height: number }>`
 
 @keyframes pulsate {
   from {

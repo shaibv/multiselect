@@ -1,7 +1,7 @@
 
 import { h } from 'preact';
 import { useEffect, useState, useRef } from 'preact/hooks';
-import { styled } from "@nksaraf/goober"
+import styled from "styled-components"
 import register from 'preact-custom-element';
 import { FC } from 'preact/compat';
 import App from '../../App';
@@ -83,7 +83,7 @@ const Tabs: FC<Props> = ({ data, activetab }) => {
   );
 };
 
-const StyledUl: any = styled('ul')`
+const StyledUl: any = styled.ul`
   list-style: none;
   display: flex;
   flex-direction: row;
@@ -95,7 +95,7 @@ const StyledUl: any = styled('ul')`
   box-sizing: border-box;
 `;
 
-const StyledLi: any = styled<{ theme: any, isActive: boolean }>('li')`
+const StyledLi: any = styled.li<{isActive: boolean}>`
 
   height: 100%;
   display: flex;

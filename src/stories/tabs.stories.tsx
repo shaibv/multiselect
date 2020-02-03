@@ -1,5 +1,6 @@
 /** @jsx h */
 import { h } from "preact";
+import { FC } from "preact/compat";
 import Tabs from "../components/Tabs";
 
 const data = [
@@ -11,8 +12,10 @@ const data = [
 
   export const Default = () => <Tabs activetab={data[0].label} data={JSON.stringify(data)} />
 
-
 export default {
     title: 'Tabs',
-    component: Default,
+    component: Tabs,
+    parameters: {
+    info: { inline: true },
+  },
 };

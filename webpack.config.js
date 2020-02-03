@@ -6,7 +6,6 @@ const WebpackBar = require("webpackbar");
 const ExtractCssChunks = require("extract-css-chunks-webpack-plugin");
 const { HashedModuleIdsPlugin } = require("webpack");
 const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
-const ScriptExtHtmlWebpackPlugin = require("script-ext-html-webpack-plugin");
 
 module.exports = (env = {}, argv) => {
   const isProduction = argv.mode === "production";

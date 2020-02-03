@@ -2,7 +2,7 @@
 
 import { h } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
-import { styled } from "@nksaraf/goober"
+import styled from "styled-components"
 import register from 'preact-custom-element';
 import App from '../../App';
 import Skeleton from '../Skeleton';
@@ -67,7 +67,7 @@ const List = ({ data }) => {
 };
 
 
-const StyledList = styled('div')`
+const StyledList = styled.div`
   padding: 0;
   margin: 0;
   display: flex;
@@ -83,7 +83,7 @@ const StyledList = styled('div')`
 
 `;
 
-const Keys = styled('div')`
+const Keys = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 30px 0 0;
@@ -91,7 +91,7 @@ const Keys = styled('div')`
   
 `;
 
-const Values = styled('div')`
+const Values = styled.div`
   display: flex;
   flex-direction: column;
 

@@ -1,8 +1,7 @@
-// @ts-nocheck
 import { h } from 'preact';
 import { FC } from 'preact/compat'
 import { useEffect, useState, useRef } from 'preact/hooks';
-import { styled } from "@nksaraf/goober"
+import styled from "styled-components"
 import register from 'preact-custom-element';
 import App from '../../App';
 import useCustomEvent from '../../utils/useCustomEvent';
@@ -63,7 +62,7 @@ const BreadCrumbs:FC<Props> = ({ data }) => {
     );
 };
 
-const StyledCrumbs: any = styled("ul")`
+const StyledCrumbs: any = styled.ul`
   list-style: none;
   display: flex;
   flex-direction: row;
@@ -74,7 +73,7 @@ const StyledCrumbs: any = styled("ul")`
   min-height: 30px;
 `;
 
-const StyledCrumb = styled("li")` 
+const StyledCrumb: any = styled.li` 
   display: flex;
   align-items: center;
   

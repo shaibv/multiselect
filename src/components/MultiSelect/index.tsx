@@ -10,7 +10,7 @@ import { h, FunctionComponent } from 'preact';
 import {
  useState, useEffect, useRef, PropRef,
 } from 'preact/hooks';
-import { styled } from "@nksaraf/goober"
+import styled from "styled-components"
 import useClickOutside from '../../utils/useClickOutside';
 import { ArrowDown } from '../../utils/Icons';
 import useKeyPress from '../../utils/useKeyPress';
@@ -210,13 +210,13 @@ const Multiselect: FunctionComponent<Attr> = ({ data, placeholder }) => {
   );
 };
 
-const Wrap: any = styled('div')`
+const Wrap: any = styled.div`
   position: relative;
   box-sizing: border-box;
 `;
 
 
-const StyledTags: any = styled('div')`
+const StyledTags: any = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -247,7 +247,7 @@ const StyledTags: any = styled('div')`
   }
 `;
 
-const Item: any = styled<{ checked: any, focused: boolean }>('li')`
+const Item: any = styled.li<{ checked: any, focused: boolean }>`
   &:hover {
     cursor: pointer;
     background:  ${(props) => props.theme.colors.$B40};
@@ -280,7 +280,7 @@ const Item: any = styled<{ checked: any, focused: boolean }>('li')`
 
 `;
 
-const StyledDropdown: any = styled<{ isOpen: Boolean }>('ul')`
+const StyledDropdown: any = styled.ul<{ isOpen: Boolean }>`
   position: absolute;
   width: 100%;
   left: 0;
@@ -314,7 +314,7 @@ const RealInput: any = styled<{ isOpen: Boolean }>('input')`
 `;
 
 
-const FakeInput: any = styled<{ focused: Boolean }>('div')`
+const FakeInput: any = styled.div<{ focused: Boolean }>`
   display: flex;
   min-height: 36px;
   flex-wrap: wrap;
@@ -340,7 +340,7 @@ const FakeInput: any = styled<{ focused: Boolean }>('div')`
   }
 `;
 
-const Content: any = styled("div")`
+const Content: any = styled.div`
   display: flex;
   flex: 1;
   justify-content: stretch;

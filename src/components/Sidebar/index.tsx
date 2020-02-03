@@ -4,7 +4,7 @@
 import { h, FunctionComponent } from 'preact';
 import { useEffect, useState, useRef } from 'preact/hooks';
 import register from 'preact-custom-element';
-import { styled } from "@nksaraf/goober"
+import styled from "styled-components"
 import { FC } from 'preact/compat/src';
 import LogoIcon from './LogoIcon';
 import useCustomEvent from '../../utils/useCustomEvent';
@@ -107,7 +107,7 @@ const Sidebar: FunctionComponent<Props> = ({ data, activemenuitem }) => {
 };
 
 
-const StyledBar: any = styled('div')`
+const StyledBar: any = styled.div`
   height: 100vh;
   width: 220px;
   background: ${(props) => props.theme.sidebar.colors.$bg};
@@ -121,7 +121,7 @@ const StyledBar: any = styled('div')`
   }
 `;
 
-const StyledSection: any = styled<{ isActive: Boolean }>('div')`
+const StyledSection: any = styled.div<{ isActive: Boolean }>`
   &:last-child:after {
     display: none;
   }
@@ -156,7 +156,7 @@ const StyledSection: any = styled<{ isActive: Boolean }>('div')`
   }
 `;
 
-const MenuItem: any = styled<{ isActive: Boolean }>('button')`
+const MenuItem: any = styled.button<{ isActive: Boolean }>`
     height: 36px;
         padding: 0 24px;
         width: 100%;

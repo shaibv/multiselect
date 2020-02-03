@@ -1,19 +1,19 @@
-import {
- h, createContext, ComponentChildren, FunctionComponent,
-} from "preact";
-import { forwardRef, useContext } from "preact/compat";
-import { styled, setup } from "@nksaraf/goober";
+import { h } from "preact";
+import styled, { ThemeProvider } from 'styled-components';
 import theme from "./utils/globalStyles";
 
-const ThemeContext = createContext(theme);
-const useTheme = () => useContext(ThemeContext);
-setup(h, forwardRef, useTheme);
+
+const App = ({ children }) => (
+
+  <StyledBase>
+    <ThemeProvider theme={theme}>{children}</ThemeProvider>
+
+  </StyledBase>
+
+  )
 
 
-const App: FunctionComponent = ({ children }) => <StyledBase>{children}</StyledBase>;
-
-
-const StyledBase = styled<{ children: ComponentChildren}>("div")`
+const StyledBase: any = styled.div`
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   box-sizing: border-box;

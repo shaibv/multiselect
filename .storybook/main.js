@@ -1,12 +1,22 @@
+
 module.exports = {
   stories: ["../src/stories/*.stories.tsx"],
   addons: [
     {
-      name: "@storybook/addon-docs"
+      name: "@storybook/addon-docs",
+      options: {
+        configureJSX: true,
+        babelOptions: {},
+        sourceLoaderOptions: null
+      }
     },
-    "@storybook/addon-storysource",
+    "@storybook/addon-storysource"
   ],
   webpackFinal: async config => {
+    config.resolve.alias = Object.assign({}, config.resolve.alias, {
+      react: "preact/compat",
+      "react-dom": "preact/compat"
+    });
     config.module.rules.push({
       test: /\.(ts|tsx)$/,
       use: [
@@ -15,10 +25,7 @@ module.exports = {
           options: {
             sourceMap: true,
             presets: [
-              [
-                require.resolve("@babel/preset-typescript"),
-                { jsxPragma: "h", typescript: true }
-              ],
+              [require.resolve("@babel/preset-typescript"), { jsxPragma: "h" }],
               [
                 require.resolve("@babel/preset-env"),
                 {
@@ -29,7 +36,7 @@ module.exports = {
                   loose: true
                 }
               ],
-              [require.resolve("@babel/preset-react")],
+              [require.resolve("@babel/preset-react")]
             ],
             plugins: [
               [require.resolve("@babel/plugin-transform-runtime")],
@@ -44,7 +51,8 @@ module.exports = {
               ]
             ]
           }
-        }
+        },
+        require.resolve("react-docgen-typescript-loader")
       ]
     });
     config.resolve.extensions.push(".ts", ".tsx");
