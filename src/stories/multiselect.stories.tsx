@@ -1,6 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { h } from "preact";
-import { storiesOf } from "@storybook/preact";
 import MultiSelect from "../components/MultiSelect";
 
 
@@ -62,9 +61,9 @@ const data = [
   },
 ];
 
-export const MultiSelectTags = () => (<MultiSelect data={JSON.stringify(data)} />)
+export const Default = () => <MultiSelect data={JSON.stringify(data)} />
 
 export default {
-  title: 'DropDown',
+  title: 'Dropdown',
   component: MultiSelect,
 };

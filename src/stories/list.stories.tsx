@@ -6,13 +6,12 @@ import List from "../components/List";
 
 export const MockList = () => {
     const [data, setData] = useState(null);
-    // @ts-ignore
-    useEffect(async () => {
-        const req = await fetch("https://www.mocky.io/v2/5e30af2c3200008000858c10");
-        const res = await req.json();
-        const objectToKeyValuePair = Object.entries(res)
+    useEffect(() => {
+      fetch("https://www.mocky.io/v2/5e30af2c3200008000858c10").then((x) => x.json().then((d) => {
+        const objectToKeyValuePair = Object.entries(d)
         .map(([key, value]) => ({ key, value }));
         setData(objectToKeyValuePair);
+      }))
     }, []);
 
     return (

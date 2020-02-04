@@ -2,7 +2,7 @@ import { h } from "preact";
 import Skeleton from "../components/Skeleton";
 
 
-export const SkeletonList = () => (
+export const Default = () => (
   <Skeleton height={16} />
 );
 

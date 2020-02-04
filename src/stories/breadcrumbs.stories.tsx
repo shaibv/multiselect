@@ -1,6 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { h } from "preact";
-import { storiesOf } from "@storybook/preact";
 import BreadCrumbs from "../components/BreadCrumbs";
 
 const data = [
@@ -9,6 +8,11 @@ const data = [
   { label: "Test Coupons", url: "" },
 ];
 
-storiesOf("Breadcrumbs", module).add("Default", () => (
-  <BreadCrumbs data={JSON.stringify(data)} />
-));
+
+export const Default = () => <BreadCrumbs data={JSON.stringify(data)} />
+
+
+export default {
+  title: 'BreadCrumbs',
+  component: BreadCrumbs,
+};

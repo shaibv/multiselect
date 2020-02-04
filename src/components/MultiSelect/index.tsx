@@ -2,7 +2,6 @@
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable react/prop-types */
 
 import register from 'preact-custom-element';
 import { h, FunctionComponent } from 'preact';
