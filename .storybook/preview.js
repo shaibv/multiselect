@@ -3,7 +3,7 @@ import { h } from "preact";
 import { useEffect, useState } from "preact/compat";
 import styled from "styled-components";
 import { useTable } from "react-table";
-
+import { Checkmark } from "../src/utils/Icons";
 const Table = ({ data }) => {
   const columns = [
     {
@@ -16,7 +16,8 @@ const Table = ({ data }) => {
     },
     {
       Header: "Type",
-      accessor: "type"
+      accessor: "type",
+      className: 'type',
     },
     {
       Header: "Default Value",
@@ -68,13 +69,14 @@ const Table = ({ data }) => {
               <div key={row.id} {...row.getRowProps()} className="tr">
                 {row.cells.map(cell => {
                   if (cell.column.id === "required") {
+                    console.log(cell);
                     return (
                       <div
                         key={cell.value}
                         {...cell.getCellProps()}
-                        className="td"
+                        className={"td" + " " + cell.column.id}
                       >
-                        {cell.value ? "true" : "false"}
+                        {cell.value ? <Checkmark size={18}/> : ""}
                       </div>
                     );
                   } else {
@@ -82,7 +84,7 @@ const Table = ({ data }) => {
                       <div
                         key={cell.value}
                         {...cell.getCellProps()}
-                        className="td"
+                        className={"td" + " " + cell.column.id}
                       >
                         {cell.render("Cell")}
                       </div>
@@ -166,6 +168,10 @@ const StyledStory = styled.div`
 
 const StyledTable = styled.div`
   margin: 18px 0 0 0;
+  .type {
+    color: rgb(189, 16, 224);
+    font-family: monospace;
+  }
   .table {
     border: 1px solid rgba(0, 0, 0, 0.1);
     font-size: 14px;
@@ -174,9 +180,10 @@ const StyledTable = styled.div`
     border-radius: 6px;
     .tr.header {
       height: 42px;
-      font-size: 10px;
+      font-size: 11px;
+      letter-spacing: 1px;
       color: #999;
-      font-weight: 600;
+      font-weight: 500;
       background: #fafafa;
       border-bottom: 1px solid rgba(0, 0, 0, 0.1);
       text-transform: uppercase;
@@ -186,7 +193,7 @@ const StyledTable = styled.div`
     }
 
     .tr {
-      height: 42px;
+      height: 54px;
       width: 100%;
       display: flex;
       flex-direction: row;
