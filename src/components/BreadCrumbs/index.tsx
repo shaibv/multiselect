@@ -69,8 +69,6 @@ const StyledCrumbs: any = styled.ul`
   align-items: center;
   margin: 0;
   padding: 0;
-   max-height: 30px;
-  min-height: 30px;
 `;
 
 const StyledCrumb: any = styled.li` 
