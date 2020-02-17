@@ -4,7 +4,7 @@ import { FC } from "preact/compat";
 import theme from "./utils/globalStyles";
 
 
-const App:FC = ({ children }) => (
+const App: any = ({ children }) => (
 
   <StyledBase>
     <ThemeProvider theme={theme}>{children}</ThemeProvider>

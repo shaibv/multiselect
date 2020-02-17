@@ -4,7 +4,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import register from 'preact-custom-element';
-import { h, FunctionComponent } from 'preact';
+import { h } from 'preact';
 import {
  useState, useEffect, useRef, PropRef,
 } from 'preact/hooks';

@@ -67,8 +67,8 @@ const Tabs: FC<Props> = ({ data, activetab }) => {
   if (!dataState) return null;
   return (
     <App>
-      <div ref={componentRef}>
-        <StyledUl>
+      <Wrap ref={componentRef}>
+        <ul className="styledUl">
           {dataState.map((tab) => (
             <Tab
               key={tab.label}
@@ -77,13 +77,15 @@ const Tabs: FC<Props> = ({ data, activetab }) => {
               isActive={active.id === tab.id}
             />
         ))}
-        </StyledUl>
-      </div>
+        </ul>
+      </Wrap>
     </App>
   );
 };
 
-const StyledUl: any = styled.ul`
+const Wrap: any = styled.div`
+
+.styledUl {
   list-style: none;
   display: flex;
   flex-direction: row;
@@ -93,7 +95,9 @@ const StyledUl: any = styled.ul`
   position: relative;
   font-family: $FontRoman;
   box-sizing: border-box;
+}
 `;
+
 
 const StyledLi: any = styled.li<{isActive: boolean}>`
 

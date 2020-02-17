@@ -104,7 +104,7 @@ module.exports = (env = {}, argv) => {
                   "@babel/plugin-transform-react-constant-elements"
                 )
               ],
-              [require.resolve("@babel/plugin-syntax-dynamic-import")]
+              [require.resolve("@babel/plugin-syntax-dynamic-import")],
             ]
           }
         },
