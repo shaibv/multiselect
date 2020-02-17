@@ -212,6 +212,10 @@ const Multiselect: FC<Props> = ({ data, placeholder }) => {
 const Wrap: any = styled.div`
   position: relative;
   box-sizing: border-box;
+  display: block;
+  height: 36px;
+  width: 100%;
+
 `;
 
 
