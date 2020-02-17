@@ -315,7 +315,9 @@ const RealInput: any = styled.input<{ isOpen: boolean }>`
 
 const FakeInput: any = styled.div<{ focused: boolean }>`
   display: flex;
-  min-height: 36px;
+  min-height: 30px;
+  max-height: 42px;
+  height: 36px;
   flex-wrap: wrap;
   align-items: stretch;
   border-radius: 4px;

@@ -5,7 +5,6 @@ import register from 'preact-custom-element';
 
 
  const Skeleton = ({ width, height }: {width?: number, height?: number }) => {
-
   const randomInteger = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
   const maxWidth = width || 150;
   const [currentWidth, setWidth] = useState(0);
@@ -65,4 +64,3 @@ const Rectangle: any = styled.span<{ width: number, height: number }>`
 `;
 export default Skeleton;
 register(Skeleton, 'x-skeleton');
-
