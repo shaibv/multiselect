@@ -108,7 +108,7 @@ const Tip: any = styled.div<{x: number;y: number;isVisible: boolean;duration: nu
   color: ${(props) => props.theme.colors.$D10};
   padding: 6px 0;
   font-size: 14px;
-  z-index: 0;
+  z-index: 991;
   border-radius: 6px;
   left: ${(props) => props.x}px;
   top: ${(props) => props.y}px;
