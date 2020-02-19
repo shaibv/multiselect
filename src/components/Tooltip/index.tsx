@@ -2,7 +2,7 @@
 
 import { h, FunctionComponent } from 'preact';
 import { useEffect, useState, useRef } from 'preact/hooks';
-import { styled } from "@nksaraf/goober"
+import styled from "styled-components"
 import register from 'preact-custom-element';
 import App from '../../App';
 
@@ -74,7 +74,7 @@ const Tooltip: FunctionComponent<{ showtooltip: string }> = ({ showtooltip }) =>
     </App>
   )
 };
-const Tip: any = styled<{ x: number, y: number, isVisible: boolean, duration: number }>("div")`
+const Tip: any = styled.div<{ x: number, y: number, isVisible: boolean, duration: number }>`
   position: absolute;
   background: ${(props) => props.theme.colors.$D10};
   color: ${(props) => props.theme.colors.$D80};
