@@ -209,11 +209,12 @@ const Multiselect: FC<Props> = ({ data, placeholder }) => {
   );
 };
 
+
 const Wrap: any = styled.div`
   position: relative;
   box-sizing: border-box;
   display: block;
-  height: 36px;
+  /* height: 36px; */
   width: 100%;
 
 `;
@@ -319,9 +320,9 @@ const RealInput: any = styled.input<{ isOpen: boolean }>`
 
 const FakeInput: any = styled.div<{ focused: boolean }>`
   display: flex;
-  min-height: 30px;
-  max-height: 42px;
-  height: 36px;
+  min-height: 36px;
+  /* max-height: 42px; */
+  /* height: 36px; */
   flex-wrap: wrap;
   align-items: stretch;
   border-radius: 4px;
