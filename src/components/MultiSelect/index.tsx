@@ -149,7 +149,6 @@ const Multiselect: FC<Props> = ({ data, placeholder }) => {
     const ctx2 = checked.filter((item) => item.id === e.target.id);
     setChecked((x) => x.filter((item) => item.id !== e.target.id));
     setUnChecked((x) => [...ctx2, ...x]);
-    realInputRef.current.focus();
   };
 
   useEffect(() => {
