@@ -21,24 +21,37 @@ const Dropdown = ({
 }) => {
   const checkboxRef = useRef<HTMLInputElement[]>([]);
 
+  if (!items.length) { return (
+    <StyledDropdown isOpen={isOpen}>
+      <Item>
+        <label className="noItems">
+          No Results
+        </label>
+
+      </Item>
+
+    </StyledDropdown>
+
+  ) }
 
   return (
     <StyledDropdown isOpen={isOpen}>
-      {items.map((x, i) => (
+      {items.map((x) => (
         <Item
           key={x.id}
           id={x.id}
           ref={(el) => { checkboxRef.current[x.id] = el; }}
           checked={x.checked}
+          onFocus={() => { checkboxRef.current[x.id].classList.add('focused') }}
+          onBlur={() => { checkboxRef.current[x.id].classList.remove('focused') }}
+          tabIndex={0}
+          onKeyPress={(e) => e.keyCode === 13 && addClickHandler(e)}
         >
           <label>
             <input
-              tabIndex={0}
               id={x.id}
               checked={x.checked}
               onChange={addClickHandler}
-              onFocus={() => { checkboxRef.current[x.id].classList.add('focused') }}
-              onBlur={() => { checkboxRef.current[x.id].classList.remove('focused') }}
               type="checkbox"
             />
             {x.label}
@@ -91,11 +104,12 @@ const Multiselect: FC<Props> = ({ data, placeholder }) => {
 
 
   const backSpaceDelete = useKeyPress('backspace');
+  const modifierDelete = useKeyPress('meta');
+
   const inputPlaceHolder = placeholder || 'Select Value';
 
 
   const realInputRef = useRef<HTMLInputElement>();
-
 
   useEffect(() => {
     if (data) setData(JSON.parse(data));
@@ -139,7 +153,11 @@ const Multiselect: FC<Props> = ({ data, placeholder }) => {
   };
 
   useEffect(() => {
-    if (backSpaceDelete && !searchTerm.length) {
+    if (modifierDelete && backSpaceDelete) {
+      setChecked([])
+      setUnChecked(parsedData);
+    }
+   else if (backSpaceDelete && !searchTerm.length) {
       const e = { target: checked[checked.length - 1] };
       removeClickHandler(e);
     }
@@ -279,6 +297,11 @@ const Item: any = styled.li<{ checked: any, focused: boolean }>`
       position: absolute;
       opacity: 0;
       height: 0; width: 0;
+    }
+
+    &.noItems {
+      font-size: 12px;
+      color: ${(props) => props.theme.colors.$D40};
     }
   }
 
