@@ -108,6 +108,7 @@ const Multiselect: FC<Props> = ({ data, placeholder }) => {
   const checked = parsedData.filter((item) => item.checked);
   const unChecked = parsedData.filter((item) => !item.checked).filter(filterByTerm);
   const filteredData = unChecked;
+  if (isOpen) realInputRef.current.focus();
 
   const addClickHandler = (e) => {
     const seleced = parsedData.find((item) => item.id === e.target.id);
