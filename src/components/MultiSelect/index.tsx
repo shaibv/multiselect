@@ -95,107 +95,56 @@ placeholder?:string
 
 
 const Multiselect: FC<Props> = ({ data, placeholder }) => {
-  const [parsedData, setData] = useState<DropdownItem[] | null>(null);
-  const [checked, setChecked] = useState<DropdownItem[] | []>([]);
-  const [unChecked, setUnChecked] = useState<DropdownItem[] | []>([]);
-  const [isOpen, setOpen] = useState(false);
+  const [parsedData, setParsedData] = useState<DropdownItem[] | null>(JSON.parse(data));
   const [searchTerm, setSearchTerm] = useState('');
-  const [filteredData, setFilteredData] = useState<DropdownItem[] | []>([]);
-
+  const [isOpen, setOpen] = useState(false);
 
   const backSpaceDelete = useKeyPress('backspace');
-  const modifierDelete = useKeyPress('meta');
+  // const modifierDelete = useKeyPress('meta');
 
   const inputPlaceHolder = placeholder || 'Select Value';
-
-
   const realInputRef = useRef<HTMLInputElement>();
-
-  useEffect(() => {
-    if (data) setData(JSON.parse(data));
-  }, [data, placeholder]);
-
-
-  useEffect(() => {
-    if (parsedData) {
-      setChecked(parsedData.filter((item) => item.checked));
-      setUnChecked(parsedData.filter((item) => !item.checked));
-    }
-  }, [parsedData]);
-
-
-  useEffect(() => {
-    setFilteredData(unChecked);
-  }, [unChecked]);
-
-
-  const dispatchEvent = useCustomEvent({
-    ref: realInputRef,
-    eventName: 'stateUpdated',
-  });
-
-  useEffect(() => {
-    dispatchEvent(checked)
-  }, [checked]);
+  const filterByTerm = (item) => item.label.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1
+  const checked = parsedData.filter((item) => item.checked);
+  const unChecked = parsedData.filter((item) => !item.checked).filter(filterByTerm);
+  const filteredData = unChecked;
 
   const addClickHandler = (e) => {
-    const ctx = unChecked.filter((item) => item.id === e.target.id);
-    setChecked((x) => [...x, ...ctx]);
-    setUnChecked((x) => x.filter((item) => item.id !== e.target.id));
-    realInputRef.current.focus();
+    const seleced = parsedData.find((item) => item.id === e.target.id);
+    seleced.checked = true;
+    setSearchTerm('');
+    setParsedData(parsedData.slice());
   };
 
   const removeClickHandler = (e) => {
-    const ctx2 = checked.filter((item) => item.id === e.target.id);
-    setChecked((x) => x.filter((item) => item.id !== e.target.id));
-    setUnChecked((x) => [...ctx2, ...x]);
+    const seleced = parsedData.find((item) => item.id === e.target.id);
+    seleced.checked = false;
+    setParsedData(parsedData.slice());
   };
 
+
   useEffect(() => {
-    if (modifierDelete && backSpaceDelete) {
-      setChecked([])
-      setUnChecked(parsedData);
-    }
-   else if (backSpaceDelete && !searchTerm.length) {
+    // *** Igor what is this part ? ***
+    // if (modifierDelete && backSpaceDelete) {
+      // setChecked([])
+      // setUnChecked(parsedData);
+    // }
+  //  else
+   if (backSpaceDelete && !searchTerm.length) {
       const e = { target: checked[checked.length - 1] };
       removeClickHandler(e);
     }
   }, [backSpaceDelete]);
 
-  useEffect(() => {
-    if (searchTerm.length) {
-      const filter = unChecked.filter(
-        (item) => item.label.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1,
-      );
-      setFilteredData(filter);
-    } else {
-      setFilteredData(unChecked);
-    }
-    return () => searchTerm;
-  }, [searchTerm, checked]);
 
-  let timeout;
-  const termSearchHandler = (e) => {
-    if (timeout) {
-      clearTimeout(timeout);
-    }
-    timeout = setTimeout(() => {
-      setSearchTerm(e.target.value);
-    }, 25);
-  };
-
+  const onInputChange = (event) => {
+    setSearchTerm(event.target.value);
+  }
 
   const [wrappRef, isClickOutside]: (PropRef<HTMLElement> | boolean)[] = useClickOutside();
 
   if (isClickOutside) setOpen(false);
 
-
-  useEffect(() => {
-    if (isOpen) realInputRef.current.focus();
-  }, [isOpen]);
-
-
-  if (!data) return null;
   return (
     <App>
       <Wrap ref={wrappRef}>
@@ -207,8 +156,9 @@ const Multiselect: FC<Props> = ({ data, placeholder }) => {
             <Tags removeClickHandler={removeClickHandler} items={checked} />
             <RealInput
               placeholder={inputPlaceHolder}
-              onInput={termSearchHandler}
               type="text"
+              value={searchTerm}
+              onChange={onInputChange}
               onFocus={() => setOpen(true)}
               ref={realInputRef}
             />
@@ -217,7 +167,7 @@ const Multiselect: FC<Props> = ({ data, placeholder }) => {
         </FakeInput>
         <Dropdown
           isOpen={isOpen}
-          addClickHandler={addClickHandler}
+          addClickHandler={(e) => addClickHandler(e)}
           items={filteredData}
         />
       </Wrap>
