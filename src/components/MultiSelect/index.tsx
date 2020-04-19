@@ -100,7 +100,7 @@ const Multiselect: FC<Props> = ({ data, placeholder }) => {
   const [isOpen, setOpen] = useState(false);
 
   const backSpaceDelete = useKeyPress('backspace');
-  // const modifierDelete = useKeyPress('meta');
+  const modifierDelete = useKeyPress('meta');
 
   const inputPlaceHolder = placeholder || 'Select Value';
   const realInputRef = useRef<HTMLInputElement>();
@@ -125,17 +125,15 @@ const Multiselect: FC<Props> = ({ data, placeholder }) => {
 
 
   useEffect(() => {
-    // *** Igor what is this part ? ***
-    // if (modifierDelete && backSpaceDelete) {
-      // setChecked([])
-      // setUnChecked(parsedData);
-    // }
-  //  else
+    if (modifierDelete && backSpaceDelete) {
+      parsedData.forEach((listItem) => { listItem.checked = false });
+      setParsedData(parsedData.slice());
+    }
    if (backSpaceDelete && !searchTerm.length) {
       const e = { target: checked[checked.length - 1] };
       removeClickHandler(e);
     }
-  }, [backSpaceDelete]);
+  }, [backSpaceDelete, modifierDelete]);
 
 
   const onInputChange = (event) => {
