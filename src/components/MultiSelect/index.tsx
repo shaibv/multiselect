@@ -98,6 +98,7 @@ const Multiselect: FC<Props> = ({ data, placeholder }) => {
   const [parsedData, setParsedData] = useState<DropdownItem[] | null>(JSON.parse(data));
   const [searchTerm, setSearchTerm] = useState('');
   const [isOpen, setOpen] = useState(false);
+  console.log('rendered:', data)
 
   const backSpaceDelete = useKeyPress('backspace');
   const modifierDelete = useKeyPress('meta');
@@ -123,6 +124,10 @@ const Multiselect: FC<Props> = ({ data, placeholder }) => {
     setParsedData(parsedData.slice());
   };
 
+  useEffect(() => {
+    console.log('use effect called', data)
+    if (data) setParsedData(JSON.parse(data));
+  }, [data, placeholder]);
 
   useEffect(() => {
     if (modifierDelete && backSpaceDelete) {
