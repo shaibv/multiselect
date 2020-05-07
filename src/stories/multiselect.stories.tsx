@@ -3,7 +3,7 @@ import { h } from "preact";
 import MultiSelect from "../components/MultiSelect";
 
 
-const data = [
+const data = `[
   {
     id: "ef4c058e-bab1-481b-9131-b56a92fc0401",
     label: "Answers",
@@ -59,7 +59,7 @@ const data = [
     label: "External Apps",
     productSettingsId: "20a780b4-04d8-42ff-bfbc-e9541863afea",
   },
-];
+]`;
 
 export const Default = () => <MultiSelect data={JSON.stringify(data)} />
 

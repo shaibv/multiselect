@@ -95,13 +95,13 @@ placeholder?:string
 
 
 const Multiselect: FC<Props> = ({ data, placeholder }) => {
-  let dataItems;
-  try {
-    dataItems = JSON.parse(data)
-  } catch {
-    dataItems = []
+  let parsedData;
+  let setParsedData;
+  if (data) {
+    [parsedData, setParsedData] = useState<DropdownItem[]>(JSON.parse(data));
+  } else {
+    [parsedData, setParsedData] = useState<DropdownItem[]>([]);
   }
-  const [parsedData, setParsedData] = useState<DropdownItem[] | null>(dataItems);
   const [searchTerm, setSearchTerm] = useState('');
   const [isOpen, setOpen] = useState(false);
 
@@ -137,10 +137,10 @@ const Multiselect: FC<Props> = ({ data, placeholder }) => {
     setParsedData(parsedData.slice());
   };
 
-  // useEffect(() => {
-  //   console.log('use effect called', data)
-  //   if (data) setParsedData(JSON.parse(data));
-  // }, [data, placeholder]);
+  useEffect(() => {
+    console.log('use effect called', data)
+    if (data) setParsedData(JSON.parse(data));
+  }, [data, placeholder]);
 
   useEffect(() => {
     if (modifierDelete && backSpaceDelete) {
