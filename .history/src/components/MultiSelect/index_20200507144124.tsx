@@ -131,8 +131,8 @@ const Multiselect: FC<Props> = ({ data, placeholder }) => {
     const seleced = parsedData.find((item) => item.id === e.target.id);
     seleced.checked = true;
     setSearchTerm('');
-    dispatchAndLogEvent([...checked, seleced]);
     setParsedData(parsedData.slice());
+    dispatchAndLogEvent(checked);
   };
 
 

@@ -1,0 +1,1 @@
+{"couponTemplate":{"status":"DRAFT","couponDetails":{"appliesTo":[{"category":"family","id":"321a4b63-9d2d-46f6-a205-0f4a6f6bbc05"}],"codePrefix":"prod","duration":{"durationUnit":"MONTHS","duration":7},"name":"test create prod","description":"Show in prod tenant","discountRule":{"multiCyclePercent":{"percent":[{"cycleDuration":3,"recurringCyclesNumber":"MONTHLY"}]}}}}
