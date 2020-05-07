@@ -121,13 +121,18 @@ const Multiselect: FC<Props> = ({ data, placeholder }) => {
     eventName: 'stateUpdated',
   });
 
+  const dispatchAndLogEvent = (eventData) => {
+    console.log('dispatching stateUpdated', eventData);
+    dispatchEvent(eventData);
+  }
+
 
   const addClickHandler = (e) => {
     const seleced = parsedData.find((item) => item.id === e.target.id);
     seleced.checked = true;
     setSearchTerm('');
     setParsedData(parsedData.slice());
-    dispatchEvent(checked);
+    dispatchAndLogEvent(checked);
   };
 
 
