@@ -95,10 +95,15 @@ placeholder?:string
 
 
 const Multiselect: FC<Props> = ({ data, placeholder }) => {
-  const [parsedData, setParsedData] = useState<DropdownItem[] | null>(JSON.parse(data));
+  let dataItems;
+  try {
+    dataItems = JSON.parse(data)
+  } catch {
+    dataItems = []
+  }
+  const [parsedData, setParsedData] = useState<DropdownItem[] | null>(dataItems);
   const [searchTerm, setSearchTerm] = useState('');
   const [isOpen, setOpen] = useState(false);
-  console.log('rendered:', data)
 
   const backSpaceDelete = useKeyPress('backspace');
   const modifierDelete = useKeyPress('meta');
@@ -111,12 +116,20 @@ const Multiselect: FC<Props> = ({ data, placeholder }) => {
   const filteredData = unChecked;
   if (isOpen) realInputRef.current.focus();
 
+  const dispatchEvent = useCustomEvent({
+    ref: realInputRef,
+    eventName: 'stateUpdated',
+  });
+
+
   const addClickHandler = (e) => {
     const seleced = parsedData.find((item) => item.id === e.target.id);
     seleced.checked = true;
     setSearchTerm('');
     setParsedData(parsedData.slice());
+    dispatchEvent(checked);
   };
+
 
   const removeClickHandler = (e) => {
     const seleced = parsedData.find((item) => item.id === e.target.id);
@@ -124,10 +137,10 @@ const Multiselect: FC<Props> = ({ data, placeholder }) => {
     setParsedData(parsedData.slice());
   };
 
-  useEffect(() => {
-    console.log('use effect called', data)
-    if (data) setParsedData(JSON.parse(data));
-  }, [data, placeholder]);
+  // useEffect(() => {
+  //   console.log('use effect called', data)
+  //   if (data) setParsedData(JSON.parse(data));
+  // }, [data, placeholder]);
 
   useEffect(() => {
     if (modifierDelete && backSpaceDelete) {
