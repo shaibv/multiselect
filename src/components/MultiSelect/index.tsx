@@ -141,6 +141,9 @@ const Multiselect: FC<Props> = ({ data, placeholder }) => {
   }, [data, placeholder]);
 
   useEffect(() => {
+    if (!isOpen) {
+      return;
+    }
     if (modifierDelete && backSpaceDelete) {
       parsedData.forEach((listItem) => { listItem.checked = false });
       setParsedData(parsedData.slice());
