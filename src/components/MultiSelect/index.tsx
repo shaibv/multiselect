@@ -134,7 +134,7 @@ const Multiselect: FC<Props> = ({ data, placeholder }) => {
     const seleced = parsedData.find((item) => item.id === id);
     seleced.checked = false;
     const newChecked = parsedData.filter((item) => item.checked);
-    dispatchAndLogEvent(newChecked)
+    dispatchAndLogEvent(newChecked);
     setParsedData([...parsedData]);
   };
 
