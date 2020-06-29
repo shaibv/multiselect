@@ -133,6 +133,8 @@ const Multiselect: FC<Props> = ({ data, placeholder }) => {
   const removeClickHandler = (id) => {
     const seleced = parsedData.find((item) => item.id === id);
     seleced.checked = false;
+    const newChecked = parsedData.filter((item) => item.checked);
+    dispatchAndLogEvent(newChecked)
     setParsedData([...parsedData]);
   };
 
