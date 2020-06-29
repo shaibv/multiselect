@@ -73,7 +73,7 @@ const Tags = ({ items, removeClickHandler }) => (
           role="button"
           id={item.id}
           onKeyPress={removeClickHandler}
-          onClick={removeClickHandler}
+          onClick={() => removeClickHandler(item.id)}
         >
           ⨯
         </i>
@@ -130,10 +130,10 @@ const Multiselect: FC<Props> = ({ data, placeholder }) => {
   };
 
 
-  const removeClickHandler = (e) => {
-    const seleced = parsedData.find((item) => item.id === e.target.id);
+  const removeClickHandler = (id) => {
+    const seleced = parsedData.find((item) => item.id === id);
     seleced.checked = false;
-    setParsedData(parsedData.slice());
+    setParsedData([...parsedData]);
   };
 
   useEffect(() => {
@@ -149,8 +149,8 @@ const Multiselect: FC<Props> = ({ data, placeholder }) => {
       setParsedData(parsedData.slice());
     }
    if (backSpaceDelete && !searchTerm.length) {
-      const e = { target: checked[checked.length - 1] };
-      removeClickHandler(e);
+      const { id } = checked[checked.length - 1];
+      removeClickHandler(id);
     }
   }, [backSpaceDelete, modifierDelete]);
 
